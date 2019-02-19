@@ -21,7 +21,7 @@ const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '123456',
-  database : 'xincan'
+  database : 'vue-xincan'
 });
 connection.connect();
 let dataBaseOption = function(sql, callback){
@@ -39,7 +39,7 @@ app.get('/user',function(req,res){
 		param = url.parse(req.url,true).query
 		page = (param.page - 1) * param.size
 		size = param.size
-		sqlCount = "SELECT count(*) count FROM employee_node where 1=1 ";
+		sqlCount = "SELECT count(*) count FROM employee where 1=1 ";
 		sql  = "SELECT ";
 		sql += "id ";
 		sql += ",login_name loginName ";
@@ -51,7 +51,7 @@ app.get('/user',function(req,res){
 		sql += ",area_id areaId ";
 		sql += ",organization_id organizationId ";
 		sql += ",date_format(create_time,'%Y-%m-%d %H:%m:%i') createTime ";
-		sql += " FROM employee_node where 1=1 "; // 查询用户信息
+		sql += " FROM employee where 1=1 "; // 查询用户信息
 
 	let searchParam = JSON.parse(param.param);
 	if(search != null){
@@ -102,12 +102,12 @@ app.get('/user/edit',function(req,res){
 		,sql = "";
 
 	if(param.id == undefined){
-		sql  = "insert into employee_node (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, create_time) ";
+		sql  = "insert into employee (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, create_time) ";
 		sql += "value ";
 		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '" 
 		+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "', now())";
 	}else{
-		sql  = "update employee_node set ";
+		sql  = "update employee set ";
 		sql += " login_name = '" + param.loginName + "'";
 		sql += ", login_password = '" + param.loginPassword + "'";
 		sql += ", name = '" + param.name + "'";
@@ -139,7 +139,7 @@ app.get('/user/delete',function(req,res){
 	for(let i  = 0; i < ids.length; i++){
 		id += ",'" + ids[i] + "'";
 	}
-	let sql = "DELETE FROM employee_node where id in (" + id.substr(1) + ")";
+	let sql = "DELETE FROM employee where id in (" + id.substr(1) + ")";
 	console.log(sql);
 	console.log("--------------------------------------------------------");
 	dataBaseOption(sql, function(result){
@@ -156,7 +156,7 @@ app.get('/user/delete',function(req,res){
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 表格显隐列样式 获取当前表格列的信息
-app.get('/select/cell',function(req,res){
+app.get('/table/select',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let sql = "SELECT * FROM table_cell_show where name = '" + param.name + "'";
 	dataBaseOption(sql, function(result){
@@ -166,7 +166,7 @@ app.get('/select/cell',function(req,res){
 });
 
 // 表格显隐列样式 更新当前表格列的信息
-app.get('/update/status',function(req,res){
+app.get('/table/status',function(req,res){
 	var param = url.parse(req.url,true).query;
 	let deleteSql = "delete from table_cell_show where name = '" + param.name + "'";
 	let insertSql = "insert into table_cell_show (id, name, content, create_time) " +
