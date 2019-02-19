@@ -81,331 +81,339 @@
         </div>
 
         <!-- 编辑用户信息 -->
-        <el-dialog custom-class="hatech-dialog" :title="editForm.title" :visible.sync="editForm.dialogFormVisible" :width="editForm.formWidth">
+        <el-dialog custom-class="hatech-dialog" :title="form.title" :visible.sync="form.dialogFormVisible" :width="form.formWidth">
             <div class="hatech-top-line"></div>
-            <el-form :model="editForm">
-
-                <el-form-item label="登录名称" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="'width: ' + editForm.formBqWidth"></el-input>
+            <el-form :model="form">
+                <el-form-item label="登录名称" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="登录密码" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="'width: ' + editForm.formBqWidth"></el-input>
+                <el-form-item label="登录密码" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="用户名称" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.name" autocomplete="off" placeholder="请输入用户名称" :style="'width: ' + editForm.formBqWidth"></el-input>
+                <el-form-item label="用户名称" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="用户性别" :label-width="editForm.formLabelWidth">
-                    <el-radio-group v-model="editForm.data.sex">
+                <el-form-item label="用户性别" :label-width="form.formLabelWidth">
+                    <el-radio-group v-model="form.data.sex">
                         <el-radio :label="0">女</el-radio>
                         <el-radio :label="1">男</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="用户电话" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="'width: ' + editForm.formBqWidth"></el-input>
+                <el-form-item label="用户电话" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="用户邮箱" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="'width: ' + editForm.formBqWidth"></el-input>
+                <el-form-item label="用户邮箱" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="所属地区" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="'width: ' + editForm.formBqWidth"></el-input>
+                <el-form-item label="所属地区" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="所属机构" :label-width="editForm.formLabelWidth">
-                    <el-input v-model="editForm.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="'width: ' + editForm.formBqWidth"></el-input>
+                <el-form-item label="所属机构" :label-width="form.formLabelWidth">
+                    <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
             </el-form>
             <div class="hatech-bottom-line"></div>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="editFormSubmit">确 定</el-button>
-                <el-button size="mini" @click="editForm.dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" size="mini" @click="formSubmit">确 定</el-button>
+                <el-button size="mini" @click="form.dialogFormVisible = false">取 消</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-  import Axios from 'axios';
 
-  export default {
-      data() {
-          return {
-              // 表格信息设置
-              table:{
-                   title:'用户列表'              // 表格名称
-                  ,id:''                        // 表格ID，系统中表格唯一
-                  ,page:1                       // 分页，当前页
-                  ,size:10                      // 分页，每页默认显示10条数据
-                  ,pageSize: [10, 20, 30, 50]   // 分页，设置默认页数
-                  ,param:{                      // 查询条件
-                      loginName: ''
-                      ,name: ''
-                      ,sex: ''
-                      ,areaId: ''
-                      ,organizationId: ''
-                  }
-                  ,column:[]                // 表格列的显隐设置
-                  ,data: []                 // 表格数据渲染
-                  ,select: []               // 数据多选
-                  ,count: 0                 // 当前表格数据总数
-                  ,showHeaderOption: true   // 是否显示头部右侧操作按钮
-                  ,showTableOption: true    // 是否显示列表右侧操作按钮
-              }
-              // 表单信息设置
-              ,editForm: {
-                   title: '编辑用户信息'               // 表单标题
-                  ,formWidth: '40%'                   // 表单宽度
-                  ,dialogFormVisible: false           // 表单是否隐藏
-                  ,formLabelWidth: '100px'            // 表单元素标题宽度
-                  ,formBqWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
-                  ,data: {                            // 表格数据
-                      loginName: ''
-                      ,loginPassword: ''
-                      ,name: ''
-                      ,sex: 1
-                      ,phone: ''
-                      ,email: ''
-                      ,areaId: ''
-                      ,organizationId: ''
-                  }
-              }
-          }
-      }
-      ,mounted() {
+    import Axios from 'axios';
 
-          // 当前登录用户名称（唯一）+ - + 当前表格名称（唯一）可以自定义
-          this.table.id = 'admin' + '-' + 'user-table';
-          // 表格显隐列设置
-          this.table.column = [
-              {label:'登录名称',  prop: 'loginName',      isHide: true}
-              ,{label:'登录密码', prop: 'loginPassword',  isHide: true}
-              ,{label:'用户名称', prop: 'name',           isHide: true}
-              ,{label:'用户性别', prop: 'sex',            isHide: true, formatter: this.sexFormatter}
-              ,{label:'用户电话', prop: 'phone',          isHide: true}
-              ,{label:'用户邮箱', prop: 'email',          isHide: true}
-              ,{label:'所属地区', prop: 'areaId',         isHide: true}
-              ,{label:'所属机构', prop: 'organizationId', isHide: true}
-              ,{label:'创建时间', prop: 'createTime',     isHide: true}
-          ];
-          // 通过数据库查询用户保存的表格显隐列显示方式
-          this.initCellIsHide();
-          // 初始化加载后台表格数据
-          this.initTableData();
-      }
+    export default {
+        data() {
+            return {
+                // 表格信息设置
+                table:{
+                     title:'用户列表'              // 表格名称
+                    ,id:''                        // 表格ID，系统中表格唯一
+                    ,page:1                       // 分页，当前页
+                    ,size:10                      // 分页，每页默认显示10条数据
+                    ,pageSize: [10, 20, 30, 50]   // 分页，设置默认页数
+                    ,param:{                      // 查询条件
+                        loginName: ''
+                        ,name: ''
+                        ,sex: ''
+                        ,areaId: ''
+                        ,organizationId: ''
+                    }
+                    ,column:[]                // 表格列的显隐设置
+                    ,data: []                 // 表格数据渲染
+                    ,select: []               // 数据多选
+                    ,count: 0                 // 当前表格数据总数
+                    ,showHeaderOption: true   // 是否显示头部右侧操作按钮
+                    ,showTableOption: true    // 是否显示列表右侧操作按钮
+                }
+                // 表单信息设置
+                ,form: {
+                     title: '编辑用户信息'               // 表单标题
+                    ,formWidth: '40%'                   // 表单宽度
+                    ,dialogFormVisible: false           // 表单是否隐藏
+                    ,formLabelWidth: '100px'            // 表单元素标题宽度
+                    ,formBqWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
+                    ,data: {                            // 表格数据
+                        loginName: ''
+                        ,loginPassword: ''
+                        ,name: ''
+                        ,sex: 1
+                        ,phone: ''
+                        ,email: ''
+                        ,areaId: ''
+                        ,organizationId: ''
+                    }
+                }
+            }
+        }
+        ,mounted() {
 
-      ,methods: {
+            // 当前登录用户名称（唯一）+ - + 当前表格名称（唯一）可以自定义
+            this.table.id = 'admin' + '-' + 'user-table';
+            // 表格显隐列设置
+            this.table.column = [
+                {label:'登录名称',  prop: 'loginName',      isHide: true}
+                ,{label:'登录密码', prop: 'loginPassword',  isHide: true}
+                ,{label:'用户名称', prop: 'name',           isHide: true}
+                ,{label:'用户性别', prop: 'sex',            isHide: true, formatter: this.sexFormatter}
+                ,{label:'用户电话', prop: 'phone',          isHide: true}
+                ,{label:'用户邮箱', prop: 'email',          isHide: true}
+                ,{label:'所属地区', prop: 'areaId',         isHide: true}
+                ,{label:'所属机构', prop: 'organizationId', isHide: true}
+                ,{label:'创建时间', prop: 'createTime',     isHide: true}
+            ];
+            // 通过数据库查询用户保存的表格显隐列显示方式
+            this.initCellIsHide();
+            // 初始化加载后台表格数据
+            this.initTableData();
+        }
 
-          /**
-           * 初始化数据
-           * 初始化读取数据库隐藏列
-           * @Method initCellIsHide
-           */
-          initCellIsHide(){
-              let that = this;
-              Axios.get("http://127.0.0.1:3000/select/cell", {
-                params: {name:this.table.id}
-              }).then( response => {
-                  // 将后台读取字符串JSON数据，转换成JSON数据
-                  let cell = JSON.parse(response.data[0].content);
-                  if(cell.length > 0){
-                      let newColumn = [];
-                      // 比对两个集合修改列显示状态
-                      that.table.column.forEach(clm => {
-                          cell.forEach(cel => {
-                              if(clm.prop === cel.prop){
-                                  clm.isHide = cel.isHide;
-                                  newColumn.push(clm);
-                              }
-                          });
-                      });
-                      that.table.column=[];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
-                      that.$nextTick(()=>{    // 数据DOM元素重新渲染之前，加载数据
-                          that.table.column = newColumn;
-                      });
-                  }
-              }).catch( error => {console.log(error);});
-          }
+        ,methods: {
 
-          /**
-           * 初始化数据
-           * 初始化加载列表数据
-           * @Method onIsCellHide
-           */
-          ,onIsCellHide(column) {
-              let cellString = '';
-              this.table.column.forEach( cell => {
-                  if( cell.prop === column.prop){
-                      cell.isHide = !column.isHide;
-                  }
-                  cellString += ',' + '{"prop":\"' + cell.prop + '\", "isHide\": ' + cell.isHide + '}';
-              });
-              // 将操作的显隐列数据保存到后台
-              Axios.get("http://127.0.0.1:3000/update/status", {
-                  params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
-              }).then( response => {}).catch( error => {console.log(error);});
-          }
+            /**
+             * 初始化数据
+             * 初始化读取数据库隐藏列
+             * @Method initCellIsHide
+             */
+            initCellIsHide(){
+                let that = this;
+                Axios.get("http://127.0.0.1:3000/table/select", {
+                  params: {name:this.table.id}
+                }).then( response => {
+                    // 将后台读取字符串JSON数据，转换成JSON数据
+                    let cell = JSON.parse(response.data[0].content);
+                    if(cell.length > 0){
+                        let newColumn = [];
+                        // 比对两个集合修改列显示状态
+                        that.table.column.forEach(clm => {
+                            cell.forEach(cel => {
+                                if(clm.prop === cel.prop){
+                                    clm.isHide = cel.isHide;
+                                    newColumn.push(clm);
+                                }
+                            });
+                        });
+                        that.table.column=[];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
+                        that.$nextTick(()=>{    // 数据DOM元素重新渲染之前，加载数据
+                            that.table.column = newColumn;
+                        });
+                    }
+                }).catch( error => {console.log(error);});
+            }
 
-          /**
-           * 初始化数据
-           * 初始化加载列表数据
-           * @Method initTableData
-           */
-          ,initTableData(){
-              let that = this;
-              Axios.get("http://127.0.0.1:3000/user", {
-                  params: { page:this.table.page, size:this.table.size, param:this.table.param }
-              }).then( response => {
-                  that.$nextTick( ()=> {
-                      that.table.count = response.data.count;
-                      that.table.data = response.data.data;
-                  });
+            /**
+             * 表格头部操作
+             * 勾选表格列数据显示隐藏
+             * @Method onIsCellHide
+             */
+            ,onIsCellHide(column) {
+                let cellString = '';
+                this.table.column.forEach( cell => {
+                    if( cell.prop === column.prop){
+                        cell.isHide = !column.isHide;
+                    }
+                    cellString += ',' + '{"prop":\"' + cell.prop + '\", "isHide\": ' + cell.isHide + '}';
+                });
+                // 将操作的显隐列数据保存到后台
+                Axios.get("http://127.0.0.1:3000/table/status", {
+                    params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
+                }).then( response => {}).catch( error => {console.log(error);});
+            }
 
-              }).catch(function (error) {console.log(error);});
-          }
+            /**
+             * 初始化数据
+             * 初始化加载列表数据
+             * @Method initTableData
+             */
+            ,initTableData(){
+                let that = this;
+                Axios.get("http://127.0.0.1:3000/user", {
+                    params: { page:this.table.page, size:this.table.size, param:this.table.param }
+                }).then( response => {
+                    that.$nextTick( ()=> {
+                        that.table.count = response.data.count;
+                        that.table.data = response.data.data;
+                    });
+                }).catch( error => {console.log(error);});
+            }
 
-          /**
-           * 表格分页
-           * 点击每页条数下拉列表进行选择数据进行查询
-           * @Method tableSizeChange
-           */
-          ,tableSizeChange(size) {
-              this.table.size = size;
-              this.initTableData();
-          }
+            /**
+             * 表格分页
+             * 点击每页条数下拉列表进行选择数据进行查询
+             * @Method tableSizeChange
+             */
+            ,tableSizeChange(size) {
+                this.table.size = size;
+                this.initTableData();
+            }
 
-          /**
-           * 表格分页
-           * 首先数据选择渲染this.table.page数据
-           * 其次调用初始化table数据
-           * @Method 当前页选择操作
-           */
-          ,tableCurrentChange(page) {
-              this.table.page = page;
-              this.initTableData();
-          }
+            /**
+             * 表格分页
+             * 首先数据选择渲染this.table.page数据
+             * 其次调用初始化table数据
+             * @Method 当前页选择操作
+             */
+            ,tableCurrentChange(page) {
+                this.table.page = page;
+                this.initTableData();
+            }
 
-          /**
-           * 表格操作
-           * 表格数据多选操作
-           * @Method tableChangeRows
-           */
-          ,tableChangeRows(row){
-              this.table.select = row;
-          }
+            /**
+             * 表格操作
+             * 表格数据多选操作
+             * @Method tableChangeRows
+             */
+            ,tableChangeRows(row){
+                this.table.select = row;
+            }
 
-          /**
-           * 头部表单操作
-           * 触发表单查询按钮，通过表单数据查询表格
-           * @Method onTableSearch
-           */
-          ,onTableSearch(){
-              this.initTableData();
-          }
+            /**
+             * 头部表单操作
+             * 触发表单查询按钮，通过表单数据查询表格
+             * @Method onTableSearch
+             */
+            ,onTableSearch(){
+                this.initTableData();
+            }
 
-          /**
-           * 头部表单操作
-           * 触发表单清空按钮，还原表单数据
-           * @Method onTableReset
-           */
-          ,onTableReset(){
-              this.table.param = {loginName: '' ,name: '' ,sex: '' ,areaId: '' ,organizationId: ''};
-          }
+            /**
+             * 头部表单操作
+             * 触发表单清空按钮，还原表单数据
+             * @Method onTableReset
+             */
+            ,onTableReset(){
+                this.table.param = {loginName: '' ,name: '' ,sex: '' ,areaId: '' ,organizationId: ''};
+            }
 
-          /**
-           * 表格列数据格式化
-           * 性别格式化
-           * @Method sexFormatter
-           */
-          ,sexFormatter(row, column, cellValue, index){
-              return row.sex === 1 ? "男" : "女";
-          }
+            /**
+             * 表格列数据格式化
+             * 性别格式化
+             * @Method sexFormatter
+             */
+            ,sexFormatter(row){
+                return row.sex === 1 ? "男" : "女";
+            }
 
-          /**
-           * 表格头部操作
-           * 添加按钮操作，初始赋值，然后显示添加表单
-           * @Method onAddBar
-           */
-          ,onAddBar(){
-              this.editForm.data = {sex:1};
-              this.editForm.dialogFormVisible = true;
-          }
+            /**
+             * 表格头部操作
+             * 添加按钮操作，初始赋值，然后显示添加表单
+             * @Method onAddBar
+             */
+            ,onAddBar(){
+                this.form.data = {sex:1};
+                this.form.dialogFormVisible = true;
+            }
 
-          /**
-           * 表格头部操作
-           * 批量删除操作
-           * 判断表格是否有数据选中，如果没有选中，则显示友好提示信息，如果有选中项，则提示是否删除，否则取消删除
-           * @Method onDeleteBatchBar
-           */
-          ,onDeleteBatchBar() {
-              let that = this
-                ,selected = that.table.select
-                ,id = "";
-              if(selected.length  == 0){
-                this.$message({message: "请选择要删除的数据",center: true ,type: 'success'});
-                return false;
-              }
-              selected.forEach(item => {
-                  id += "," + item.id;
-              });
-              Axios.get("http://127.0.0.1:3000/user/delete", {
-                params: {id:id.substr(1)}
-              }).then(function (response) {
-                that.$message({message: response.data.msg ,center: true ,type: 'success'});
-                that.$nextTick(()=>{ that.initTableData(); });
-              }).catch(function (error) {
-                that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
-              });
+            /**
+             * 表格头部操作
+             * 批量删除操作
+             * 判断表格是否有数据选中，如果没有选中，则显示友好提示信息，如果有选中项，则提示是否删除，否则取消删除
+             * @Method onDeleteBatchBar
+             */
+            ,onDeleteBatchBar() {
+                let that = this
+                    ,selected = that.table.select
+                    ,id = "";
+                if(selected.length  == 0){
+                    that.$message({message: "请选择要删除的数据",center: true ,type: 'success'});
+                    return false;
+                }
 
-          }
+                that.$confirm('确定要删除吗?', '温馨提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                  center: true
+                }).then(() => {
+                    selected.forEach(item => {
+                        id += "," + item.id;
+                    });
+                    Axios.get("http://127.0.0.1:3000/user/delete", {
+                        params: {id:id.substr(1)}
+                    }).then(function (response) {
+                        that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                        that.$nextTick(()=>{ that.initTableData(); });
+                    }).catch(function (error) {console.log(error)});
+                }).catch(() => {});
+            }
 
-          /**
-           * 表格右侧列操作
-           * 编辑表格行数据信息
-           * 点击编辑按钮，进行选中数据双向绑定并显示编辑弹出层
-           * @Method editTableRowOption
-           */
-          ,editTableRowOption(index, row) {
-              this.editForm.data = row;
-              this.editForm.dialogFormVisible = true;
-          }
+            /**
+             * 表格右侧列操作
+             * 编辑表格行数据信息
+             * 点击编辑按钮，进行选中数据双向绑定并显示编辑弹出层
+             * @Method editTableRowOption
+             */
+            ,editTableRowOption(index, row) {
+                this.form.data = row;
+                this.form.dialogFormVisible = true;
+            }
 
-          /**
-           * 表格右侧列操作
-           * 删除表格行数据信息
-           * 点击删除按钮，根据选中数据ID进行删除
-           * @Method
-           */
-          ,deleteTableRowOption(index, row) {
-              let that = this;
-              Axios.get("http://127.0.0.1:3000/user/delete", {
-                params: {id:row.id}
-              }).then( response => {
-                  that.$message({message: response.data.msg ,center: true ,type: 'success'});
-                  that.$nextTick(()=>{ that.initTableData(); });
-              }).catch( error => {
-                  that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
-              });
-          }
+            /**
+             * 表格右侧列操作
+             * 删除表格行数据信息
+             * 点击删除按钮，根据选中数据ID进行删除
+             * @Method
+             */
+            ,deleteTableRowOption(index, row) {
+                let that = this;
+                that.$confirm('确定要删除吗?', '温馨提示', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  type: 'warning',
+                  center: true
+                }).then(() => {
+                    Axios.get("http://127.0.0.1:3000/user/delete", {
+                        params: {id:row.id}
+                    }).then( response => {
+                        that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                        that.$nextTick(()=>{ that.initTableData(); });
+                    }).catch( error => {console.log(error);});
+                }).catch(() => {});
+            }
 
-          /**
-           * 弹出层操作
-           * 提交弹出层数据信息
-           * @Method editFormSubmit
-           */
-          ,editFormSubmit(){
-              let that = this;
-              // 关闭弹出层
-              this.editForm.dialogFormVisible = false;
-              Axios.get("http://127.0.0.1:3000/user/edit", {
-                  params: this.editForm.data
-              }).then(function (response) {
-                  that.$message({message: response.data.msg ,center: true ,type: 'success'});
-                  that.$nextTick(()=>{ that.initTableData(); });
-              }).catch(function (error) {
-                  that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
-              });
-          }
-
-      }
-  }
+            /**
+             * 弹出层操作
+             * 提交弹出层数据信息
+             * @Method formSubmit
+             */
+            ,formSubmit(){
+                let that = this;
+                // 关闭弹出层
+                that.form.dialogFormVisible = false;
+                Axios.get("http://127.0.0.1:3000/user/edit", {
+                    params: this.form.data
+                }).then(function (response) {
+                    that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                    that.$nextTick(()=>{ that.initTableData(); });
+                }).catch(function (error) {
+                    that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                });
+            }
+        }
+    }
 </script>
 
 
