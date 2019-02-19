@@ -1,8 +1,8 @@
-let express=require('express');
-let app =express();
-let url = require("url");
-let bodyParser = require('body-parser'); 
-let mysql      = require('mysql');
+let express 	= require('express');
+let app 		= express();
+let url 		= require("url");
+let bodyParser 	= require('body-parser');
+let mysql      	= require('mysql');
 //引用bodyParser 这个不要忘了写
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -35,7 +35,7 @@ let dataBaseOption = function(sql, callback){
 
 // 用户操作 根据条件查询用户分页信息
 app.get('/user',function(req,res){
-	let search = url.parse(req.url,true).search, 
+	let search = url.parse(req.url,true).search,
 		param = url.parse(req.url,true).query
 		page = (param.page - 1) * param.size
 		size = param.size
@@ -75,7 +75,7 @@ app.get('/user',function(req,res){
 			sqlCount += " and organization_id='" + searchParam.organizationId + "'";
 			sql += " and organization_id='" + searchParam.organizationId + "'";
 		}
-	}	
+	}
 	sql += " order by create_time desc";
 	sql += " limit " + page + ", " + size;
 	console.log("------------------------------------------");
@@ -83,7 +83,7 @@ app.get('/user',function(req,res){
 	console.log("------------------------------------------");
 	console.log(sql);
 	console.log("------------------------------------------");
-	
+
 	// 查询总条数
 	dataBaseOption(sqlCount, function(total){
 		let count = total[0].count;
@@ -92,7 +92,7 @@ app.get('/user',function(req,res){
 			res.json({count:count,msg:'查询成功', data:result});
 		});
 	});
-	
+
 });
 
 
@@ -104,7 +104,7 @@ app.get('/user/edit',function(req,res){
 	if(param.id == undefined){
 		sql  = "insert into employee (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, create_time) ";
 		sql += "value ";
-		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '" 
+		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '"
 		+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "', now())";
 	}else{
 		sql  = "update employee set ";
@@ -134,7 +134,7 @@ app.get('/user/edit',function(req,res){
 app.get('/user/delete',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let id = "";
-	
+
 	let ids = param.id.split(",");
 	for(let i  = 0; i < ids.length; i++){
 		id += ",'" + ids[i] + "'";
@@ -192,8 +192,7 @@ let server = app.listen(3000, function () {
 
 	console.log('Example app listening at http://%s:%s', host, port);
 });
-	
-	
-	
-	
-	
+
+
+
+
