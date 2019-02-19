@@ -142,16 +142,16 @@
                         ,areaId: ''
                         ,organizationId: ''
                     }
-                    ,column:[]                // 表格列的显隐设置
-                    ,data: []                 // 表格数据渲染
-                    ,select: []               // 数据多选
-                    ,count: 0                 // 当前表格数据总数
-                    ,showHeaderOption: true   // 是否显示头部右侧操作按钮
-                    ,showTableOption: true    // 是否显示列表右侧操作按钮
+                    ,column:[]                    // 表格列的显隐设置
+                    ,data: []                     // 表格数据渲染
+                    ,select: []                   // 数据多选
+                    ,count: 0                     // 当前表格数据总数
+                    ,showHeaderOption: true       // 是否显示头部右侧操作按钮
+                    ,showTableOption: true        // 是否显示列表右侧操作按钮
                 }
                 // 表单信息设置
                 ,form: {
-                     title: '编辑用户信息'               // 表单标题
+                     title: ''                          // 表单标题
                     ,formWidth: '40%'                   // 表单宽度
                     ,dialogFormVisible: false           // 表单是否隐藏
                     ,formLabelWidth: '100px'            // 表单元素标题宽度
@@ -323,6 +323,7 @@
              * @Method onAddBar
              */
             ,onAddBar(){
+                this.form.title = '新增用户信息';
                 this.form.data = {sex:1};
                 this.form.dialogFormVisible = true;
             }
@@ -341,7 +342,6 @@
                     that.$message({message: "请选择要删除的数据",center: true ,type: 'success'});
                     return false;
                 }
-
                 that.$confirm('确定要删除吗?', '温馨提示', {
                   confirmButtonText: '确定',
                   cancelButtonText: '取消',
@@ -367,6 +367,7 @@
              * @Method editTableRowOption
              */
             ,editTableRowOption(index, row) {
+                this.form.title = '编辑用户信息';
                 this.form.data = row;
                 this.form.dialogFormVisible = true;
             }
