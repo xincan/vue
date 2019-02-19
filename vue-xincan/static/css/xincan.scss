@@ -1,0 +1,41 @@
+
+html,body {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+
+#app {
+    height: 100%;
+    overflow: hidden;
+}
+
+// 修改elementui checkbox 样式 start //
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #5BBBBB;
+  border-color: #5BBBBB;
+}
+
+.el-checkbox__input.is-checked+.el-checkbox__label {
+  color: #5BBBBB;
+}
+
+.el-popover .el-checkbox {
+  margin-right: 0px;
+  width: 50%;
+}
+// 修改elementui checkbox 样式 end //
+
+// 修改消息提示弹出框样式 start //
+.el-message {
+  min-width: 150px;
+  top: calc(100% / 2 - 15px * 2);
+}
+.el-message--success {
+  background-color: #060606bd;
+  border: none;
+}
+// 修改消息提示弹出框样式 end //
