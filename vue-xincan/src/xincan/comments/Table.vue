@@ -33,10 +33,7 @@
                         <li title="下载"><i class="el-icon-download"></i></li>
                         <li title="删除" @click="onDeleteBatchBar"><i class="el-icon-delete"></i></li>
                         <li title="显隐列">
-                            <el-popover
-                              placement="bottom"
-                              width="200"
-                              trigger="click">
+                            <el-popover placement="bottom" width="200" trigger="click">
                                 <el-checkbox v-for="(column,key) in table.column" :key="key" :checked="column.isHide" :name="column.prop" @change="onIsCellHide(column)">{{column.label}}</el-checkbox>
                                 <i class="el-icon-menu" slot="reference"></i>
                             </el-popover>
@@ -47,17 +44,26 @@
             <!-- 表格主体布局 -->
             <div class="hatech-table-body">
                 <el-table
-                  :data="table.data" stripe border size="small" resizable
-                  @selection-change="tableChangeRows"
+                    stripe
+                    border
+                    resizable
+                    size="small"
+                    :data="table.data"
+                    @selection-change="tableChangeRows"
                 >
                     <!-- 表格多选设置 -->
                     <el-table-column type="selection" header-align="center" align="center" width="40" fixed="left"></el-table-column>
                     <!-- 表格列循环设置 -->
                     <el-table-column
-                      v-for = "(column, key) in table.column"
-                      v-if="column.isHide"
-                      :prop = "column.prop" :label = "column.label" :key="key" :formatter = 'column.formatter'
-                      header-align = "center" align = "left" sortable show-overflow-tooltip
+                        header-align = "center"
+                        align = "left"
+                        sortable show-overflow-tooltip
+                        v-for = "(column, key) in table.column"
+                        v-if="column.isHide"
+                        :prop = "column.prop"
+                        :label = "column.label"
+                        :key="key"
+                        :formatter = 'column.formatter'
                     ></el-table-column>
                     <!-- 表格操作列设置 -->
                     <el-table-column prop="option" v-if="table.showTableOption" header-align="center" align="center" label="操作" fixed="right">
@@ -80,29 +86,33 @@
             </div>
         </div>
 
-        <!-- 编辑用户信息 -->
+        <!--
+            编辑用户信息
+            公用一个弹出层时需要加上v-if判断使之重新渲染组件 避免重置按钮出现数据混乱现象
+        -->
         <el-dialog
             custom-class="hatech-dialog"
+            v-if="form.dialogFormVisible"
             :title="form.title"
             :visible.sync="form.dialogFormVisible"
             :width="form.formWidth"
-            v-if="form.dialogFormVisible"
+            :before-close="formClose"
         >
             <div class="hatech-top-line"></div>
             <el-form
-                ref="form"
-                :model="form.data"
                 status-icon
+                :ref="form.name"
+                :model="form.data"
                 :rules="form.rules"
             >
                 <el-form-item label="登录名称" prop="loginName" :label-width="form.formLabelWidth" >
-                    <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码" prop="loginPassword" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户性别" prop="sex" :label-width="form.formLabelWidth">
                     <el-radio-group v-model="form.data.sex">
@@ -111,23 +121,23 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户邮箱" prop="email" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="所属地区" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="所属机构" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="'width: ' + form.formBqWidth"></el-input>
+                    <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
             </el-form>
             <div class="hatech-bottom-line"></div>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="formSubmit('form')">确 定</el-button>
-                <el-button size="mini" @click="formRecet('form')">重 置</el-button>
-                <el-button size="mini" @click="form.dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" size="mini" @click="formSubmit()">确 定</el-button>
+                <el-button size="mini" @click="formReset()">重 置</el-button>
+                <el-button size="mini" @click="formConsole()">取 消</el-button>
             </div>
         </el-dialog>
     </div>
@@ -142,33 +152,34 @@
             return {
                 // 表格信息设置
                 table:{
-                     title:'用户列表'              // 表格名称
-                    ,id:''                        // 表格ID，系统中表格唯一
-                    ,page:1                       // 分页，当前页
-                    ,size:10                      // 分页，每页默认显示10条数据
-                    ,pageSize: [10, 20, 30, 50]   // 分页，设置默认页数
-                    ,param:{                      // 查询条件
+                     title:'用户列表'                    // 表格名称
+                    ,id:''                              // 表格ID，系统中表格唯一
+                    ,page:1                             // 分页，当前页
+                    ,size:10                            // 分页，每页默认显示10条数据
+                    ,pageSize: [10, 20, 30, 50]         // 分页，设置默认页数
+                    ,param:{                            // 查询条件
                         loginName: ''
                         ,name: ''
                         ,sex: ''
                         ,areaId: ''
                         ,organizationId: ''
                     }
-                    ,column:[]                    // 表格列的显隐设置
-                    ,data: []                     // 表格数据渲染
-                    ,select: []                   // 数据多选
-                    ,count: 0                     // 当前表格数据总数
-                    ,showHeaderOption: true       // 是否显示头部右侧操作按钮
-                    ,showTableOption: true        // 是否显示列表右侧操作按钮
+                    ,column:[]                          // 表格列的显隐设置
+                    ,data: []                           // 表格数据渲染
+                    ,select: []                         // 数据多选
+                    ,count: 0                           // 当前表格数据总数
+                    ,showHeaderOption: true             // 是否显示头部右侧操作按钮
+                    ,showTableOption: true              // 是否显示列表右侧操作按钮
                 }
                 // 表单信息设置
                 ,form: {
-                     title: ''                          // 表单标题
+                    name:'form'                         // 表单名称
+                    ,title: ''                          // 表单标题
                     ,formWidth: '40%'                   // 表单宽度
                     ,dialogFormVisible: false           // 表单是否隐藏
                     ,formLabelWidth: '100px'            // 表单元素标题宽度
-                    ,formBqWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
-                    ,rules:{
+                    ,formInputWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
+                    ,rules:{                            // 表单各项元素校验
                         loginName: [
                             { required: true, message: '请输入登录名称', trigger: 'blur' },
                             { min: 3, max: 10, message: '长度在3到10个字符', trigger: 'blur' }
@@ -193,7 +204,7 @@
                             { min: 3, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
                         ]
                     }
-                    ,data: {                            // 表格数据
+                    ,data: {                            // 表单数据数据
                         loginName: ''
                         ,loginPassword: ''
                         ,name: ''
@@ -268,6 +279,7 @@
              */
             ,onIsCellHide(column) {
                 let cellString = '';
+                // 遍历表头，更改表头数据模型，并拼接表头数据
                 this.table.column.forEach( cell => {
                     if( cell.prop === column.prop){
                         cell.isHide = !column.isHide;
@@ -361,7 +373,6 @@
              */
             ,onAddBar(){
                 this.form.title = '新增用户信息';
-                this.form.index = 1;
                 this.form.data = {sex:1};
                 this.form.dialogFormVisible = true;
             }
@@ -406,7 +417,6 @@
              */
             ,editTableRowOption(index, row) {
                 this.form.title = '编辑用户信息';
-                this.form.index = 2;
                 this.form.data = row;
                 this.form.dialogFormVisible = true;
             }
@@ -420,10 +430,9 @@
             ,deleteTableRowOption(index, row) {
                 let that = this;
                 that.$confirm('确定要删除吗?', '温馨提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning',
-                  center: true
+                  confirmButtonText: '确定'
+                  ,cancelButtonText: '取消'
+                  ,type: 'warning'
                 }).then(() => {
                     Axios.get("http://127.0.0.1:3000/user/delete", {
                         params: {id:row.id}
@@ -436,40 +445,62 @@
 
             /**
              * 弹出层操作
-             * 提交弹出层数据信息
+             * 提交弹出层中form表单数据信息
              * @Method formSubmit
              */
-            ,formSubmit(form){
+            ,formSubmit(){
                 let that = this;
+                this.$refs[this.form.name].validate(valid => {
 
-                this.$refs[form].validate(valid => {
-                  if (valid) {
-                    alert('提交成功');
-                  } else {
-                    console.log('提交失败');
-                    return false;
-                  }
+                    // 如果所有验证不通过则直接拦截，不向下执行
+                    if (!valid) return false;
+
+                    that.$confirm('确定要修改吗?', '温馨提示', {
+                      confirmButtonText: '确定'
+                      ,cancelButtonText: '取消'
+                      ,type: 'warning'
+                    }).then(() => {
+                        // 关闭弹出层
+                        that.form.dialogFormVisible = false;
+                        Axios.get("http://127.0.0.1:3000/user/edit", {
+                          params: this.form.data
+                        }).then(function (response) {
+                          that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                          that.$nextTick(()=>{ that.initTableData(); });
+                        }).catch(function (error) {
+                          that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                        });
+
+                    }).catch(() => {});
                 });
-                return false;
-                // 关闭弹出层
-                that.form.dialogFormVisible = false;
-                Axios.get("http://127.0.0.1:3000/user/edit", {
-                    params: this.form.data
-                }).then(function (response) {
-                    that.$message({message: response.data.msg ,center: true ,type: 'success'});
-                    that.$nextTick(()=>{ that.initTableData(); });
-                }).catch(function (error) {
-                    that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
-                });
+
             }
 
             /**
              * 弹出层操作
-             * 表单重置数据信息
+             * 表单重置数据信息，重置表单弹出时原始数据
              * @Method formSubmit
              */
-            ,formRecet(form){
-              this.$refs[form].resetFields();
+            ,formReset(){
+              this.$refs[this.form.name].resetFields();
+            }
+            /**
+             * 弹出层操作
+             * 表单取消操作，重置表单数据，关闭弹出层
+             * @Method formSubmit
+             */
+            ,formConsole(){
+                this.$refs[this.form.name].resetFields();
+                this.form.dialogFormVisible = false;
+            }
+            /**
+             * 弹出层操作
+             * 表单取消操作, 回归重置表单、列表数据然后关闭
+             * @Method formSubmit
+             */
+            ,formClose(done){
+                this.$refs[this.form.name].resetFields();
+                done();
             }
         }
     }
