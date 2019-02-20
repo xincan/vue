@@ -26,14 +26,18 @@ $hatech-line-color: #F1EFEF;   // 表格边框颜色
               height: 15px;
               margin-bottom: 5px;
             }
-            & .el-input__inner{
-                height: 35px;
-                line-height: 35px;
-                padding: 0 5px;
-            }
             & .el-form-item {
-                margin-bottom: 5px;
+              margin-bottom: 15px;
             }
+            & .el-form-item__error {
+              padding-top: 2px;
+            }
+            & .el-input__inner{
+              height: 35px;
+              line-height: 35px;
+              padding: 0 5px;
+            }
+
         }
         & .el-dialog__footer {
           padding: 10px 20px 10px;

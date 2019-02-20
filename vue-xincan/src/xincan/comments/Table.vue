@@ -81,28 +81,39 @@
         </div>
 
         <!-- 编辑用户信息 -->
-        <el-dialog custom-class="hatech-dialog" :title="form.title" :visible.sync="form.dialogFormVisible" :width="form.formWidth">
+        <el-dialog
+            custom-class="hatech-dialog"
+            :title="form.title"
+            :visible.sync="form.dialogFormVisible"
+            :width="form.formWidth"
+            v-if="form.dialogFormVisible"
+        >
             <div class="hatech-top-line"></div>
-            <el-form :model="form">
-                <el-form-item label="登录名称" :label-width="form.formLabelWidth">
+            <el-form
+                ref="form"
+                :model="form.data"
+                status-icon
+                :rules="form.rules"
+            >
+                <el-form-item label="登录名称" prop="loginName" :label-width="form.formLabelWidth" >
                     <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="登录密码" :label-width="form.formLabelWidth">
+                <el-form-item label="登录密码" prop="loginPassword" :label-width="form.formLabelWidth">
                     <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="用户名称" :label-width="form.formLabelWidth">
+                <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
                     <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="用户性别" :label-width="form.formLabelWidth">
+                <el-form-item label="用户性别" prop="sex" :label-width="form.formLabelWidth">
                     <el-radio-group v-model="form.data.sex">
                         <el-radio :label="0">女</el-radio>
                         <el-radio :label="1">男</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="用户电话" :label-width="form.formLabelWidth">
+                <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
                     <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
-                <el-form-item label="用户邮箱" :label-width="form.formLabelWidth">
+                <el-form-item label="用户邮箱" prop="email" :label-width="form.formLabelWidth">
                     <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="'width: ' + form.formBqWidth"></el-input>
                 </el-form-item>
                 <el-form-item label="所属地区" :label-width="form.formLabelWidth">
@@ -114,7 +125,8 @@
             </el-form>
             <div class="hatech-bottom-line"></div>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="formSubmit">确 定</el-button>
+                <el-button type="primary" size="mini" @click="formSubmit('form')">确 定</el-button>
+                <el-button size="mini" @click="formRecet('form')">重 置</el-button>
                 <el-button size="mini" @click="form.dialogFormVisible = false">取 消</el-button>
             </div>
         </el-dialog>
@@ -156,6 +168,31 @@
                     ,dialogFormVisible: false           // 表单是否隐藏
                     ,formLabelWidth: '100px'            // 表单元素标题宽度
                     ,formBqWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
+                    ,rules:{
+                        loginName: [
+                            { required: true, message: '请输入登录名称', trigger: 'blur' },
+                            { min: 3, max: 10, message: '长度在3到10个字符', trigger: 'blur' }
+                        ]
+                        ,loginPassword: [
+                            { required: true, message: '请输入登录密码', trigger: 'blur' },
+                            { min: 6, max: 15, message: '长度在6到15个字符', trigger: 'blur' }
+                        ]
+                        ,name: [
+                           { required: true, message: '请输入用户名称', trigger: 'blur' },
+                           { min: 3, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
+                        ]
+                        ,sex: [
+                          { type:'number', message: '请选择性别'}
+                        ]
+                        ,phone: [
+                            { required: true, message: '请输入手机号码', trigger: 'blur' },
+                            { min: 11, max: 11, message: '长度为11字符', trigger: 'blur' }
+                        ]
+                        ,email: [
+                            { required: true, message: '请输入用户邮箱', trigger: 'blur' },
+                            { min: 3, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
+                        ]
+                    }
                     ,data: {                            // 表格数据
                         loginName: ''
                         ,loginPassword: ''
@@ -324,6 +361,7 @@
              */
             ,onAddBar(){
                 this.form.title = '新增用户信息';
+                this.form.index = 1;
                 this.form.data = {sex:1};
                 this.form.dialogFormVisible = true;
             }
@@ -368,6 +406,7 @@
              */
             ,editTableRowOption(index, row) {
                 this.form.title = '编辑用户信息';
+                this.form.index = 2;
                 this.form.data = row;
                 this.form.dialogFormVisible = true;
             }
@@ -400,8 +439,18 @@
              * 提交弹出层数据信息
              * @Method formSubmit
              */
-            ,formSubmit(){
+            ,formSubmit(form){
                 let that = this;
+
+                this.$refs[form].validate(valid => {
+                  if (valid) {
+                    alert('提交成功');
+                  } else {
+                    console.log('提交失败');
+                    return false;
+                  }
+                });
+                return false;
                 // 关闭弹出层
                 that.form.dialogFormVisible = false;
                 Axios.get("http://127.0.0.1:3000/user/edit", {
@@ -412,6 +461,15 @@
                 }).catch(function (error) {
                     that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
                 });
+            }
+
+            /**
+             * 弹出层操作
+             * 表单重置数据信息
+             * @Method formSubmit
+             */
+            ,formRecet(form){
+              this.$refs[form].resetFields();
             }
         }
     }
