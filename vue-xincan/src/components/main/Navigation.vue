@@ -172,7 +172,7 @@
                 & > span {
                     position: relative;
                     display: inline-block;
-                    line-height: 35px;
+                    line-height: 30px;
                     padding-left: 10px;
                     color: white;
                     &:nth-child(2) {
