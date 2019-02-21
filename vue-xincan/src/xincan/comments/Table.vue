@@ -86,7 +86,8 @@
                 >
                     <!-- 表格多选设置 -->
                     <el-table-column type="selection" align="center" width="40" fixed="left"></el-table-column>
-                    <el-table-column label="编号" type="index"  align="center" width="70" fixed="left" :index="tableIndex"></el-table-column>
+                    <!-- 表格编号设置 -->
+                    <el-table-column label="编号" v-if="table.isIndexShow" type="index"  align="center" width="70" fixed="left" :index="tableIndex"></el-table-column>
                     <!-- 表格列循环设置 -->
                     <el-table-column
                         header-align = "center"
@@ -266,7 +267,8 @@
                         ,areaId: ''
                         ,organizationId: ''
                     }
-                    ,column:[]                          // 表格列的显隐设置
+                    ,isIndexShow: true                  // 表格编号列显示隐藏设置
+                    ,column:[]                          // 表格头部信息、列的显隐设置
                     ,data: []                           // 表格数据渲染
                     ,select: []                         // 数据多选
                     ,count: 0                           // 当前表格数据总数
