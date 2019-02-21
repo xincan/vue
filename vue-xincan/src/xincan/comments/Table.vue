@@ -114,7 +114,7 @@
                 <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
                     <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
-                <el-form-item label="用户性别" prop="sex" :label-width="form.formLabelWidth">
+                <el-form-item label="用户性别" :label-width="form.formLabelWidth">
                     <el-radio-group v-model="form.data.sex">
                         <el-radio :label="0">女</el-radio>
                         <el-radio :label="1">男</el-radio>
@@ -148,7 +148,72 @@
     import Axios from 'axios';
 
     export default {
+
         data() {
+
+            /**
+             * 统一form表单验证入口
+             * @Method validateForm
+             */
+            let validateForm = {
+
+                /**
+                 * 密码验证
+                 * @Method v_loginPassword
+                 */
+                v_loginPassword: (rule, value, callback) => {
+                    if (value === '') {
+                        callback(new Error('请输入登录密码'));
+                    }else if (this.form.data.loginPassword !== '' && this.form.data.loginPassword.length != 6) {
+                        callback(new Error('登录密码为6位字符'));
+                    }else {
+                      callback();
+                    }
+                }
+
+                /**
+                 * 手机号码验证
+                 * @Method v_phone
+                 */
+                ,v_phone: (rule, value, callback) => {
+                    const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
+                    if (!value) {
+                        return callback(new Error('电话号码不能为空'))
+                    }
+                    setTimeout(() => {
+                        // Number.isInteger是es6验证数字是否为整数的方法,但是我实际用的时候输入的数字总是识别成字符串
+                        // 所以我就在前面加了一个+实现隐式转换
+                        if (!Number.isInteger(+value)) {
+                            callback(new Error('请输入数字'))
+                        } else {
+                          if (phoneReg.test(value)) {
+                              callback();
+                          } else {
+                              callback(new Error('电话号码格式不正确'))
+                          }
+                        }
+                    }, 100);
+                }
+
+                /**
+                 * 邮箱验证
+                 * @Method v_email
+                 */
+                ,v_email: (rule, value, callback) => {
+                    const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+                    if (!value) {
+                        return callback(new Error('邮箱不能为空'));
+                    }
+                    setTimeout(() => {
+                        if (mailReg.test(value)) {
+                            callback();
+                        } else {
+                            callback(new Error('请输入正确的邮箱格式'));
+                        }
+                    }, 100);
+                }
+            };
+
             return {
                 // 表格信息设置
                 table:{
@@ -182,26 +247,20 @@
                     ,rules:{                            // 表单各项元素校验
                         loginName: [
                             { required: true, message: '请输入登录名称', trigger: 'blur' },
-                            { min: 3, max: 10, message: '长度在3到10个字符', trigger: 'blur' }
+                            { min: 5, max: 10, message: '长度在5到10个字符', trigger: 'blur' }
                         ]
                         ,loginPassword: [
-                            { required: true, message: '请输入登录密码', trigger: 'blur' },
-                            { min: 6, max: 15, message: '长度在6到15个字符', trigger: 'blur' }
+                            { validator: validateForm.v_loginPassword, trigger: 'blur' }
                         ]
                         ,name: [
                            { required: true, message: '请输入用户名称', trigger: 'blur' },
-                           { min: 3, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
-                        ]
-                        ,sex: [
-                          { type:'number', message: '请选择性别'}
+                           { min: 2, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
                         ]
                         ,phone: [
-                            { required: true, message: '请输入手机号码', trigger: 'blur' },
-                            { min: 11, max: 11, message: '长度为11字符', trigger: 'blur' }
+                            { validator: validateForm.v_phone, trigger: 'blur' }
                         ]
                         ,email: [
-                            { required: true, message: '请输入用户邮箱', trigger: 'blur' },
-                            { min: 3, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
+                            { validator: validateForm.v_email, trigger: 'blur' }
                         ]
                     }
                     ,data: {                            // 表单数据数据
