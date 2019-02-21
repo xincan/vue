@@ -136,7 +136,7 @@
             <div class="hatech-bottom-line"></div>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" size="mini" @click="formSubmit()">确 定</el-button>
-                <el-button size="mini" @click="formReset()">重 置</el-button>
+                <el-button type="warning" size="mini" @click="formReset()">重 置</el-button>
                 <el-button size="mini" @click="formConsole()">取 消</el-button>
             </div>
         </el-dialog>
