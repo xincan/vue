@@ -50,6 +50,7 @@
                     size="small"
                     :data="table.data"
                     @selection-change="tableChangeRows"
+                    @header-dragend="tableCellDragend"
                 >
                     <!-- 表格多选设置 -->
                     <el-table-column type="selection" header-align="center" align="center" width="40" fixed="left"></el-table-column>
@@ -58,11 +59,12 @@
                         header-align = "center"
                         align = "left"
                         sortable show-overflow-tooltip
-                        v-for = "(column, key) in table.column"
                         v-if="column.isHide"
+                        v-for = "(column, key) in table.column"
+                        :key="key"
                         :prop = "column.prop"
                         :label = "column.label"
-                        :key="key"
+                        :width = "column.width"
                         :formatter = 'column.formatter'
                     ></el-table-column>
                     <!-- 表格操作列设置 -->
@@ -284,15 +286,15 @@
             this.table.id = 'admin' + '-' + 'user-table';
             // 表格显隐列设置
             this.table.column = [
-                {label:'登录名称',  prop: 'loginName',      isHide: true}
-                ,{label:'登录密码', prop: 'loginPassword',  isHide: true}
-                ,{label:'用户名称', prop: 'name',           isHide: true}
-                ,{label:'用户性别', prop: 'sex',            isHide: true, formatter: this.sexFormatter}
-                ,{label:'用户电话', prop: 'phone',          isHide: true}
-                ,{label:'用户邮箱', prop: 'email',          isHide: true}
-                ,{label:'所属地区', prop: 'areaId',         isHide: true}
-                ,{label:'所属机构', prop: 'organizationId', isHide: true}
-                ,{label:'创建时间', prop: 'createTime',     isHide: true}
+                {label:'登录名称',  prop: 'loginName',      width:'auto', isHide: true}
+                ,{label:'登录密码', prop: 'loginPassword',  width:'auto', isHide: true}
+                ,{label:'用户名称', prop: 'name',           width:'auto', isHide: true}
+                ,{label:'用户性别', prop: 'sex',            width:'auto', isHide: true, formatter: this.sexFormatter}
+                ,{label:'用户电话', prop: 'phone',          width:'auto', isHide: true}
+                ,{label:'用户邮箱', prop: 'email',          width:'auto', isHide: true}
+                ,{label:'所属地区', prop: 'areaId',         width:'auto', isHide: true}
+                ,{label:'所属机构', prop: 'organizationId', width:'auto', isHide: true}
+                ,{label:'创建时间', prop: 'createTime',     width:'auto', isHide: true}
             ];
             // 通过数据库查询用户保存的表格显隐列显示方式
             this.initCellIsHide();
@@ -304,7 +306,7 @@
 
             /**
              * 初始化数据
-             * 初始化读取数据库隐藏列
+             * 初始化读取数据库隐藏列,每列的宽度
              * @Method initCellIsHide
              */
             initCellIsHide(){
@@ -321,6 +323,7 @@
                             cell.forEach(cel => {
                                 if(clm.prop === cel.prop){
                                     clm.isHide = cel.isHide;
+                                    clm.width = cel.width;
                                     newColumn.push(clm);
                                 }
                             });
@@ -333,24 +336,50 @@
                 }).catch( error => {console.log(error);});
             }
 
-            /**
-             * 表格头部操作
-             * 勾选表格列数据显示隐藏
-             * @Method onIsCellHide
-             */
-            ,onIsCellHide(column) {
+
+              /**
+               * 表格处理操作
+               * 勾选表格列数据显示隐藏
+               * type说明：
+               * 【1: table列的显示隐藏，2：table列的拖拽】
+               * @Method excuteTable
+               */
+            ,excuteTable(column, type){
                 let cellString = '';
                 // 遍历表头，更改表头数据模型，并拼接表头数据
                 this.table.column.forEach( cell => {
                     if( cell.prop === column.prop){
-                        cell.isHide = !column.isHide;
+                        if(type === 1){ // 隐藏处理
+                            cell.isHide = !column.isHide;
+                        }else{          // 拖拽宽度处理
+                            cell.width = column.width;
+                        }
                     }
-                    cellString += ',' + '{"prop":\"' + cell.prop + '\", "isHide\": ' + cell.isHide + '}';
+                    cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
                 Axios.get("http://127.0.0.1:3000/table/status", {
-                    params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
+                  params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
                 }).then( response => {}).catch( error => {console.log(error);});
+
+            }
+            /**
+             * 表格头部按钮操作
+             * 勾选表格列数据显示隐藏
+             * @Method onIsCellHide
+             */
+            ,onIsCellHide(column) {
+                this.excuteTable(column,1);
+            }
+
+            /**
+             * 表格头部列拖拽操作
+             * 选中列边框进行左右拖拽，改变列的宽度，并更改模型数据，将其保存到数据库中
+             * @Method onIsCellHide
+             */
+            ,tableCellDragend(newWidth, oldWidth, column, event){
+                let  cell = {prop: column.property, width: column.width};
+                this.excuteTable(cell,2);
             }
 
             /**
