@@ -28,6 +28,38 @@
                 <div class="hatech-table-header-left"><ul><li>{{table.title}}</li></ul></div>
                 <div class="hatech-table-header-right" v-if="table.showHeaderOption">
                     <ul>
+                        <li title="检索">
+                            <el-popover placement="bottom"  trigger="click">
+
+                              <el-form :model="table.param" class="demo-form-inline">
+                                <el-form-item>
+                                  <el-input v-model="table.param.loginName" placeholder="请输入登录名称"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                  <el-input v-model="table.param.name" placeholder="请输入用户名称"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-select v-model="table.param.sex" placeholder="请选择性别">
+                                      <el-option label="请选择性别" value=""></el-option>
+                                      <el-option label="男" value="1"></el-option>
+                                      <el-option label="女" value="0"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-input v-model="table.param.areaId" placeholder="请出入用户所在地区"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-input v-model="table.param.organizationId" placeholder="请输入用户所属机构"></el-input>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
+                                    <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
+                                </el-form-item>
+                              </el-form>
+
+                                <i class="el-icon-search" slot="reference"></i>
+                            </el-popover>
+                        </li>
                         <li title="添加" @click="onAddBar"><i class="el-icon-edit"></i></li>
                         <li title="上传"><i class="el-icon-upload2"></i></li>
                         <li title="下载"><i class="el-icon-download"></i></li>
@@ -311,7 +343,7 @@
              */
             initCellIsHide(){
                 let that = this;
-                Axios.get("http://127.0.0.1:3000/table/select", {
+                Axios.get("http://192.168.199.220:3000/table/select", {
                   params: {name:this.table.id}
                 }).then( response => {
                     // 将后台读取字符串JSON数据，转换成JSON数据
@@ -358,7 +390,7 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                Axios.get("http://127.0.0.1:3000/table/status", {
+                Axios.get("http://192.168.199.220:3000/table/status", {
                   params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
                 }).then( response => {}).catch( error => {console.log(error);});
 
@@ -389,7 +421,7 @@
              */
             ,initTableData(){
                 let that = this;
-                Axios.get("http://127.0.0.1:3000/user", {
+                Axios.get("http://192.168.199.220:3000/user", {
                     params: { page:this.table.page, size:this.table.size, param:this.table.param }
                 }).then( response => {
                     that.$nextTick( ()=> {
@@ -490,7 +522,7 @@
                     selected.forEach(item => {
                         id += "," + item.id;
                     });
-                    Axios.get("http://127.0.0.1:3000/user/delete", {
+                    Axios.get("http://192.168.199.220:3000/user/delete", {
                         params: {id:id.substr(1)}
                     }).then(function (response) {
                         that.$message({message: response.data.msg ,center: true ,type: 'success'});
@@ -524,7 +556,7 @@
                   ,cancelButtonText: '取消'
                   ,type: 'warning'
                 }).then(() => {
-                    Axios.get("http://127.0.0.1:3000/user/delete", {
+                    Axios.get("http://192.168.199.220:3000/user/delete", {
                         params: {id:row.id}
                     }).then( response => {
                         that.$message({message: response.data.msg ,center: true ,type: 'success'});
@@ -552,7 +584,7 @@
                     }).then(() => {
                         // 关闭弹出层
                         that.form.dialogFormVisible = false;
-                        Axios.get("http://127.0.0.1:3000/user/edit", {
+                        Axios.get("http://192.168.199.220:3000/user/edit", {
                           params: this.form.data
                         }).then(function (response) {
                           that.$message({message: response.data.msg ,center: true ,type: 'success'});
