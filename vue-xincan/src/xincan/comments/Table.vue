@@ -162,12 +162,14 @@
                  * @Method v_loginPassword
                  */
                 v_loginPassword: (rule, value, callback) => {
-                    if (value === '') {
-                        callback(new Error('请输入登录密码'));
-                    }else if (this.form.data.loginPassword !== '' && this.form.data.loginPassword.length != 6) {
-                        callback(new Error('登录密码为6位字符'));
-                    }else {
-                      callback();
+                    if (value === undefined || value === '') {
+                        return callback(new Error('请输入登录密码'));
+                    }else{
+                        if (this.form.data.loginPassword.length != 6) {
+                          callback(new Error('登录密码为6位字符'));
+                        }else {
+                          callback();
+                        }
                     }
                 }
 
