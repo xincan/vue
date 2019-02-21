@@ -168,18 +168,18 @@
                 cursor: pointer;
                 margin-top: 1px;
                 &.active {
-                    background: #081919;
+                    background: #113131;
                     &:hover {
-                      background: #081919;
+                      background: #113131;
                     }
                 }
                 &:hover {
-                  background: #081919;
+                  background: #113131;
                 }
                 & > span {
                     position: relative;
                     display: inline-block;
-                    line-height: 35px;
+                    line-height: 30px;
                     padding-left: 10px;
                     color: white;
                     &:nth-child(2) {
@@ -190,7 +190,7 @@
                     & .caret {
                       position: absolute;
                       right: -10px;
-                      top: 10px;
+                      top: 7px;
                       color: #EAEAEA;
                     }
 
@@ -199,10 +199,10 @@
                     padding-left: 20px;
                     cursor: pointer;
                     &:hover {
-                        background: #1c6763;
+                        background: #2e9e98;
                     }
                     &.active {
-                        background: #1c6763;
+                        background: #2e9e98;
                     }
                 }
             }

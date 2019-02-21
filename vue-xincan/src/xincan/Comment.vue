@@ -1,7 +1,7 @@
 <template>
     <div class="comment">
         <div class="comment-left">
-            <NavigationXincan />
+            <NavigationPlugin />
         </div>
 
         <div class="comment-right">
@@ -11,10 +11,10 @@
 </template>
 
 <script>
-    import NavigationXincan from "@/components/main/Navigation-Xincan";
+    import NavigationPlugin from "@/components/main/Navigation-Plugin";
     export default {
         name: "Comment"
-        , components: {NavigationXincan}
+        , components: {NavigationPlugin}
         ,menus: [
 
         ]
