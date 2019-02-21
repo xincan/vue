@@ -23,17 +23,25 @@
 
 <style scoped lang="scss">
     .comment {
-        min-height: calc(100% - 40px);
+        height: 100%;
         display: flex;
         display: -webkit-flex;
         flex-direction: row;
+        overflow: auto;
+        overflow-x: hidden;
         & .comment-left {
+            position: fixed;
+            z-index: 9999999;
+            top: 40px;
             width: 165px;
+            height: calc(100% - 40px);
             background: black;
         }
         & .comment-right {
-          width: calc(100% - 165px);
-          background: #f7f5f5;
+            margin-left: 165px;
+            margin-top: 40px;
+            width: calc(100% - 165px);
+            background: #f7f5f5;
         }
     }
 </style>

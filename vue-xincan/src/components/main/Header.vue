@@ -82,9 +82,11 @@
     #header{
 
         & .active {
-          background: #1dc7bf;
+            background: #1dc7bf;
         }
 
+        position: fixed;
+        z-index: 9999999;
         font-size: 14px;
         color: white;
         width:100%;
@@ -93,6 +95,7 @@
         display: inline-flex;
         background: black;
         flex-direction: row;
+
         & .header-right ul,
         & .header-center ul{
             padding: 0;
@@ -104,7 +107,6 @@
                 cursor: pointer;
             }
         }
-
         // 头部左侧样式
         & .header-left {
             width: 20%;
@@ -118,7 +120,6 @@
               font-weight: bold;
             }
         }
-
         // 头部中间样式
         & .header-center {
             width: 55%;
@@ -136,7 +137,6 @@
                 }
             }
         }
-
         // 头部右侧样式
         & .header-right {
             width: 25%;
@@ -151,7 +151,6 @@
                   }
                 }
             }
-
             // 修改elementui select 样式
             & /deep/ {
                 .el-select {

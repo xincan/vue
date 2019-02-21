@@ -5,7 +5,7 @@
 
 -->
 <template>
-    <div class="xincan-dashboard">
+    <div class="xincan">
       新灿主页
     </div>
 </template>
