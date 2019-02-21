@@ -85,7 +85,8 @@
                     @header-dragend="tableCellDragend"
                 >
                     <!-- 表格多选设置 -->
-                    <el-table-column type="selection" header-align="center" align="center" width="40" fixed="left"></el-table-column>
+                    <el-table-column type="selection" align="center" width="40" fixed="left"></el-table-column>
+                    <el-table-column label="编号" type="index"  align="center" width="70" fixed="left" :index="tableIndex"></el-table-column>
                     <!-- 表格列循环设置 -->
                     <el-table-column
                         header-align = "center"
@@ -369,13 +370,13 @@
             }
 
 
-              /**
-               * 表格处理操作
-               * 勾选表格列数据显示隐藏
-               * type说明：
-               * 【1: table列的显示隐藏，2：table列的拖拽】
-               * @Method excuteTable
-               */
+            /**
+             * 表格处理操作
+             * 勾选表格列数据显示隐藏
+             * type说明：
+             * 【1: table列的显示隐藏，2：table列的拖拽】
+             * @Method excuteTable
+             */
             ,excuteTable(column, type){
                 let cellString = '';
                 // 遍历表头，更改表头数据模型，并拼接表头数据
@@ -395,6 +396,7 @@
                 }).then( response => {}).catch( error => {console.log(error);});
 
             }
+
             /**
              * 表格头部按钮操作
              * 勾选表格列数据显示隐藏
@@ -414,6 +416,14 @@
                 this.excuteTable(cell,2);
             }
 
+            /**
+             * 表格列下标操作
+             * 重新计算数据下标
+             * @Method onIsCellHide
+             */
+            ,tableIndex(index){
+                return ((this.table.page - 1) * this.table.size) + index + 1;
+            }
             /**
              * 初始化数据
              * 初始化加载列表数据
