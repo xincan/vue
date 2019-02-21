@@ -63,9 +63,7 @@
                         </li>
                     </ul>
                 </div>
-
             </li>
-
         </ul>
     </div>
 </template>
@@ -133,8 +131,6 @@
 
 <style scoped lang="scss">
 
-
-
     #navigation{
 
         & .is-hide {
@@ -151,6 +147,10 @@
             transition: max-height 1s;
         }
 
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
         font-size: 12px;
 
         & li {
@@ -163,6 +163,11 @@
         & ul {
             padding: 0;
             margin: 0;
+            width: 180px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 100%;
+
             & li {
                 clear: both;
                 cursor: pointer;

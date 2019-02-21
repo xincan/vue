@@ -5,7 +5,7 @@
 -->
 
 <template>
-    <div id="navigation-xincan">
+    <div id="navigation-plugin">
         <ul>
 
             <li
@@ -87,22 +87,26 @@
 
 <style scoped lang="scss">
 
-    #navigation-xincan{
+    #navigation-plugin{
 
-      & .is-hide {
+        & .is-hide {
+            overflow: hidden;
+            max-height: 0;
+            -webkit-transition: max-height .3s;
+            transition: max-height .3s;
+        }
+
+        & .is-show {
+            max-height: 400px;
+            overflow: hidden;
+            -webkit-transition: max-height 1s;
+            transition: max-height 1s;
+        }
+
+        padding: 0;
+        margin: 0;
         overflow: hidden;
-        max-height: 0;
-        -webkit-transition: max-height .3s;
-        transition: max-height .3s;
-      }
-
-      & .is-show {
-        max-height: 400px;
-        overflow: hidden;
-        -webkit-transition: max-height 1s;
-        transition: max-height 1s;
-      }
-
+        height: 100%;
         font-size: 12px;
 
         & li {
@@ -115,6 +119,11 @@
         & ul {
             padding: 0;
             margin: 0;
+            width: 180px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 100%;
+
             & li {
                 clear: both;
                 cursor: pointer;
@@ -122,11 +131,11 @@
                 &.active {
                     background: #113131;
                     &:hover {
-                      background: #113131;
+                        background: #113131;
                     }
                 }
                 &:hover {
-                  background: #113131;
+                    background: #113131;
                 }
                 & > span {
                     position: relative;
@@ -140,10 +149,10 @@
                     }
 
                     & .caret {
-                      position: absolute;
-                      right: -10px;
-                      top: 7px;
-                      color: #EAEAEA;
+                        position: absolute;
+                        right: -10px;
+                        top: 7px;
+                        color: #EAEAEA;
                     }
 
                 }
