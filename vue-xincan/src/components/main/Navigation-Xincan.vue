@@ -92,15 +92,15 @@
       & .is-hide {
         overflow: hidden;
         max-height: 0;
-        -webkit-transition: max-height .5s;
-        transition: max-height .5s;
+        -webkit-transition: max-height .3s;
+        transition: max-height .3s;
       }
 
       & .is-show {
         max-height: 400px;
         overflow: hidden;
-        -webkit-transition: max-height 1.1s;
-        transition: max-height 1.1s;
+        -webkit-transition: max-height 1s;
+        transition: max-height 1s;
       }
 
         font-size: 12px;
