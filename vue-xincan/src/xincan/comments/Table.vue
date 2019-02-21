@@ -346,7 +346,7 @@
              */
             initCellIsHide(){
                 let that = this;
-                Axios.get("http://192.168.199.220:3000/table/select", {
+                Axios.get("http://localhost:3000/table/select", {
                   params: {name:this.table.id}
                 }).then( response => {
                     // 将后台读取字符串JSON数据，转换成JSON数据
@@ -393,7 +393,7 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                Axios.get("http://192.168.199.220:3000/table/status", {
+                Axios.get("http://localhost:3000/table/status", {
                   params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
                 }).then( response => {}).catch( error => {console.log(error);});
 
@@ -433,7 +433,7 @@
              */
             ,initTableData(){
                 let that = this;
-                Axios.get("http://192.168.199.220:3000/user", {
+                Axios.get("http://localhost:3000/user", {
                     params: { page:this.table.page, size:this.table.size, param:this.table.param }
                 }).then( response => {
                     that.$nextTick( ()=> {
@@ -534,7 +534,7 @@
                     selected.forEach(item => {
                         id += "," + item.id;
                     });
-                    Axios.get("http://192.168.199.220:3000/user/delete", {
+                    Axios.get("http://localhost:3000/user/delete", {
                         params: {id:id.substr(1)}
                     }).then(function (response) {
                         that.$message({message: response.data.msg ,center: true ,type: 'success'});
@@ -568,7 +568,7 @@
                   ,cancelButtonText: '取消'
                   ,type: 'warning'
                 }).then(() => {
-                    Axios.get("http://192.168.199.220:3000/user/delete", {
+                    Axios.get("http://localhost:3000/user/delete", {
                         params: {id:row.id}
                     }).then( response => {
                         that.$message({message: response.data.msg ,center: true ,type: 'success'});
@@ -596,7 +596,7 @@
                     }).then(() => {
                         // 关闭弹出层
                         that.form.dialogFormVisible = false;
-                        Axios.get("http://192.168.199.220:3000/user/edit", {
+                        Axios.get("http://localhost:3000/user/edit", {
                           params: this.form.data
                         }).then(function (response) {
                           that.$message({message: response.data.msg ,center: true ,type: 'success'});
