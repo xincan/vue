@@ -89,13 +89,19 @@
 
     #navigation-xincan{
 
-        & .is-hide {
-            display: none;
-        }
+      & .is-hide {
+        overflow: hidden;
+        max-height: 0;
+        -webkit-transition: max-height .5s;
+        transition: max-height .5s;
+      }
 
-        & .is-show {
-          display: block;
-        }
+      & .is-show {
+        max-height: 400px;
+        overflow: hidden;
+        -webkit-transition: max-height 1.1s;
+        transition: max-height 1.1s;
+      }
 
         font-size: 12px;
 

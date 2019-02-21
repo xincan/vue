@@ -63,6 +63,7 @@
                         </li>
                     </ul>
                 </div>
+
             </li>
 
         </ul>
@@ -137,11 +138,17 @@
     #navigation{
 
         & .is-hide {
-            display: none;
+            overflow: hidden;
+            max-height: 0;
+            -webkit-transition: max-height .5s;
+            transition: max-height .5s;
         }
 
         & .is-show {
-          display: block;
+            max-height: 400px;
+            overflow: hidden;
+            -webkit-transition: max-height 1.1s;
+            transition: max-height 1.1s;
         }
 
         font-size: 12px;
@@ -172,7 +179,7 @@
                 & > span {
                     position: relative;
                     display: inline-block;
-                    line-height: 30px;
+                    line-height: 35px;
                     padding-left: 10px;
                     color: white;
                     &:nth-child(2) {
