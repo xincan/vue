@@ -3,8 +3,8 @@
         <div class="header-left"><span>{{title}}</span></div>
         <div class="header-center">
             <ul>
-                <li v-for="(menu, key) in menus" :class="active === key ? 'active' : ''" @click="menuBarBtn(key)">
-                  <router-link :to="menu.path">{{menu.name}}</router-link>
+                <li v-for="(menu, key) in menus" :class="active === key ? 'active' : ''" @click="menuBarBtn(key, menu)">
+                  {{menu.name}}
                 </li>
             </ul>
         </div>
@@ -45,8 +45,8 @@
                 ,{value: 3, label: '灾备中心', path: '/dashboard'}
                 ,{value: 4, label: '切换中心', path: '/dashboard'}
             ]
-            ,value:1
-            ,active:0
+            ,value:1  // 又测下拉列表中，默认选中第一个数据
+            ,active:0 // 添加路由菜单选中，取消选中样式
           }
       }
       ,methods: {
@@ -56,11 +56,11 @@
                   this.menus = [
                      { id: 1 ,name: '首页' , path: '/dashboard'}
                     ,{ id: 2 ,name: '中控中心', path: '/controller'}
-                    ,{ id: 2 ,name: '组件中心' , path: '/comment'}
+                    ,{ id: 3 ,name: '组件中心' , path: '/comment'}
                   ]
               }else if(checked === 2){
                   this.menus = [
-                    { id: 1 ,name: '首页' , path: '/dashboard'}
+                     { id: 1 ,name: '首页' , path: '/dashboard'}
                     ,{ id: 2 ,name: '预警中心' , path: '/dashboard'}
                     ,{ id: 3 ,name: '场景切换' , path: '/dashboard'}
                     ,{ id: 4 ,name: '系统管理' , path: '/dashboard'}
@@ -70,8 +70,9 @@
                   ]
               }
           }
-          ,menuBarBtn(key) {
+          ,menuBarBtn(key, menu) {
               this.active = key;
+              this.$router.push({path: menu.path});
           }
       }
   }
