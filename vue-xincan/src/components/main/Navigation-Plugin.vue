@@ -7,7 +7,6 @@
 <template>
     <div id="navigation-plugin">
         <ul>
-
             <li
               v-for="(nav,key) in navigation"
               :class=" key === pKey ? 'active' : ''"

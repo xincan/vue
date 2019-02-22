@@ -6,7 +6,7 @@
 -->
 <template>
     <div class="xincan">
-      新灿主页
+      系统主页
     </div>
 </template>
 

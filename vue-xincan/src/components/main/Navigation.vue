@@ -7,37 +7,6 @@
 <template>
     <div id="navigation">
         <ul>
-            <!--
-            <li class="active" @click="isHidden(1)">
-                <span><i class="fa fa-home" />&nbsp;&nbsp;系统管理</span>
-                <span><i class="fa fa-angle-up"></i></span>
-                <div class="child is-hide">
-                    <ul>
-                        <li class="active"  @click.stop="isHidden(2)">
-                            <span><i class="fa fa-home" />&nbsp;&nbsp;基础管理</span><span></span>
-                        </li>
-                        <li  @click.stop="isHidden(2)">
-                            <span><i class="fa fa-home" />&nbsp;&nbsp;用户管理</span><span></span>
-                        </li>
-                        <li  @click.stop="isHidden(2)">
-                            <span><i class="fa fa-home" />&nbsp;&nbsp;角色管理</span><span></span>
-                        </li>
-                        <li  @click.stop="isHidden(2)">
-                            <span><i class="fa fa-home" />&nbsp;&nbsp;权限管理</span><span></span>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li  @click="isHidden(1)">
-                <span class="nav-title"><i class="fa fa-home" />&nbsp;&nbsp;辅助决策</span>
-                <span class="nav-option"><i class="fa fa-angle-down"></i></span>
-            </li>
-            <li  @click="isHidden(1)">
-                <span class="nav-title"><i class="fa fa-home" />&nbsp;&nbsp;预警编辑</span>
-                <span class="nav-option"><i class="fa fa-angle-down"></i></span>
-            </li>
-            -->
-
             <li
               v-for="(nav,key) in navigation"
               :class=" key === pKey ? 'active' : ''"
@@ -115,13 +84,20 @@
 
       ,methods: {
 
-          // 左侧一级菜单点击事件
+          /**
+           * 左侧一级菜单点击事件
+           * @Method controlBtn
+           */
           clickParentBtn(menu, key){
               this.pKey = key;    // 点击一级菜单：改变当前点击菜单的下标
               this.cKey = 0;      // 默认展示第一个二级菜单
           }
 
-          // 左侧二级菜单点击事件
+          //
+          /**
+           * 左侧二级菜单点击事件
+           * @Method controlBtn
+           */
           ,clickChildBtn(menu, index){
               this.cKey = index;  // 点击二级菜单：改变当前点击二级菜单的下标
           }
