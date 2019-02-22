@@ -3,22 +3,15 @@
         <div class="header-left"><span>{{title}}</span></div>
         <div class="header-center">
             <ul>
-                <li v-for="(menu, key) in menus" :class="active === key ? 'active' : ''" @click="menuBarBtn(key, menu)">
-                  {{menu.name}}
-                </li>
+                <li v-for="(menu, key) in menus" :class="active === key ? 'active' : ''" @click="haderMenuClick(key, menu)" v-text="menu.name" ></li>
             </ul>
         </div>
         <div class="header-right">
             <ul>
                 <li>
-                  <el-select v-model="value" placeholder="请选择" @change="controlBtn">
-                    <el-option
-                        v-for="option in control"
-                        :key="option.value"
-                        :label="option.label"
-                        :value="option.value" >
-                    </el-option>
-                  </el-select>
+                    <el-select v-model="defaultSelectSystem" placeholder="请选择" @change="controllChange">
+                        <el-option v-for="option in control" :key="option.id" :label="option.label" :value="option.id" ></el-option>
+                    </el-select>
                 </li>
                 <li>百里长风</li>
                 <li>退出</li>
@@ -35,42 +28,59 @@
           return {
             title: "IStorM DRaaS"
             ,menus: [
-               { id: 1 ,name: '首页', path: '/dashboard'}
-              ,{ id: 2 ,name: '中控中心', path: '/controller'}
-              ,{ id: 2 ,name: '组件中心', path: '/comment'}
+               { id: 11 ,name: '首页', path: '/dashboard'}
+              ,{ id: 12 ,name: '中控中心', path: '/controller'}
+              ,{ id: 13 ,name: '组件中心', path: '/comment'}
             ]
-            ,control: [
-                 {value: 1, label: 'DEMO展示', path: '/dashboard'}
-                ,{value: 2, label: '控制中心', path: '/dashboard'}
-                ,{value: 3, label: '灾备中心', path: '/dashboard'}
-                ,{value: 4, label: '切换中心', path: '/dashboard'}
-            ]
-            ,value:1  // 又测下拉列表中，默认选中第一个数据
-            ,active:0 // 添加路由菜单选中，取消选中样式
-          }
-      }
-      ,methods: {
-          controlBtn(option) {
-              let checked = this.control.slice(option-1, option)[0].value;
-              if(checked === 1){
-                  this.menus = [
-                     { id: 1 ,name: '首页' , path: '/dashboard'}
-                    ,{ id: 2 ,name: '中控中心', path: '/controller'}
-                    ,{ id: 3 ,name: '组件中心' , path: '/comment'}
-                  ]
-              }else if(checked === 2){
-                  this.menus = [
-                     { id: 1 ,name: '首页' , path: '/dashboard'}
+            ,control: [{
+              id: 1
+             ,label: 'DEMO展示'
+             ,path: '/dashboard'
+             ,child:[
+                  { id: 11 ,name: '首页' , path: '/dashboard'}
+                 ,{ id: 12 ,name: '中控中心', path: '/controller'}
+                 ,{ id: 13 ,name: '组件中心' , path: '/comment'}
+             ]},{
+                id: 2
+                ,label: '控制中心'
+                ,path: '/dashboard'
+                ,child:[
+                    { id: 1 ,name: '首页' , path: '/dashboard'}
                     ,{ id: 2 ,name: '预警中心' , path: '/dashboard'}
                     ,{ id: 3 ,name: '场景切换' , path: '/dashboard'}
                     ,{ id: 4 ,name: '系统管理' , path: '/dashboard'}
                     ,{ id: 5 ,name: '数据管理' , path: '/dashboard'}
                     ,{ id: 6 ,name: '资源管理' , path: '/dashboard'}
                     ,{ id: 7 ,name: '灾备管理' , path: '/dashboard'}
-                  ]
-              }
+                ]
+             },{
+                id: 3
+                ,label: '灾备中心'
+                ,path: '/dashboard'
+             },{
+                id: 4
+                ,label: '切换中心'
+                ,path: '/dashboard'
+             }]
+            ,defaultSelectSystem:1  // 右侧中控中心下拉列表中，默认选中第一个数据
+            ,active:0               // 添加路由菜单选中，取消选中样式
           }
-          ,menuBarBtn(key, menu) {
+      }
+      ,methods: {
+
+          /**
+           * 右侧下拉控制台，选择系统
+           * @Method controlBtn
+           */
+           controllChange(option) {
+              this.menus = this.control.slice(option-1, option)[0].child;
+          }
+
+          /**
+           * 头部一级菜单点击显示
+           * @Method controlBtn
+           */
+          ,haderMenuClick(key, menu) {
               this.active = key;
               this.$router.push({path: menu.path});
           }
