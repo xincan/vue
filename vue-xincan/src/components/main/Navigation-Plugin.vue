@@ -119,7 +119,7 @@
         & ul {
             padding: 0;
             margin: 0;
-            width: 180px;
+            width: 182px;
             overflow-y: scroll;
             overflow-x: hidden;
             height: 100%;
