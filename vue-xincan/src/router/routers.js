@@ -30,15 +30,15 @@ const routes = [{
         path: '/table'
         ,component: Table
     }, {
-    path: '/topBottomPanel'
-    ,component: TopBottomPanel
-  }, {
-    path: '/leftRightPanel1'
-    ,component: LeftRightPanel1
-  }, {
-    path: '/leftRightPanel2'
-    ,component: LeftRightPanel2
-  }]
+        path: '/topBottomPanel'
+        ,component: TopBottomPanel
+    }, {
+        path: '/leftRightPanel1'
+        ,component: LeftRightPanel1
+    }, {
+        path: '/leftRightPanel2'
+        ,component: LeftRightPanel2
+    }]
 }, {
     path: '*',
     redirect: '/dashboard'

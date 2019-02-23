@@ -1,14 +1,13 @@
 
 <!--
   左侧导航
-  <router-link :to="nav.path">{{nav.name}}</router-link>
 -->
 
 <template>
     <div id="navigation">
         <ul>
             <li
-              v-for="(nav,key) in navigation"
+              v-for="(nav,key) in menus"
               :class=" key === pKey ? 'active' : ''"
               @click="clickParentBtn(nav, key)"
             >
@@ -41,47 +40,29 @@
 
   export default {
 
+      /**
+       *  组件名称
+       */
       name: "Navigation"
+
+      /**
+       * 用于父子组件传值、或接收值
+       */
+      ,props:{
+          controller: Object
+          ,menus: Array
+      }
 
       ,data() {
           return {
-            // navigation: [
-            //    { id: 1 ,name: '按钮', path: '/button'}
-            //   ,{ id: 2 ,name: '表格', path: '/table'}
-            // ]
-              navigation: [{
-                  id: 1
-                  ,name: '系统管理'
-                  ,icon: 'fa-home'
-                  ,path: ''
-                  ,child: [
-                       { id: 11 ,name: '地区管理', icon: 'fa-globe',    path: '/areaManage'}
-                      ,{ id: 12 ,name: '菜单管理', icon: 'fa-bars',     path: '/menuManage'}
-                      ,{ id: 13 ,name: '用户管理', icon: 'fa-user-o',   path: '/userManage'}
-                      ,{ id: 14 ,name: '角色管理', icon: 'fa-user-md',  path: '/roleManage'}
-                      ,{ id: 15 ,name: '权限管理', icon: 'fa-home',     path: '/permissionManage'}
-
-                  ]},{
-                      id: 2
-                      ,name: '辅助决策'
-                      ,icon: 'fa-cube'
-                      ,path: '/policy'
-                      ,child: []
-                  },{
-                      id: 3
-                      ,name: '预警发布'
-                      ,icon: 'fa-exclamation-triangle'
-                      ,path: '/publish'
-                      ,child: [
-                          { id: 31 ,name: '预警编辑', icon: 'fa-user-md',   path: '/warnEdit'}
-                          ,{ id: 32 ,name: '预警配置', icon: 'fa-user-md',  path: '/warnConfig'}
-                      ]
-              }]
-              ,pKey: 0  // 系统默认自动展开选中第一个一级菜单
+              pKey: 0  // 系统默认自动展开选中第一个一级菜单
               ,cKey: 0  // 系统默认自动选中第一个一级菜单下的第一个二级菜单
           }
       }
 
+      ,mounted() {
+
+      }
       ,methods: {
 
           /**
@@ -89,8 +70,10 @@
            * @Method controlBtn
            */
           clickParentBtn(menu, key){
-              this.pKey = key;    // 点击一级菜单：改变当前点击菜单的下标
-              this.cKey = 0;      // 默认展示第一个二级菜单
+              // 点击一级菜单：改变当前点击菜单的下标
+              this.pKey = key;
+              // 默认展示第一个二级菜单
+              this.cKey = 0;
           }
 
           //
@@ -99,7 +82,10 @@
            * @Method controlBtn
            */
           ,clickChildBtn(menu, index){
-              this.cKey = index;  // 点击二级菜单：改变当前点击二级菜单的下标
+              // 点击二级菜单：改变当前点击二级菜单的下标
+              this.cKey = index;
+              // 触发路由跳转
+              this.$router.push({path: menu.path});
           }
       }
   }

@@ -1,47 +1,42 @@
+
 <template>
-    <div class="comment">
-        <div class="comment-left">
-            <NavigationPlugin />
+
+    <div id="Comment" class="content">
+
+        <div class="content-left">
+            <Navigation :menus="menus" :controller="this"/>
         </div>
 
-        <div class="comment-right">
+        <div class="content-right">
             <router-view />
         </div>
+
     </div>
+
 </template>
 
 <script>
-    import NavigationPlugin from "@/components/main/Navigation-Plugin";
-    export default {
-        name: "Comment"
-        , components: {NavigationPlugin}
-        ,menus: [
 
-        ]
+    import Navigation from "@/components/main/Navigation";
+
+    export default {
+        components: {Navigation}
+        ,name: "Comment"
+        ,props:{
+            app: Object
+            ,menus: Array
+        }
+        ,data(){
+            return {
+
+            }
+        }
+        ,mounted(){
+
+        }
     }
 </script>
 
 <style scoped lang="scss">
-    .comment {
-          height: 100%;
-          display: flex;
-          display: -webkit-flex;
-          flex-direction: row;
-          overflow: auto;
-          overflow-x: hidden;
-        & .comment-left {
-            position: fixed;
-            z-index: 9999999;
-            top: 40px;
-            width: 165px;
-            height: calc(100% - 40px);
-            background: black;
-        }
-        & .comment-right {
-            margin-left: 165px;
-            margin-top: 40px;
-            width: calc(100% - 165px);
-            background: #f7f5f5;
-        }
-    }
+    @import "../../static/css/navigation";
 </style>

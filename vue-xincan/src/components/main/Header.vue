@@ -10,7 +10,7 @@
             <ul>
                 <li>
                     <el-select v-model="defaultSelectSystem" placeholder="请选择" @change="controllChange">
-                        <el-option v-for="option in control" :key="option.id" :label="option.label" :value="option.id" ></el-option>
+                        <el-option v-for="option in controll" :key="option.id" :label="option.label" :value="option.id" ></el-option>
                     </el-select>
                 </li>
                 <li>百里长风</li>
@@ -24,34 +24,89 @@
 
   export default {
       name: "Header"
+      ,props:{
+          app: Object
+      }
       ,data() {
           return {
             title: "IStorM DRaaS"
-            ,menus: [
-               { id: 11 ,name: '首页', path: '/dashboard'}
-              ,{ id: 12 ,name: '中控中心', path: '/controller'}
-              ,{ id: 13 ,name: '组件中心', path: '/comment'}
-            ]
-            ,control: [{
-              id: 1
-             ,label: 'DEMO展示'
-             ,path: '/dashboard'
-             ,child:[
-                  { id: 11 ,name: '首页' , path: '/dashboard'}
-                 ,{ id: 12 ,name: '中控中心', path: '/controller'}
-                 ,{ id: 13 ,name: '组件中心' , path: '/comment'}
-             ]},{
+            ,controll: [{
+                id: 1
+                ,label: 'DEMO展示'
+                ,path: '/dashboard'
+                ,child:[{
+                    id: 11
+                    ,name: '首页'
+                    ,path: '/dashboard'
+                },{
+                    id: 12
+                    ,name: '中控中心'
+                    ,path: '/controller'
+                    ,child: [{
+                        id: 121
+                        ,name: '系统管理'
+                        ,icon: 'fa-home'
+                        ,path: ''
+                        ,child: [
+                             {id: 1211 ,name: '地区管理', icon: 'fa-globe',    path: '/areaManage'}
+                            ,{id: 1212 ,name: '菜单管理', icon: 'fa-bars',     path: '/menuManage'}
+                            ,{id: 1213 ,name: '用户管理', icon: 'fa-user-o',   path: '/userManage'}
+                            ,{id: 1214 ,name: '角色管理', icon: 'fa-user-md',  path: '/roleManage'}
+                            ,{id: 1215 ,name: '权限管理', icon: 'fa-home',     path: '/permissionManage'}
+                        ]
+                    },{
+                        id: 122
+                        ,name: '辅助决策'
+                        ,icon: 'fa-cube'
+                        ,path: '/policy'
+                        ,child: []
+                    },{
+                        id: 123
+                        ,name: '预警发布'
+                        ,icon: 'fa-exclamation-triangle'
+                        ,path: '/publish'
+                        ,child: [
+                           {id: 1231 ,name: '预警编辑', icon: 'fa-user-md',   path: '/warnEdit'}
+                          ,{id: 1232 ,name: '预警配置', icon: 'fa-user-md',  path: '/warnConfig'}
+                        ]
+                    }]
+                },{
+                    id: 13
+                    ,name: '组件中心'
+                    ,path: '/comment'
+                    ,child: [{
+                        id: 131
+                        ,name: '组件管理'
+                        ,icon: 'fa-home'
+                        ,path: ''
+                        ,child: [
+                           {id: 1311 ,name: '表格', icon: 'fa-globe',    path: '/table'}
+                          ,{id: 1312 ,name: '按钮', icon: 'fa-globe',    path: '/button'}
+                        ]
+                    },{
+                        id: 132
+                        ,name: '面板管理'
+                        ,icon: 'fa-home'
+                        ,path: ''
+                        ,child: [
+                           {id: 1321 ,name: '上下布局', icon: 'fa-home',    path: '/topBottomPanel'}
+                          ,{id: 1322 ,name: '左右布局1', icon: 'fa-home',    path: '/leftRightPanel1'}
+                          ,{id: 1323 ,name: '左右布局2', icon: 'fa-home',    path: '/leftRightPanel2'}
+                        ]
+                    }]
+                }]
+            },{
                 id: 2
                 ,label: '控制中心'
                 ,path: '/dashboard'
                 ,child:[
-                    { id: 1 ,name: '首页' , path: '/dashboard'}
-                    ,{ id: 2 ,name: '预警中心' , path: '/dashboard'}
-                    ,{ id: 3 ,name: '场景切换' , path: '/dashboard'}
-                    ,{ id: 4 ,name: '系统管理' , path: '/dashboard'}
-                    ,{ id: 5 ,name: '数据管理' , path: '/dashboard'}
-                    ,{ id: 6 ,name: '资源管理' , path: '/dashboard'}
-                    ,{ id: 7 ,name: '灾备管理' , path: '/dashboard'}
+                     {id: 21 ,name: '首页' , path: '/dashboard'}
+                    ,{id: 22 ,name: '预警中心' , path: '/dashboard'}
+                    ,{id: 23 ,name: '场景切换' , path: '/dashboard'}
+                    ,{id: 24 ,name: '系统管理' , path: '/dashboard'}
+                    ,{id: 25 ,name: '数据管理' , path: '/dashboard'}
+                    ,{id: 26 ,name: '资源管理' , path: '/dashboard'}
+                    ,{id: 27 ,name: '灾备管理' , path: '/dashboard'}
                 ]
              },{
                 id: 3
@@ -62,18 +117,22 @@
                 ,label: '切换中心'
                 ,path: '/dashboard'
              }]
+            ,menus: []
             ,defaultSelectSystem:1  // 右侧中控中心下拉列表中，默认选中第一个数据
             ,active:0               // 添加路由菜单选中，取消选中样式
           }
       }
+      ,mounted(){
+          // 默认加载第一个系统
+          this.controllChange(this.defaultSelectSystem);
+      }
       ,methods: {
-
           /**
            * 右侧下拉控制台，选择系统
            * @Method controlBtn
            */
            controllChange(option) {
-              this.menus = this.control.slice(option-1, option)[0].child;
+              this.menus = this.controll.slice(option-1, option)[0].child;
           }
 
           /**
@@ -82,6 +141,7 @@
            */
           ,haderMenuClick(key, menu) {
               this.active = key;
+              this.app.getMenus(menu.child); // 将当前一级菜单下的所有其他菜单传递到父级容器
               this.$router.push({path: menu.path});
           }
       }
