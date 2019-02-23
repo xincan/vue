@@ -140,9 +140,11 @@
            * @Method controlBtn
            */
           ,haderMenuClick(key, menu) {
+              if(this.active === key) return; //  判断重复点击一级菜单，拦截
               this.active = key;
               this.app.getMenus(menu.child); // 将当前一级菜单下的所有其他菜单传递到父级容器
               this.$router.push({path: menu.path});
+
           }
       }
   }
