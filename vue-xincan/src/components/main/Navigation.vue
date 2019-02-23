@@ -55,10 +55,19 @@
               ,cKey: 0  // 系统默认自动选中第一个一级菜单下的第一个二级菜单
           }
       }
+      ,created(){
 
+      }
       ,mounted() {
-          if(this.controller.menus[0].child != undefined){
-              this.$router.push({path: this.controller.menus[0].child[0].path}); // 触发路由跳转
+          // 如果菜单为空，自动跳转到首页，
+          if(this.menus.langth==0 ){
+            this.$router.push({path: "/"}); // 触发路由跳转
+          }else{
+              if(this.menus[0]){
+                this.$router.push({path: this.menus[0].child[0].path}); // 触发路由跳转
+              }else{
+                this.$router.push({path: "/"}); // 触发路由跳转
+              }
           }
       }
       ,methods: {
@@ -75,7 +84,6 @@
 
           }
 
-          //
           /**
            * 左侧二级菜单点击事件
            * @Method controlBtn
