@@ -589,7 +589,7 @@
                     // 如果所有验证不通过则直接拦截，不向下执行
                     if (!valid) return false;
 
-                    that.$confirm('确定要修改吗?', '温馨提示', {
+                    that.$confirm('确定要'+(this.form.data.id ? '修改' : '增加')+'吗?', '温馨提示', {
                       confirmButtonText: '确定'
                       ,cancelButtonText: '取消'
                       ,type: 'warning'
