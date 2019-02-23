@@ -5,7 +5,7 @@
 
 -->
 <template>
-    <div class="xincan">
+    <div id="Dashboard" class="dashboard">
       系统主页
     </div>
 </template>
@@ -16,6 +16,8 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .dashboard {
+    margin-top: 40px;
+  }
 </style>

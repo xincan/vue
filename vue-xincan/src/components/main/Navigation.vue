@@ -57,7 +57,9 @@
       }
 
       ,mounted() {
-
+          if(this.controller.menus[0].child != undefined){
+              this.$router.push({path: this.controller.menus[0].child[0].path}); // 触发路由跳转
+          }
       }
       ,methods: {
 

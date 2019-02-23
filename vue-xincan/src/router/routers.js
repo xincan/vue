@@ -9,6 +9,11 @@ import Table from "@/xincan/comments/Table";
 import TopBottomPanel from "@/xincan/comments/TopBottomPanel";
 import LeftRightPanel1 from "@/xincan/comments/LeftRightPanel1";
 import LeftRightPanel2 from "@/xincan/comments/LeftRightPanel2";
+import AreaManage from "@/warn/manager/AreaManage";
+import MenuManage from "@/warn/manager/MenuManage";
+import UserManage from "@/warn/manager/UserManage";
+import RoleManage from "@/warn/manager/RoleManage";
+import PermissionManage from "@/warn/manager/PermissionManage";
 
 
 
@@ -20,6 +25,22 @@ const routes = [{
 },{
     path: '/controller'
     ,component: Controller
+    ,children: [{
+        path: '/areaManage'
+        ,component: AreaManage
+    }, {
+        path: '/menuManage'
+        ,component: MenuManage
+    }, {
+        path: '/userManage'
+        ,component: UserManage
+    }, {
+        path: '/roleManage'
+        ,component: RoleManage
+    }, {
+        path: '/permissionManage'
+        ,component: PermissionManage
+    }]
 },{
     path: '/comment'
     ,component: Comment
