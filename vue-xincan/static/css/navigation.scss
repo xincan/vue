@@ -1,25 +1,83 @@
 
-//导航栏样式
+#navigation{
 
-.content {
-  height: 100%;
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: row;
-  overflow: auto;
-  overflow-x: hidden;
-  & .content-left {
-    position: fixed;
-    z-index: 9999999;
-    top: 40px;
-    width: 165px;
-    height: calc(100% - 40px);
-    background: black;
-  }
-  & .content-right {
-    margin-left: 165px;
-    margin-top: 40px;
-    width: calc(100% - 165px);
-    background: #f7f5f5;
-  }
+    & .is-hide {
+        overflow: hidden;
+        max-height: 0;
+        -webkit-transition: max-height .3s;
+        transition: max-height .3s;
+    }
+
+    & .is-show {
+        max-height: 400px;
+        overflow: hidden;
+        -webkit-transition: max-height 1s;
+        transition: max-height 1s;
+    }
+
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    height: 100%;
+    font-size: 12px;
+
+    & li {
+        list-style: none;
+        & i {
+            font-size: 16px;
+        }
+    }
+
+    & ul {
+        padding: 0;
+        margin: 0;
+        width: 182px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 100%;
+
+        & li {
+            clear: both;
+            cursor: pointer;
+            margin-top: 1px;
+            &.active {
+                background: #113131;
+                &:hover {
+                    background: #113131;
+                }
+            }
+            &:hover {
+                background: #113131;
+            }
+            & > span {
+              position: relative;
+              display: inline-block;
+              line-height: 30px;
+              padding-left: 10px;
+              color: white;
+              &:nth-child(2) {
+                  float: right;
+                  margin-right: 10px;
+              }
+
+              & .caret {
+                  position: absolute;
+                  right: -10px;
+                  top: 7px;
+                  color: #EAEAEA;
+              }
+
+            }
+            & div.child ul li {
+                padding-left: 20px;
+                cursor: pointer;
+                &:hover {
+                    background: #2e9e98;
+                }
+                &.active {
+                    background: #2e9e98;
+                }
+            }
+        }
+    }
 }

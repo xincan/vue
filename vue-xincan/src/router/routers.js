@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Controller from "../components/main/Controller";
 import Dashboard from "@/dashbord/Dashboard";
-import Comment from "@/xincan/Comment";
+import Controller from "../components/controller/CenterController";
+import Comment from "@/components/controller/PluginController";
 import Button from "@/xincan/comments/Button";
 import Table from "@/xincan/comments/Table";
 import TopBottomPanel from "@/xincan/comments/TopBottomPanel";
