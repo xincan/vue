@@ -61,7 +61,7 @@ const routes = [{
         ,component: LeftRightPanel2
     }]
 }, {
-    path: '*',
+    path: '/',
     redirect: '/dashboard'
 }];
 
