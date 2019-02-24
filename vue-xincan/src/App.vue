@@ -27,21 +27,27 @@
 </template>
 
 <script>
-import Header from "@/components/main/Header";
-export default {
-    name: 'App'
-    ,components: {Header}
-    ,data(){
-        return {
-           menus:[]
+    // 引入头部插件
+    import Header from "@/components/main/Header";
+    export default {
+        name: 'App'
+        ,components: {Header}   // 头部插件注册
+        ,data(){
+            return {
+               menus:[]         // 用于存储子组件调用父组件函数赋值
+            }
+        }
+        ,methods: {
+            /**
+             * 定义函数
+             * 用于子组件调用父组件函数传参，并给父组件menus赋值
+             * @Method initCellIsHide
+             */
+            setParentMenus(menus){
+                this.menus = menus;
+            }
         }
     }
-    ,methods: {
-        getMenus(menus){
-            this.menus = menus;
-        }
-    }
-}
 </script>
 
 <style scoped lang="scss">

@@ -1,14 +1,21 @@
+
+<!--
+  头部导航栏
+-->
+
 <template>
     <div id="header">
         <div class="header-left"><span>{{title}}</span></div>
         <div class="header-center">
             <ul>
+                <!--遍历选择后系统的一级菜单-->
                 <li v-for="(menu, key) in menus" :class="active === key ? 'active' : ''" @click="haderMenuClick(key, menu)" v-text="menu.name" ></li>
             </ul>
         </div>
         <div class="header-right">
             <ul>
                 <li>
+                    <!--遍历系统-->
                     <el-select v-model="defaultSelectSystem" placeholder="请选择" @change="controllChange">
                         <el-option v-for="option in controll" :key="option.id" :label="option.label" :value="option.id" ></el-option>
                     </el-select>
@@ -25,7 +32,7 @@
   export default {
       name: "Header"
       ,props:{
-          app: Object
+          app: Object // 存放父级菜单对象
       }
       ,data() {
           return {
@@ -117,7 +124,7 @@
                 ,label: '切换中心'
                 ,path: '/dashboard'
              }]
-            ,menus: []
+            ,menus: []              // 存放选中系统所有菜单
             ,defaultSelectSystem:1  // 右侧中控中心下拉列表中，默认选中第一个数据
             ,active:0               // 添加路由菜单选中，取消选中样式
           }
@@ -131,8 +138,8 @@
            * 右侧下拉控制台，选择系统
            * @Method controlBtn
            */
-           controllChange(option) {
-              this.menus = this.controll.slice(option-1, option)[0].child;
+          controllChange(option) {
+              this.menus = this.controll.slice(option-1, option)[0].child;  // 获取选中系统下标对应的所有菜单
           }
 
           /**
@@ -140,11 +147,10 @@
            * @Method controlBtn
            */
           ,haderMenuClick(key, menu) {
-              if(this.active === key) return; //  判断重复点击一级菜单，拦截
+              if(this.active === key) return;         // 判断重复点击一级菜单，拦截
               this.active = key;
-              this.app.getMenus(menu.child); // 将当前一级菜单下的所有其他菜单传递到父级容器
-              this.$router.push({path: menu.path});
-
+              this.app.setParentMenus(menu.child);    // 将当前一级菜单下的所有其他菜单传递到父级容器
+              this.$router.push({path: menu.path});   // 进行路由跳转
           }
       }
   }
