@@ -1,7 +1,13 @@
+
+<!--
+    Table表格开发
+-->
+
 <template>
 
     <div class="hatech">
 
+        <!-- 按条件查询模块 -->
         <div class="hatech-search">
             <el-form :inline="true" :model="table.param" class="demo-form-inline">
                 <el-form-item><el-input v-model="table.param.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
@@ -30,33 +36,23 @@
                     <ul>
                         <li title="检索">
                             <el-popover placement="bottom"  trigger="click">
-
-                              <el-form :model="table.param" class="demo-form-inline">
-                                <el-form-item>
-                                  <el-input v-model="table.param.loginName" placeholder="请输入登录名称"></el-input>
-                                </el-form-item>
-                                <el-form-item>
-                                  <el-input v-model="table.param.name" placeholder="请输入用户名称"></el-input>
-                                </el-form-item>
-                                <el-form-item>
-                                    <el-select v-model="table.param.sex" placeholder="请选择性别">
-                                      <el-option label="请选择性别" value=""></el-option>
-                                      <el-option label="男" value="1"></el-option>
-                                      <el-option label="女" value="0"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item>
-                                    <el-input v-model="table.param.areaId" placeholder="请出入用户所在地区"></el-input>
-                                </el-form-item>
-                                <el-form-item>
-                                    <el-input v-model="table.param.organizationId" placeholder="请输入用户所属机构"></el-input>
-                                </el-form-item>
-                                <el-form-item>
-                                    <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
-                                    <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
-                                </el-form-item>
-                              </el-form>
-
+                                <el-form :model="table.param" class="demo-form-inline">
+                                    <el-form-item><el-input v-model="table.param.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
+                                    <el-form-item><el-input v-model="table.param.name" placeholder="请输入用户名称"></el-input></el-form-item>
+                                    <el-form-item>
+                                        <el-select v-model="table.param.sex" placeholder="请选择性别">
+                                          <el-option label="请选择性别" value=""></el-option>
+                                          <el-option label="男" value="1"></el-option>
+                                          <el-option label="女" value="0"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item><el-input v-model="table.param.areaId" placeholder="请出入用户所在地区"></el-input></el-form-item>
+                                    <el-form-item><el-input v-model="table.param.organizationId" placeholder="请输入用户所属机构"></el-input></el-form-item>
+                                    <el-form-item>
+                                        <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
+                                        <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
+                                    </el-form-item>
+                                </el-form>
                                 <i class="el-icon-search" slot="reference"></i>
                             </el-popover>
                         </li>
@@ -110,14 +106,16 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <!-- 表格底部布局 -->
+            <!--
+                表格底部布局，表格分页设置
+            -->
             <div class="hatech-table-footer">
                 <el-pagination
-                  background
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :current-page="table.page" :page-sizes="table.pageSize" :page-size="table.size" :total="table.count"
-                  @size-change="tableSizeChange"
-                  @current-change="tableCurrentChange"
+                    background
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :current-page="table.page" :page-sizes="table.pageSize" :page-size="table.size" :total="table.count"
+                    @size-change="tableSizeChange"
+                    @current-change="tableCurrentChange"
                 ></el-pagination>
             </div>
         </div>
@@ -125,6 +123,13 @@
         <!--
             编辑用户信息
             公用一个弹出层时需要加上v-if判断使之重新渲染组件 避免重置按钮出现数据混乱现象
+
+            custom-class="hatech-dialog"              自定义弹出层class名称
+            v-if="form.dialogFormVisible"             判断弹出层是否显示、隐藏（重新加载渲染弹出层）
+            :title="form.title"                       设置弹出层标题
+            :visible.sync="form.dialogFormVisible"    判断弹出层是否显示、隐藏（不重新加载渲染弹出层）
+            :width="form.formWidth"                   设置弹出层宽度
+            :before-close="formClose"                 弹出层右上角关闭icon
         -->
         <el-dialog
             custom-class="hatech-dialog"
@@ -134,7 +139,14 @@
             :width="form.formWidth"
             :before-close="formClose"
         >
-            <div class="hatech-top-line"></div>
+            <div class="hatech-top-line"></div>     <!-- 弹出层划线，上 -->
+            <!--
+                表单设置
+                status-icon               设置表单校验时：是否在输入框中显示校验结果反馈图标
+                :ref="form.name"          设置表单名称
+                :model="form.data"        设置表单数据并绑定数据
+                :rules="form.rules"       设置表单验证规则
+            -->
             <el-form
                 status-icon
                 :ref="form.name"
@@ -169,7 +181,7 @@
                     <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
             </el-form>
-            <div class="hatech-bottom-line"></div>
+            <div class="hatech-bottom-line"></div>    <!-- 弹出层划线，上 -->
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" size="mini" @click="formSubmit()">确 定</el-button>
                 <el-button type="warning" size="mini" @click="formReset()">重 置</el-button>
@@ -180,7 +192,7 @@
 </template>
 
 <script>
-
+    // 引用Axios异步数据获取插件
     import Axios from 'axios';
 
     export default {
