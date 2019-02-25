@@ -14,6 +14,7 @@ import MenuManage from "@/warn/manager/MenuManage";
 import UserManage from "@/warn/manager/UserManage";
 import RoleManage from "@/warn/manager/RoleManage";
 import PermissionManage from "@/warn/manager/PermissionManage";
+import TablePlugin from "@/xincan/comments/TablePlugin";
 
 
 
@@ -50,6 +51,9 @@ const routes = [{
     }, {
         path: '/table'
         ,component: Table
+    }, {
+      path: '/table/plugin'
+      ,component: TablePlugin
     }, {
         path: '/topBottomPanel'
         ,component: TopBottomPanel
