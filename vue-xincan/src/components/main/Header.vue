@@ -89,6 +89,7 @@
                         ,child: [
                            {id: 1311 ,name: '表格', icon: 'fa-globe',    path: '/table'}
                           ,{id: 1312 ,name: '表格封装', icon: 'fa-globe',    path: '/table/plugin'}
+                          ,{id: 1312 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
                           ,{id: 1313 ,name: '按钮', icon: 'fa-globe',    path: '/button'}
                         ]
                     },{

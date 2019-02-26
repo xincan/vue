@@ -6,6 +6,9 @@
 <template>
 
   <div class="hatech">
+
+    <!-- 按条件查询模块 -->
+    <slot name="hatech-search"></slot>
     <div class="hatech-table">
       <!-- 表格头部布局 -->
       <div class="hatech-table-header">
@@ -98,11 +101,7 @@
     props: {
         table:  {
             type: Object
-            ,required:true
-        }
-        ,tableBtn: {
-            type:Function
-            ,required:true
+            ,required: true
         }
 
     }
@@ -117,6 +116,7 @@
       this.initCellIsHide();
       // 初始化加载后台表格数据
       this.initTableData();
+
     }
 
     ,methods: {
@@ -216,7 +216,7 @@
       ,initTableData(){
         let that = this;
         Axios.get(this.table.url, {
-          params: { page:this.table.page, size:this.table.size, param:this.table.param }
+          params: { page:this.table.page, size:this.table.size, param:this.table.search }
         }).then( response => {
           that.$nextTick( ()=> {
             that.table.count = response.data.count;
@@ -309,16 +309,14 @@
         }).catch(() => {});
       }
 
-
-
-
       /**
-       * 头部右侧按钮点击事件
-       *
+       * 自定义表格按钮统一操作
+       *  判断父组件函数是否存在，如果存在则执行，否则不执行
        * @Method formSubmit
        */
       ,hatechTableOptionBtn(param){
-          this.tableBtn(param);
+          console.log(param);
+          this.$parent[param.type] ? this.$parent[param.type].call(this, param) : '';
       }
 
 
