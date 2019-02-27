@@ -301,17 +301,17 @@
                             { min: 5, max: 10, message: '长度在5到10个字符', trigger: 'blur' }
                         ]
                         ,loginPassword: [
-                            { validator: validateForm.v_loginPassword, trigger: 'blur' }
+                            { required: true, validator: validateForm.v_loginPassword, trigger: 'blur' }
                         ]
                         ,name: [
                            { required: true, message: '请输入用户名称', trigger: 'blur' },
                            { min: 2, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
                         ]
                         ,phone: [
-                            { validator: validateForm.v_phone, trigger: 'blur' }
+                            { required: true, validator: validateForm.v_phone, trigger: 'blur' }
                         ]
                         ,email: [
-                            { validator: validateForm.v_email, trigger: 'blur' }
+                            { required: true, validator: validateForm.v_email, trigger: 'blur' }
                         ]
                     }
                     ,data: {                            // 表单数据数据
