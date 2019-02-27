@@ -6,6 +6,12 @@
 <template>
 
     <div>
+          <!--
+              同创数据表格调用实列
+              ref="hatechTable"   定义ref属性值，用于父组件调用子组件对象、函数、属性等
+              :table="table"      定义table属性，用于父组件传值到子组件，子组件用props{table:Object}接收
+              :form="form"        定义form属性， 用于父组件传值到子组件，子组件用props{form:Object}接收
+          -->
         <HatechTable ref="hatechTable" :table="table" :form="form" >
             <!--
                 按条件查询模块
@@ -81,7 +87,13 @@
 </template>
 
 <script>
-    import HatechTable from '@/components/table/Hatech-Table'
+
+    // 引用数据请求插件
+    import Axios from 'axios';
+
+    // 引用同创表格插件
+    import HatechTable from '@/components/table/Hatech-Table';
+
     export default {
         components:{ HatechTable }
         ,data() {
@@ -160,7 +172,7 @@
                     ,dropCellUrl:'http://localhost:3000/table/status' // 拖拽列保存入库路径，记录用户习惯
                     ,page:1                                           // 分页，当前页
                     ,size:10                                          // 分页，每页默认显示10条数据
-                    ,pageSize: [30, 50, 100, 200]                     // 分页，设置默认页数
+                    ,pageSize: [10, 20, 50, 100]                      // 分页，设置默认页数
                     ,isIndexShow: true                                // 表格编号列显示隐藏设置
                     ,data: []                                         // 表格数据渲染
                     ,select: []                                       // 数据多选
@@ -180,15 +192,15 @@
                     ]
                     ,showHeaderOption: true             // 是否显示头部右侧操作按钮
                     ,headerOption:[                     // 表格头部操作按钮集合
-                         {name:'增加',        icon:'el-icon-edit',       type:'add',            isShow: true}
-                        ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',         isShow: true}
-                        ,{name:'下载',        icon:'el-icon-download',   type:'download',       isShow: true}
-                        ,{name:'批量删除',    icon:'el-icon-delete',      type:'deleteBatch',    isShow: true}
+                         {name:'增加',        icon:'el-icon-edit',       type:'add',        isShow: true}
+                        ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',     isShow: true}
+                        ,{name:'下载',        icon:'el-icon-download',   type:'download',   isShow: true}
+                        ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
                     ]
                     ,showTableOption: true              // 是否显示列表右侧操作按钮
                     ,cellOption:[                       // 表格右侧列操作按钮集合
                          {name:'修改',        icon:'el-icon-edit',      type:'edit',    isShow: true}
-                        ,{name:'查看',        icon:'el-icon-upload2',   type:'upload',  isShow: false}
+                        ,{name:'查看',        icon:'el-icon-document',  type:'detail',  isShow: true}
                         ,{name:'删除',        icon:'el-icon-delete',    type:'delete',  isShow: true}
                     ]
                 }
@@ -197,6 +209,7 @@
                     name:'form'                         // 表单名称
                     ,title: ''                          // 表单标题
                     ,formWidth: '40%'                   // 表单宽度
+                    ,submit:'formSubmit'                // 表单提交函数名称
                     ,dialogFormVisible: false           // 表单是否隐藏
                     ,formLabelWidth: '100px'            // 表单元素标题宽度
                     ,formInputWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
@@ -206,17 +219,17 @@
                           { min: 5, max: 10, message: '长度在5到10个字符', trigger: 'blur' }
                         ]
                         ,loginPassword: [
-                            { validator: validateForm.v_loginPassword, trigger: 'blur' }
+                            { required: true, validator: validateForm.v_loginPassword, trigger: 'blur' }
                         ]
                         ,name: [
                             { required: true, message: '请输入用户名称', trigger: 'blur' },
                             { min: 2, max: 20, message: '长度在3到20个字符', trigger: 'blur' }
                         ]
                         ,phone: [
-                            { validator: validateForm.v_phone, trigger: 'blur' }
+                            { required: true, validator: validateForm.v_phone, trigger: 'blur' }
                         ]
                         ,email: [
-                            { validator: validateForm.v_email, trigger: 'blur' }
+                            { required: true, validator: validateForm.v_email, trigger: 'blur' }
                         ]
                     }
                     ,data: {                            // 表单数据数据
@@ -272,7 +285,7 @@
              * 对应headerOption数组对象中type值
              * @Method add
              */
-            ,add(result){
+            ,add(){
                 this.form.title='新增用户信息';
                 this.form.data = {sex: 1};
                 this.form.dialogFormVisible=true;
@@ -289,22 +302,54 @@
                 this.form.dialogFormVisible=true;
             }
 
-            /**
-             * 表格操作按钮集合
-             * 对应headerOption数组对象中type值
-             * @Method delete
-             */
-            ,delete(result){
-              console.log("父类：" + result);
+            ,detail(){
+              alert("sdf");
             }
 
             /**
              * 表格操作按钮集合
              * 对应headerOption数组对象中type值
-             * @Method deleteBatch
+             * 单个删除、批量删除公用函数
+             * @Method delete
              */
-            ,deleteBatch(result){
-              console.log("父类：" + result);
+            ,delete(result){
+
+                let that = this ,select = result.select ,id = "";
+
+                if(select.length  == 0){
+                    that.$message({message: "请选择要删除的数据",center: true ,type: 'success'});
+                    return false;
+                }
+                that.$confirm('确定要删除吗?', '温馨提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    select.forEach(item => { id += "," + item.id; });
+                    Axios.get("http://localhost:3000/user/delete", {
+                        params: {id:id.substr(1)}
+                    }).then(function (response) {
+                        that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                        that.$nextTick(()=>{ that.$refs.hatechTable.initTableData(); });
+                    }).catch(function (error) {console.log(error)});
+                }).catch(() => {});
+            }
+
+            /**
+             * 弹出层操作
+             * 表单数据提交（添加、修改公用提交，后台以数据id做判断区分）
+             * @Method formSubmit
+             */
+            ,formSubmit(result) {
+                let that = this;
+                Axios.get("http://localhost:3000/user/edit", {
+                    params: result.row
+                }).then(response => {
+                    that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                    that.$nextTick(()=>{ that.$refs.hatechTable.initTableData(); });
+                }).catch(function (error) {
+                    that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                });
             }
 
         }
