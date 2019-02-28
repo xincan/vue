@@ -15,7 +15,7 @@
         <HatechTable ref="hatechTable" :table="table" :form="form" >
             <!--
                 按条件查询模块
-                slot="hatech-search"   slot:表示table组件中的插槽，hatech-search：表示插槽名称，又称为插槽具名：必写项
+                slot="hatech-search"   slot:表示table组件中的插槽，hatech-search：表示插槽名称，又称为具名插槽：必写项
             -->
             <div slot="hatech-search" class="hatech-search">
                 <el-form :inline="true" :model="table.search" class="demo-form-inline">
