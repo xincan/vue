@@ -36,6 +36,10 @@ $hatech-line-color: #F1EFEF;   // 表格边框颜色
               height: 35px;
               line-height: 35px;
               padding: 0 5px;
+              cursor: default;
+              &:hover{
+                cursor: default!important;
+              }
             }
 
         }

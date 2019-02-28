@@ -52,31 +52,31 @@
                 :rules="form.rules"
               >
                 <el-form-item label="登录名称" prop="loginName" :label-width="form.formLabelWidth" >
-                  <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码" prop="loginPassword" :label-width="form.formLabelWidth">
-                  <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
-                  <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户性别" :label-width="form.formLabelWidth">
                   <el-radio-group v-model="form.data.sex">
-                    <el-radio :label="0">女</el-radio>
-                    <el-radio :label="1">男</el-radio>
+                    <el-radio :label="0" :disabled="form.disabled" >女</el-radio>
+                    <el-radio :label="1" :disabled="form.disabled" >男</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
-                  <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户邮箱" prop="email" :label-width="form.formLabelWidth">
-                  <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="所属地区" :label-width="form.formLabelWidth">
-                  <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="所属机构" :label-width="form.formLabelWidth">
-                  <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
               </el-form>
             </div>
@@ -190,15 +190,15 @@
                         ,{label:'所属机构',   prop: 'organizationId', width:'auto', isHide: true}
                         ,{label:'创建时间',   prop: 'createTime',     width:'auto', isHide: true}
                     ]
-                    ,showHeaderOption: true             // 是否显示头部右侧操作按钮
-                    ,headerOption:[                     // 表格头部操作按钮集合
+                    ,showHeaderOption: true                 // 是否显示头部右侧操作按钮
+                    ,headerOption:[                         // 表格头部操作按钮集合
                          {name:'增加',        icon:'el-icon-edit',       type:'add',        isShow: true}
                         ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',     isShow: true}
                         ,{name:'下载',        icon:'el-icon-download',   type:'download',   isShow: true}
                         ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
                     ]
-                    ,showTableOption: true              // 是否显示列表右侧操作按钮
-                    ,cellOption:[                       // 表格右侧列操作按钮集合
+                    ,showTableOption: true                  // 是否显示列表右侧操作按钮
+                    ,cellOption:[                           // 表格右侧列操作按钮集合
                          {name:'修改',        icon:'el-icon-edit',      type:'edit',    isShow: true}
                         ,{name:'查看',        icon:'el-icon-document',  type:'detail',  isShow: true}
                         ,{name:'删除',        icon:'el-icon-delete',    type:'delete',  isShow: true}
@@ -206,14 +206,16 @@
                 }
                 // 表单信息设置
                 ,form: {
-                    name:'form'                         // 表单名称
-                    ,title: ''                          // 表单标题
-                    ,formWidth: '40%'                   // 表单宽度
-                    ,submit:'formSubmit'                // 表单提交函数名称
-                    ,dialogFormVisible: false           // 表单是否隐藏
-                    ,formLabelWidth: '100px'            // 表单元素标题宽度
-                    ,formInputWidth: 'calc(100% - 30px)'   // 表单输入框等宽度
-                    ,rules:{                            // 表单各项元素校验
+                    name:'form'                             // 表单名称
+                    ,title: ''                              // 表单标题
+                    ,formWidth: '40%'                       // 表单宽度
+                    ,submit:'formSubmit'                    // 表单提交函数名称
+                    ,dialogFormVisible: false               // 表单是否隐藏
+                    ,formLabelWidth: '100px'                // 表单元素标题宽度
+                    ,formInputWidth: 'calc(100% - 30px)'    // 表单输入框等宽度
+                    ,disabled: false                        // 表单元素是否禁用
+                    ,isBtnShow: true                        // 确定、重置按钮是否显示
+                    ,rules:{                                // 表单各项元素校验
                         loginName: [
                           { required: true, message: '请输入登录名称', trigger: 'blur' },
                           { min: 5, max: 10, message: '长度在5到10个字符', trigger: 'blur' }
@@ -232,7 +234,7 @@
                             { required: true, validator: validateForm.v_email, trigger: 'blur' }
                         ]
                     }
-                    ,data: {                            // 表单数据数据
+                    ,data: {                                // 表单数据数据
                         loginName: ''
                         ,loginPassword: ''
                         ,name: ''
@@ -277,7 +279,7 @@
              * @Method onTableReset
              */
             ,onTableReset(){
-                this.table.search={}
+                this.table.search={};
             }
 
             /**
@@ -288,6 +290,8 @@
             ,add(){
                 this.form.title='新增用户信息';
                 this.form.data = {sex: 1};
+                this.form.disabled = false;
+                this.form.isBtnShow = true;
                 this.form.dialogFormVisible=true;
             }
 
@@ -299,11 +303,17 @@
             ,edit(result) {
                 this.form.title='修改用户信息';
                 this.form.data = result.row;
+                this.form.disabled = false;
+                this.form.isBtnShow = true;
                 this.form.dialogFormVisible=true;
             }
 
-            ,detail(){
-              alert("sdf");
+            ,detail(result){
+                this.form.title='查看用户信息';
+                this.form.data = result.row;
+                this.form.disabled = true;
+                this.form.isBtnShow = false;
+                this.form.dialogFormVisible=true;
             }
 
             /**

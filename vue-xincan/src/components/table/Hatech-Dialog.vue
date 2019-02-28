@@ -32,8 +32,8 @@
 
     <div class="hatech-bottom-line"></div>    <!-- 弹出层划线，上 -->
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" size="mini" @click="hatechFormSubmit">确 定</el-button>
-      <el-button type="warning" size="mini" @click="hatechFormReset">重 置</el-button>
+      <el-button v-if="form.isBtnShow" type="primary" size="mini" @click="hatechFormSubmit">确 定</el-button>
+      <el-button v-if="form.isBtnShow" type="warning" size="mini" @click="hatechFormReset">重 置</el-button>
       <el-button size="mini" @click="hatechDialogConsole">取 消</el-button>
     </div>
   </el-dialog>
