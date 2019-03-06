@@ -182,8 +182,16 @@
                     ,column: [                                        // 表格头部信息、列的显隐设置
                          {label:'登录名称',   prop: 'loginName',      width:'auto', isHide: true}
                         ,{label:'登录密码',   prop: 'loginPassword',  width:'auto', isHide: true}
-                        ,{label:'用户名称',   prop: 'name',           width:'auto', isHide: true}
-                        ,{label:'用户性别',   prop: 'sex',            width:'auto', isHide: true, formatter: this.sexFormatter}
+                        ,{label:'用户名称',   prop: 'name',           width:'auto', isHide: true,
+                          formatter: {
+                            田东:'<span class="hatech-fmt-hand hatech-success">${value}</span>'
+                            ,三国张飞:'<span class="hatech-fmt-hand hatech-warning">${value}</span>'
+                            ,王启超:'<span class="hatech-fmt-hand hatech-danger">${value}</span>'
+                            ,管理员:'<span class="hatech-fmt-hand hatech-info">${value}</span>'
+                          }
+                          ,click: 'fmtNameClick'
+                        }
+                        ,{label:'用户性别',   prop: 'sex',            width:'auto', isHide: true, formatter: {1: '<i class="fa fa-male"></i>', 0: '<i class="fa fa-female"></i>'}, click: 'fmtSexClick'}
                         ,{label:'用户电话',   prop: 'phone',          width:'auto', isHide: true}
                         ,{label:'用户邮箱',   prop: 'email',          width:'auto', isHide: true}
                         ,{label:'所属地区',   prop: 'areaId',         width:'auto', isHide: true}
@@ -193,8 +201,8 @@
                     ,showHeaderOption: true                 // 是否显示头部右侧操作按钮
                     ,headerOption:[                         // 表格头部操作按钮集合
                          {name:'增加',        icon:'el-icon-edit',       type:'add',        isShow: true}
-                        ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',     isShow: true}
-                        ,{name:'下载',        icon:'el-icon-download',   type:'download',   isShow: true}
+                        ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',     isShow: false}
+                        ,{name:'下载',        icon:'el-icon-download',   type:'download',   isShow: false}
                         ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
                     ]
                     ,showTableOption: true                  // 是否显示列表右侧操作按钮
@@ -253,14 +261,22 @@
         }
 
         ,methods: {
+            /**
+             * 表单格式化点击事件
+             * 带html格式化的点击事件
+             * @Method onTableSearch
+             */
+            fmtNameClick(param){
+              alert(param.row.name);
+            }
 
             /**
-             * 表格列数据格式化
-             * 性别格式化
-             * @Method sexFormatter
+             * 表单格式化点击事件
+             * 带图标格式化的点击事件
+             * @Method onTableSearch
              */
-            sexFormatter(row){
-                return row.sex === 1 ? "男" : "女";
+            ,fmtSexClick(param){
+              console.log(param);
             }
 
             /**

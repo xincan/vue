@@ -61,8 +61,26 @@
                         :prop = "column.prop"
                         :label = "column.label"
                         :width = "column.width"
-                        :formatter = 'column.formatter'
-                      ></el-table-column>
+                      >
+                          <template slot-scope="scope" >
+                            <!--如果当前列存在格式化、点击参数则走第一个div-->
+                            <div
+                                class="hatech-fmt-item"
+                                v-if="column.formatter && column.click"
+                                @click="onTableFmtClick({event:column.click,row: scope.row})"
+                                v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
+                            ></div>
+                            <!--如果当前列存在格式化则走第二个div-->
+                            <div
+                                class="hatech-fmt-item"
+                                v-else-if="column.formatter"
+                                v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
+                            ></div>
+                            <!--否则则走第三个div-->
+                            <div v-else class="hatech-fmt-item" >{{ scope.row[column.prop] }}</div>
+                          </template>
+
+                      </el-table-column>
                       <!-- 表格操作列设置 -->
                       <el-table-column prop="option" v-if="table.showTableOption" header-align="center" align="center" label="操作" fixed="right">
                           <template slot-scope="scope">
@@ -133,7 +151,6 @@
         }
 
         ,methods: {
-
             /**
              * 初始化数据
              * 初始化读取数据库隐藏列,每列的宽度
@@ -283,6 +300,15 @@
                 param.select = this.table.select;
                 this.tableClickArea = param.state;
                 this.$parent[param.type] ? this.$parent[param.type].call(this, param) : '';
+            }
+
+            /**
+             * 表格数据格式化点击操作
+             * 格式化点击事件
+             * @Method onTableFmtClick
+             */
+            ,onTableFmtClick(param){
+                this.$parent[param.event] ? this.$parent[param.event].call(this, param) : '';
             }
         }
     }

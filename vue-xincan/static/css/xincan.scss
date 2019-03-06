@@ -40,3 +40,37 @@ html,body {
   border: none;
 }
 // 修改消息提示弹出框样式 end //
+.hatech-fmt-item{
+    height: 100%;
+}
+
+// 表格数据格式化//
+@mixin fmt($cur){
+  cursor: $cur;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color:white;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ws-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+.hatech-fmt{
+    @include fmt(auto);
+}
+.hatech-fmt-hand{
+    @include fmt(pointer);
+}
+.hatech-success{
+   background: #67C23A;
+ }
+.hatech-warning{
+  background: #E6a23c;
+}
+.hatech-danger{
+  background: #F98B8B;
+}
+.hatech-info{
+  background: #8EB9F1;
+}
