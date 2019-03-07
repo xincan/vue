@@ -43,6 +43,7 @@
                     size="small"
                     :data="table.data"
                     :ref="table.id"
+                    :style="'width: ' + table.tableWidth"
                     @selection-change="tableChangeRows"
                     @header-dragend="tableCellDragend"
                   >

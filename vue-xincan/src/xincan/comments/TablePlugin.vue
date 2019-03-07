@@ -168,6 +168,7 @@
                      title:'用户列表'                                  // 表格名称
                     ,id:'admin' + '-' + 'user-table'                  // 表格ID，系统中表格唯一
                     ,url:'http://localhost:3000/user'                 // 数据访问路径
+                    ,tableWidth:'100%'
                     ,showCellUrl:'http://localhost:3000/table/select' // 显隐列读取用户习惯
                     ,dropCellUrl:'http://localhost:3000/table/status' // 拖拽列保存入库路径，记录用户习惯
                     ,page:1                                           // 分页，当前页
