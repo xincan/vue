@@ -167,7 +167,7 @@
                 table:{
                      title:'用户列表'                                  // 表格名称
                     ,id:'admin' + '-' + 'user-table'                  // 表格ID，系统中表格唯一
-                    ,url:'http://localhost:3000/user'                 // 数据访问路径
+                    ,url:'http://localhost:3000/api/user'                 // 数据访问路径
                     ,tableWidth:'100%'
                     ,showCellUrl:'http://localhost:3000/table/select' // 显隐列读取用户习惯
                     ,dropCellUrl:'http://localhost:3000/table/status' // 拖拽列保存入库路径，记录用户习惯
@@ -353,7 +353,7 @@
                     type: 'warning'
                 }).then(() => {
                     select.forEach(item => { id += "," + item.id; });
-                    Axios.get("http://localhost:3000/user/delete", {
+                    Axios.get("http://localhost:3000/api/user/delete", {
                         params: {id:id.substr(1)}
                     }).then(function (response) {
                         that.$message({message: response.data.msg ,center: true ,type: 'success'});
@@ -369,7 +369,7 @@
              */
             ,formSubmit(result) {
                 let that = this;
-                Axios.get("http://localhost:3000/user/edit", {
+                Axios.get("http://localhost:3000/api/user/edit", {
                     params: result.row
                 }).then(response => {
                     that.$message({message: response.data.msg ,center: true ,type: 'success'});

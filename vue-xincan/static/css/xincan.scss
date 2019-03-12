@@ -1,4 +1,7 @@
 
+@import "./mixin/function";
+
+
 html,body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -12,6 +15,13 @@ html,body {
     height: 100%;
     overflow: hidden;
     background: #F5F5F5;
+}
+
+// 系统十二栅格布局
+@for $i from 1 through 12 {
+  .scss-cell-#{$i} {
+    width: calc((100% / 12 * #{$i}));
+  }
 }
 
 // 修改elementui checkbox 样式 start //
@@ -44,23 +54,11 @@ html,body {
     height: 100%;
 }
 
-// 表格数据格式化//
-@mixin fmt($cur){
-  cursor: $cur;
-  padding: 4px 10px;
-  border-radius: 4px;
-  color:white;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ws-border-radius: 4px;
-  -o-border-radius: 4px;
-}
-
 .hatech-fmt{
-    @include fmt(auto);
+    @include table-data-formatter(auto);
 }
 .hatech-fmt-hand{
-    @include fmt(pointer);
+    @include table-data-formatter(pointer);
 }
 .hatech-success{
    background: #67C23A;

@@ -19,6 +19,8 @@
   & .content-right {
     margin-left: 165px;
     margin-top: 40px;
+    padding: 5px;
     width: calc(100% - 165px);
+    height: calc(100% - 50px);
   }
 }

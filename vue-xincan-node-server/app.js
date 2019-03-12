@@ -34,7 +34,7 @@ let dataBaseOption = function(sql, callback){
 
 
 // 用户操作 根据条件查询用户分页信息
-app.get('/user',function(req,res){
+app.get('/api/user',function(req,res){
 	let search = url.parse(req.url,true).search,
 		param = url.parse(req.url,true).query
 		page = (param.page - 1) * param.size
@@ -97,7 +97,7 @@ app.get('/user',function(req,res){
 
 
 // 用户操作 根据条件添加修改用户信息
-app.get('/user/edit',function(req,res){
+app.get('/api/user/edit',function(req,res){
 	let param = url.parse(req.url,true).query
 		,sql = "";
 
@@ -131,7 +131,7 @@ app.get('/user/edit',function(req,res){
 });
 
 // 用户操作 根据条件添加修改用户信息
-app.get('/user/delete',function(req,res){
+app.get('/api/user/delete',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let id = "";
 
@@ -156,7 +156,7 @@ app.get('/user/delete',function(req,res){
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 表格显隐列样式 获取当前表格列的信息
-app.get('/table/select',function(req,res){
+app.get('/api/table/select',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let sql = "SELECT * FROM table_cell_show where name = '" + param.name + "'";
 	dataBaseOption(sql, function(result){
@@ -166,7 +166,7 @@ app.get('/table/select',function(req,res){
 });
 
 // 表格显隐列样式 更新当前表格列的信息
-app.get('/table/status',function(req,res){
+app.get('/api/table/status',function(req,res){
 	var param = url.parse(req.url,true).query;
 	let deleteSql = "delete from table_cell_show where name = '" + param.name + "'";
 	let insertSql = "insert into table_cell_show (id, name, content, create_time) " +

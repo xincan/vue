@@ -1,0 +1,21 @@
+
+@import "../theme/param";
+
+
+@mixin box-boder-radius($num:4px){
+    border-radius: $num;
+    -webkit-border-radius: $num;
+    -o-border-radius: $num;
+    -moz-border-radius: $num;
+    -ws-border-radius: $num;
+
+}
+
+// 表格数据格式化//
+@mixin table-data-formatter($cur){
+  cursor: $cur;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color:white;
+  @include box-boder-radius(4px);
+}

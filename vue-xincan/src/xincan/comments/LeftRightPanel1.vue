@@ -1,38 +1,47 @@
 
-<!--左右布局1-->
+<!--左右布局-->
 
 <template>
-    <div class="hatech">
-        <div class="hatech-panel"></div>
-        <div class="hatech-panel"></div>
+  <div class="scss">
+    <div class="scss-item scss-cell-10">
+      <div></div>
     </div>
+    <div class="scss-item scss-cell-2">
+      <div></div>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "LeftRightPanel"
-    }
+  export default {
+    name: "LeftRightPanel"
+  }
 </script>
 
 <style scoped lang="scss">
-    .hatech {
-        display:flex;
-        display: -webkit-flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+
+  @import "../../../static/css/mixin/function";
+
+  .scss{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    & .scss-item {
+      display: inline-block;
+      float: left;
+      box-sizing: border-box;
+      height: 100%;
+      text-align: center;
+      @include box-boder-radius(0%);
+      &:last-child {
+        margin-right: 0px;
+      }
+      & div{
+        display: inline-block;
+        width: calc(100% - 5px);
         height: 100%;
-        justify-content: space-between;
-        & .hatech-panel{
-            flex: 3;
-            -webkit-flex: 3;
-            margin: 5px;
-            padding: 10px;
-            background: #5BBBBB;
-            &:last-child {
-                flex: 9;
-                -webkit-flex: 9;
-                margin-left: 0px;
-            }
-        }
+        background: $scss-background-color;
+      }
     }
+  }
 </style>
