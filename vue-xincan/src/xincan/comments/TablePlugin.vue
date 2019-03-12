@@ -169,8 +169,8 @@
                     ,id:'admin' + '-' + 'user-table'                  // 表格ID，系统中表格唯一
                     ,url:'http://localhost:3000/api/user'                 // 数据访问路径
                     ,tableWidth:'100%'
-                    ,showCellUrl:'http://localhost:3000/table/select' // 显隐列读取用户习惯
-                    ,dropCellUrl:'http://localhost:3000/table/status' // 拖拽列保存入库路径，记录用户习惯
+                    ,showCellUrl:'http://localhost:3000/api/table/select' // 显隐列读取用户习惯
+                    ,dropCellUrl:'http://localhost:3000/api/table/status' // 拖拽列保存入库路径，记录用户习惯
                     ,page:1                                           // 分页，当前页
                     ,size:10                                          // 分页，每页默认显示10条数据
                     ,pageSize: [10, 20, 50, 100]                      // 分页，设置默认页数

@@ -7,8 +7,7 @@ import Comment from "@/components/controller/PluginController";
 import Button from "@/xincan/comments/Button";
 import Table from "@/xincan/comments/Table";
 import TopBottomPanel from "@/xincan/comments/TopBottomPanel";
-import LeftRightPanel1 from "@/xincan/comments/LeftRightPanel1";
-import LeftRightPanel2 from "@/xincan/comments/LeftRightPanel2";
+import LeftRightPanel from "@/xincan/comments/LeftRightPanel";
 import AreaManage from "@/warn/manager/AreaManage";
 import MenuManage from "@/warn/manager/MenuManage";
 import UserManage from "@/warn/manager/UserManage";
@@ -16,7 +15,6 @@ import RoleManage from "@/warn/manager/RoleManage";
 import PermissionManage from "@/warn/manager/PermissionManage";
 import TablePlugin from "@/xincan/comments/TablePlugin";
 import Select from "@/xincan/comments/Select";
-
 
 
 Vue.use(VueRouter);
@@ -62,11 +60,8 @@ const routes = [{
         path: '/topBottomPanel'
         ,component: TopBottomPanel
     }, {
-        path: '/leftRightPanel1'
-        ,component: LeftRightPanel1
-    }, {
-        path: '/leftRightPanel2'
-        ,component: LeftRightPanel2
+        path: '/leftRightPanel'
+        ,component: LeftRightPanel
     }]
 }, {
     path: '/',

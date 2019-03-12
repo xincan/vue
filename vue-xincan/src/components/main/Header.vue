@@ -99,8 +99,7 @@
                         ,path: ''
                         ,child: [
                            {id: 1321 ,name: '上下布局', icon: 'fa-home',    path: '/topBottomPanel'}
-                          ,{id: 1322 ,name: '左右布局1', icon: 'fa-home',    path: '/leftRightPanel1'}
-                          ,{id: 1323 ,name: '左右布局2', icon: 'fa-home',    path: '/leftRightPanel2'}
+                          ,{id: 1322 ,name: '左右布局', icon: 'fa-home',    path: '/leftRightPanel'}
                         ]
                     }]
                 }]
