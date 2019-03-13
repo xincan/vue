@@ -39,7 +39,7 @@ html,body {
  */
 @for $i from 1 through length($hatech-option-color) {
     $item: nth($hatech-option-color, $i);
-    & .hatech-#{map_get($item, name)} {
+    .hatech-#{map_get($item, name)} {
         background-color: map_get($item, color);
     }
 }
