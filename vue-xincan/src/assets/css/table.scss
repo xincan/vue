@@ -46,10 +46,10 @@
             }
 
             & .hatech-table-header-left{
-                @include header-option-align(left);
+                @include table-header-option-align(left);
             }
             & .hatech-table-header-right{
-                @include header-option-align(right);
+                @include table-header-option-align(right);
             }
         }
 

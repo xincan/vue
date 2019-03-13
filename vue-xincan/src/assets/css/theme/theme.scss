@@ -2,11 +2,17 @@
 
 $hatech-background-color: hotpink;        // demo测试背景色
 
-$hatech-content-color: #F5F5F5;           // 系统主要内容区域背景颜色
+$hatech-header-color: #000000;            // 系统头部背景颜色
+$hatech-header-logo-start-color: #23EFC9; // 系统头部logo开始渐变颜色
+$hatech-header-logo-end-color: #FF00B1;   // 系统头部logo结束渐变颜色
+$hatech-header-hover-color: #1dc7bf;      // 系统头部（一级菜单、按钮、下拉框等）鼠标悬浮、点击选中颜色
 
+$hatech-left-nav-color: #000000;          //
 $hatech-left-nav-first-color: #113131;    // 左侧导航一级菜单颜色（包括选中颜色、滑过颜色）
 $hatech-left-nav-child-color: #2E9E98;    // 左侧导航二级菜单颜色（包括选中颜色、滑过颜色）
 $hatech-left-nav-choose-color: #EAEAEA;   // 左侧导航选中箭头颜色
+
+$hatech-content-color: #F5F5F5;           // 系统主要内容区域背景颜色
 
 $hatech-success: #67C23A;                 // 成功操作颜色
 $hatech-warning: #E6a23c;                 // 警告操作颜色

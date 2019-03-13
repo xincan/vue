@@ -5,12 +5,11 @@
 @import "./mixin/function";
 
 .hatech {
-
     & /deep/ .hatech-dialog{
         & .el-dialog__header {
             padding: 10px 15px 10px;
             & .el-dialog__title {
-              font-size: 16px;
+                font-size: 16px;
             }
         }
         & .el-dialog__body {
@@ -20,26 +19,25 @@
                 height: 15px;
             }
             & .hatech-bottom-line {
-              border-bottom: 1px solid $hatech-line-color;
-              height: 15px;
-              margin-bottom: 5px;
+                border-bottom: 1px solid $hatech-line-color;
+                height: 15px;
+                margin-bottom: 5px;
             }
             & .el-form-item {
-              margin-bottom: 15px;
+                margin-bottom: 15px;
             }
             & .el-form-item__error {
-              padding-top: 2px;
+                padding-top: 2px;
             }
             & .el-input__inner{
-              height: 35px;
-              line-height: 35px;
-              padding: 0 5px;
-              cursor: default;
-              &:hover{
-                cursor: default!important;
-              }
+                height: 35px;
+                line-height: 35px;
+                padding: 0 5px;
+                cursor: default;
+                &:hover{
+                    cursor: default!important;
+                }
             }
-
         }
         & .el-dialog__footer {
           padding: 10px 20px 10px;
