@@ -13,15 +13,16 @@
 html,body {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+    height: 100%;
     padding: 0;
     margin: 0;
-    height: 100%;
+
 }
 
 #app {
     height: 100%;
-    overflow: hidden;
     background: $hatech-content-color;
+    overflow: hidden;
 }
 
 /**
@@ -42,7 +43,6 @@ html,body {
         background-color: map_get($item, color);
     }
 }
-
 
 .hatech-fmt{
     @include table-data-formatter(auto);

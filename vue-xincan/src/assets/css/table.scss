@@ -32,8 +32,8 @@
             width: calc(100% - 2px);
             border: 1px solid $table-border-color;
             border-bottom: none;
-            float: left;
             background: white;
+            float: left;
             & div > ul {
                 padding: 0;
                 margin: 0;
@@ -65,8 +65,8 @@
                     border-bottom: 1px solid $table-border-color;
                 }
                 & .caret-wrapper {
-                    height: 30px;
                     width: 10px;
+                    height: 30px;
                     & .sort-caret.ascending {
                         top: 2px;
                     }
@@ -80,10 +80,11 @@
                 }
 
                 & i{
-                    font-size: 18px;
+
                     position: relative;
                     top: 4px;
                     cursor: pointer;
+                    font-size: 18px;
                     color: $table-icon-color;
                     margin-right: 5px;
                 }
@@ -96,17 +97,18 @@
         & .hatech-table-footer {
             display: block;
             width: calc(100% - 2px - 30px * 2);
-            padding: 5px 30px;
+
             border: 1px solid $table-border-color;
             border-top: none;
-            overflow: hidden;
+            padding: 5px 30px;
             background: white;
+            overflow: hidden;
             & /deep/ {
                 & .el-pagination.is-background {
                     & .el-pager{
                         & li:not(.disabled).active {
-                            background-color: $table-icon-color;
                             color: #fff;
+                            background-color: $table-icon-color;
                         }
                     }
                 }
