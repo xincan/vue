@@ -34,29 +34,19 @@ html,body {
 }
 
 /**
- * 修改消息提示弹出框样式
+ * 系统消息提示背景颜色设定
  */
-.hatech-fmt-item{
-    height: 100%;
+@for $i from 1 through length($hatech-option-color) {
+    $item: nth($hatech-option-color, $i);
+    & .hatech-#{map_get($item, name)} {
+        background-color: map_get($item, color);
+    }
 }
+
 
 .hatech-fmt{
     @include table-data-formatter(auto);
 }
 .hatech-fmt-hand{
     @include table-data-formatter(pointer);
-}
-
-
-.hatech-success{
-   background: $hatech-success;
- }
-.hatech-warning{
-  background: $hatech-warning;
-}
-.hatech-danger{
-  background: $hatech-warning;
-}
-.hatech-info{
-  background: $hatech-info;
 }

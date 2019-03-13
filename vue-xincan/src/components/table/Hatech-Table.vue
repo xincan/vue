@@ -66,19 +66,17 @@
                           <template slot-scope="scope" >
                             <!--如果当前列存在格式化、点击参数则走第一个div-->
                             <div
-                                class="hatech-fmt-item"
                                 v-if="column.formatter && column.click"
                                 @click="onTableFmtClick({event:column.click,row: scope.row})"
                                 v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
                             ></div>
                             <!--如果当前列存在格式化则走第二个div-->
                             <div
-                                class="hatech-fmt-item"
                                 v-else-if="column.formatter"
                                 v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
                             ></div>
                             <!--否则则走第三个div-->
-                            <div v-else class="hatech-fmt-item" >{{ scope.row[column.prop] }}</div>
+                            <div v-else >{{ scope.row[column.prop] }}</div>
                           </template>
 
                       </el-table-column>

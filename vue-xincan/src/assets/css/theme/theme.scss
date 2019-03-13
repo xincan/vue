@@ -14,10 +14,13 @@ $hatech-left-nav-choose-color: #EAEAEA;   // 左侧导航选中箭头颜色
 
 $hatech-content-color: #F5F5F5;           // 系统主要内容区域背景颜色
 
-$hatech-success: #67C23A;                 // 成功操作颜色
-$hatech-warning: #E6a23c;                 // 警告操作颜色
-$hatech-danger: #F98B8B;                  // 危险操作颜色
-$hatech-info: #8EB9F1;                    // 信息操作颜色
+
+$hatech-option-color: (
+  (name: success, color: #67C23A),        // 成功操作颜色
+  (name: warning, color: #E6a23c),        // 警告操作颜色
+  (name: danger,  color: #F98B8B),        // 危险操作颜色
+  (name: info,    color: #8EB9F1)         // 信息操作颜色
+);
 
 $table-border-color: #EBEEF5;             // 表格边框颜色
 $table-icon-color: #5BBBBB;               // 表格操作按钮颜色
