@@ -5,7 +5,7 @@ import router from './router/routers';
 
 import 'font-awesome/css/font-awesome.css';
 import 'element-ui/lib/theme-chalk/index.css';
-import '../static/css/xincan.scss';
+import './assets/css/hatech.scss';
 
 import App from './App';
 

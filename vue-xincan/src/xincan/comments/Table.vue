@@ -654,6 +654,6 @@
 
 
 <style scoped lang="scss">
-    @import "../../../static/css/table";
-    @import "../../../static/css/dialog";
+    @import "../../assets/css/table";
+    @import "../../assets/css/dialog";
 </style>

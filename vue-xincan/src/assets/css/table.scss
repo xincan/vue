@@ -1,0 +1,116 @@
+
+/**
+ * 导入函数工具类
+ */
+@import "./mixin/function";
+
+.hatech {
+
+    & .hatech-search {
+        margin: 5px;
+        padding: 10px;
+        background: white;
+        clear: left;
+        & /deep/ .el-form{
+            & .el-input__inner {
+                height: 35px;
+                line-height: 35px;
+                padding: 0 5px;
+            }
+            & .el-form-item {
+                margin-bottom: 0px;
+            }
+        }
+    }
+
+    & .hatech-table {
+        margin: 5px;
+        padding: 0;
+        clear: left;
+        & .hatech-table-header {
+            display: block;
+            width: calc(100% - 2px);
+            border: 1px solid $table-border-color;
+            border-bottom: none;
+            float: left;
+            background: white;
+            & div > ul {
+                padding: 0;
+                margin: 0;
+                & > li {
+                    position: relative;
+                    padding: 0;
+                    margin: 0;
+                    list-style: none;
+                }
+            }
+
+            & .hatech-table-header-left{
+                @include header-option-align(left);
+            }
+            & .hatech-table-header-right{
+                @include header-option-align(right);
+            }
+        }
+
+        & .hatech-table-body {
+            & /deep/ .el-table {
+                & th{
+                  background-color: $table-first-line-color;
+                }
+                & td, & th {
+                    padding: 3px 0;
+                }
+                & td, & th.is-leaf {
+                    border-bottom: 1px solid $table-border-color;
+                }
+                & .caret-wrapper {
+                    height: 30px;
+                    width: 10px;
+                    & .sort-caret.ascending {
+                        top: 2px;
+                    }
+                    & .sort-caret.descending {
+                        bottom: 5px;
+                    }
+                }
+
+                & .descending .sort-caret.descending {
+                    border-top-color: $table-icon-color;
+                }
+
+                & i{
+                    font-size: 18px;
+                    position: relative;
+                    top: 4px;
+                    cursor: pointer;
+                    color: $table-icon-color;
+                    margin-right: 5px;
+                }
+                & .table-icon{
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        & .hatech-table-footer {
+            display: block;
+            width: calc(100% - 2px - 30px * 2);
+            padding: 5px 30px;
+            border: 1px solid $table-border-color;
+            border-top: none;
+            overflow: hidden;
+            background: white;
+            & /deep/ {
+                & .el-pagination.is-background {
+                    & .el-pager{
+                        & li:not(.disabled).active {
+                            background-color: $table-icon-color;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

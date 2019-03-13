@@ -1,10 +1,8 @@
 
-$hatech-line-color: #F1EFEF;   // 表格边框颜色
-
-// 头部操作按钮位置
-@mixin header-option-align($direction) {
-
-}
+/**
+ * 导入函数工具类
+ */
+@import "./mixin/function";
 
 .hatech {
 

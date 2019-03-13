@@ -69,5 +69,5 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../../../static/css/controller";
+  @import "../../assets/css/controller";
 </style>

@@ -2,11 +2,17 @@
 <!--左右布局-->
 
 <template>
-  <div class="scss">
-    <div class="scss-item scss-cell-10">
+  <div class="hatech">
+    <div class="hatech-item hatech-cell-3">
       <div></div>
     </div>
-    <div class="scss-item scss-cell-2">
+    <div class="hatech-item hatech-cell-3">
+      <div></div>
+    </div>
+    <div class="hatech-item hatech-cell-3">
+      <div></div>
+    </div>
+    <div class="hatech-item hatech-cell-3">
       <div></div>
     </div>
   </div>
@@ -20,27 +26,34 @@
 
 <style scoped lang="scss">
 
-  @import "../../../static/css/mixin/function";
+  @import "../../assets/css/mixin/function";
 
-  .scss{
+  .hatech{
     display: inline-block;
     width: 100%;
     height: 100%;
-    & .scss-item {
+    & .hatech-item {
       display: inline-block;
+      height: 100%;
+      margin-right: 10px;
       float: left;
       box-sizing: border-box;
-      height: 100%;
-      text-align: center;
-      @include box-boder-radius(0%);
-      &:last-child {
-        margin-right: 0px;
+      -webkit-box-sizing: border-box;
+      -o-box-sizing: border-box;
+      -ws--box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      &:first-child{
+          margin-left: 5px;
+      }
+      &:last-child{
+          margin-right: 0px;
       }
       & div{
         display: inline-block;
-        width: calc(100% - 5px);
+        width: 100%;
         height: 100%;
-        background: $scss-background-color;
+        @include box-boder-radius(4px);
+        background: $hatech-background-color;
       }
     }
   }

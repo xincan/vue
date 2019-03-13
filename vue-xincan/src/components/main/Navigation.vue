@@ -117,5 +117,5 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../../static/css/navigation";
+    @import "../../assets/css/navigation";
 </style>
