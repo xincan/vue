@@ -10,6 +10,7 @@
         margin: 5px;
         padding: 10px;
         background: white;
+        border: 1px solid $table-border-color;
         clear: left;
         & /deep/ .el-form{
             & .el-input__inner {

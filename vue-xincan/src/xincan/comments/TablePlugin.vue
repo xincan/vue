@@ -203,7 +203,7 @@
                         ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
                     ]
                     ,showTableOption: true                  // 是否显示列表右侧操作按钮
-                    ,cellOptionWidth: '150px'               // 表格右侧列操作按钮集合宽度
+                    ,cellOptionWidth: '120px'               // 表格右侧列操作按钮集合宽度
                     ,cellOption:[                           // 表格右侧列操作按钮集合
                          {name:'修改',        icon:'el-icon-edit',      type:'edit',    isShow: true}
                         ,{name:'查看',        icon:'el-icon-document',  type:'detail',  isShow: true}
