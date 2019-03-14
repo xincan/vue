@@ -13,6 +13,7 @@
         clear: left;
         & /deep/ .el-form{
             & .el-input__inner {
+                width: 160px;
                 height: 35px;
                 line-height: 35px;
                 padding: 0 5px;
@@ -74,13 +75,10 @@
                         bottom: 5px;
                     }
                 }
-
                 & .descending .sort-caret.descending {
                     border-top-color: $table-icon-color;
                 }
-
                 & i{
-
                     position: relative;
                     top: 4px;
                     cursor: pointer;
