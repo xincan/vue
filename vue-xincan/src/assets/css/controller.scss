@@ -6,8 +6,9 @@
     display: flex;
     display: -webkit-flex;
     flex-direction: row;
-    overflow: auto;
-    overflow-x: hidden;
+    overflow: hidden;
+    //overflow: auto;
+    //overflow-x: hidden;
     & .content-left {
         position: fixed;
         z-index: 9999999;
@@ -20,7 +21,9 @@
         margin-left: 165px;
         margin-top: 40px;
         padding: 10px;
-        width: calc(100% - 165px);
-        height: calc(100% - 60px);
+        width: calc(100% - 165px - 10px * 2);
+        height: calc(100% - 40px - 10px * 2);
+        overflow: auto;
+        overflow-x: hidden;
     }
 }

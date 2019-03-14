@@ -5,7 +5,7 @@
 
 <template>
 
-    <div class="hatech">
+    <div class="hatech-item">
 
         <!-- 按条件查询模块 -->
         <slot name="hatech-search"></slot>
