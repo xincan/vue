@@ -4,13 +4,12 @@
  */
 @import "./mixin/function";
 
-#navigation{
+#navigation {
     & .is-hide {
         max-height: 0;
         @include hatech-transition(.3s);
         overflow: hidden;
     }
-
     & .is-show {
         max-height: 400px;
         @include hatech-transition(1s);
@@ -39,6 +38,9 @@
             clear: both;
             cursor: pointer;
             margin-top: 1px;
+            &:first-child {
+              margin-top: 0px;
+            }
             &.active {
                 background: $hatech-left-nav-first-color;
                 &:hover {
