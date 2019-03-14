@@ -5,7 +5,7 @@
 
 <template>
 
-    <div class="istorm-hatech">
+    <div class="hatech-plugin-table">
 
         <!-- 按条件查询模块 -->
         <div class="hatech-search">
