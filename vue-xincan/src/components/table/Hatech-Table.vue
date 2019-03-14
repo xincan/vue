@@ -81,7 +81,7 @@
 
                       </el-table-column>
                       <!-- 表格操作列设置 -->
-                      <el-table-column prop="option" v-if="table.showTableOption" header-align="center" align="center" label="操作" fixed="right">
+                      <el-table-column prop="option" v-if="table.showTableOption" :width="table.cellOptionWidth" header-align="center" align="center" label="操作" fixed="right">
                           <template slot-scope="scope">
                               <i
                                   v-for="(option,key) in table.cellOption"
