@@ -3,7 +3,7 @@
 
 <template>
   <div class="hatech">
- 
+
     <div class="hatech-item hatech-cell-1">
       <div></div>
     </div>
@@ -178,5 +178,12 @@
 </script>
 
 <style scoped lang="scss">
-
+  .hatech-item {
+    & > div{
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      background: skyblue;
+    }
+  }
 </style>

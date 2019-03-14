@@ -98,8 +98,9 @@
                         ,path: ''
                         ,child: [
                            {id: 1322 ,name: '基本布局', icon: 'fa-home',    path: '/panel'}
+                          ,{id: 1323 ,name: '常用布局', icon: 'fa-home',    path: '/always/panel'}
                           ,{id: 1324 ,name: '常用按钮', icon: 'fa-globe',    path: '/button'}
-                          ,{id: 1323 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
+                          ,{id: 1325 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
                         ]
                     }]
                 }]

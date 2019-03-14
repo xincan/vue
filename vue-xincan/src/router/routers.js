@@ -13,8 +13,10 @@ import Plugin from "@/components/controller/PluginController";
 import Button from "@/xincan/comments/Button";
 import Table from "@/xincan/comments/Table";
 import Panel from "@/xincan/comments/Panel";
+import AlwaysPanel from "@/xincan/comments/AlwaysPanel";
 import TablePlugin from "@/xincan/comments/TablePlugin";
 import Select from "@/xincan/comments/Select";
+
 
 
 Vue.use(VueRouter);
@@ -45,20 +47,23 @@ const routes = [{
     path: '/plugin'
     ,component: Plugin
     ,children: [{
-        path: '/button'
-        ,component: Button
-    }, {
         path: '/table'
         ,component: Table
     }, {
-      path: '/table/plugin'
-      ,component: TablePlugin
-    }, {
-      path: '/select'
-      ,component: Select
+        path: '/table/plugin'
+        ,component: TablePlugin
     },{
         path: '/panel'
         ,component: Panel
+    },{
+      path: '/always/panel'
+      ,component: AlwaysPanel
+    },{
+        path: '/button'
+        ,component: Button
+    },{
+        path: '/select'
+        ,component: Select
     }]
 }, {
     path: '/',
