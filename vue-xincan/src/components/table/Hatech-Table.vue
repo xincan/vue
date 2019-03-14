@@ -5,7 +5,7 @@
 
 <template>
 
-    <div class="hatech-item">
+    <div class="istorm-hatech">
 
         <!-- 按条件查询模块 -->
         <slot name="hatech-search"></slot>
@@ -111,12 +111,10 @@
 
         <!-- 表格操作对应弹出层 -->
         <div class="hatech-dialog">
-
             <!-- 定义当前对象并将form传入dialog -->
             <HatechDialog :form="form" :hatechTable="this">
                 <slot slot="hatech-dialog" name="hatech-dialog-from"></slot>
             </HatechDialog>
-
         </div>
 
     </div>
