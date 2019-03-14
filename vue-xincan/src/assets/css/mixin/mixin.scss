@@ -37,7 +37,7 @@
  * @Description 边框圆角设置
  * @Date 2019/3/13 13:36
  */
-@mixin box-boder-radius($num:4px){
+@mixin box-border-radius($num:4px){
     -webkit-border-radius: $num;
     -o-border-radius: $num;
     -moz-border-radius: $num;
@@ -57,7 +57,7 @@
     padding: 4px 10px;
     border-radius: 4px;
     color:white;
-    @include box-boder-radius(4px);
+    @include box-border-radius(4px);
 }
 
 /**

@@ -1,14 +1,13 @@
 
 /**
+ * 导入函数工具类
+ */
+@import "mixin/mixin";
+
+/**
  * 导入修改elementUI的样式
  */
 @import "element-ui";
-
-/**
- * 导入函数工具类
- */
-@import "./mixin/function";
-
 
 html,body {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -30,7 +29,7 @@ html,body {
  */
 @for $i from 1 through 12 {
     .hatech-cell-#{$i} {
-        width: calc((100% / 12 * #{$i} - 10px));
+        width: calc((100% / 12 * #{$i} - 5px * 2));
     }
 }
 

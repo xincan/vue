@@ -25,9 +25,6 @@
 </script>
 
 <style scoped lang="scss">
-
-  @import "../../assets/css/mixin/function";
-
   .hatech{
     display: inline-block;
     width: 100%;
@@ -52,8 +49,8 @@
         display: inline-block;
         width: 100%;
         height: 100%;
-        @include box-boder-radius(4px);
-        background: $hatech-background-color;
+        border-radius: 4px;
+        background: hotpink;
       }
     }
   }
