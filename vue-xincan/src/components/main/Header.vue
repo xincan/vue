@@ -87,7 +87,7 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                           {id: 1311 ,name: '表格', icon: 'fa-globe',    path: '/table'}
+                           {id: 1311 ,name: '表格实例', icon: 'fa-globe',    path: '/table'}
                           ,{id: 1312 ,name: '表格封装', icon: 'fa-globe',    path: '/table/plugin'}
 
                         ]
@@ -97,9 +97,9 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                          {id: 1322 ,name: '布局', icon: 'fa-home',    path: '/panel'}
+                           {id: 1322 ,name: '基本布局', icon: 'fa-home',    path: '/panel'}
+                          ,{id: 1324 ,name: '常用按钮', icon: 'fa-globe',    path: '/button'}
                           ,{id: 1323 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
-                          ,{id: 1324 ,name: '按钮', icon: 'fa-globe',    path: '/button'}
                         ]
                     }]
                 }]
