@@ -80,7 +80,7 @@
                 },{
                     id: 13
                     ,name: '组件中心'
-                    ,path: '/comment'
+                    ,path: '/plugin'
                     ,child: [{
                         id: 131
                         ,name: '组件管理'
@@ -89,8 +89,7 @@
                         ,child: [
                            {id: 1311 ,name: '表格', icon: 'fa-globe',    path: '/table'}
                           ,{id: 1312 ,name: '表格封装', icon: 'fa-globe',    path: '/table/plugin'}
-                          ,{id: 1312 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
-                          ,{id: 1313 ,name: '按钮', icon: 'fa-globe',    path: '/button'}
+
                         ]
                     },{
                         id: 132
@@ -98,8 +97,9 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                           {id: 1321 ,name: '上下布局', icon: 'fa-home',    path: '/topBottomPanel'}
-                          ,{id: 1322 ,name: '左右布局', icon: 'fa-home',    path: '/leftRightPanel'}
+                          {id: 1322 ,name: '布局', icon: 'fa-home',    path: '/panel'}
+                          ,{id: 1323 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
+                          ,{id: 1324 ,name: '按钮', icon: 'fa-globe',    path: '/button'}
                         ]
                     }]
                 }]

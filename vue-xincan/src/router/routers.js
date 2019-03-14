@@ -3,16 +3,16 @@ import VueRouter from 'vue-router';
 
 import Dashboard from "@/dashbord/Dashboard";
 import Controller from "../components/controller/CenterController";
-import Comment from "@/components/controller/PluginController";
-import Button from "@/xincan/comments/Button";
-import Table from "@/xincan/comments/Table";
-import TopBottomPanel from "@/xincan/comments/TopBottomPanel";
-import LeftRightPanel from "@/xincan/comments/LeftRightPanel";
 import AreaManage from "@/warn/manager/AreaManage";
 import MenuManage from "@/warn/manager/MenuManage";
 import UserManage from "@/warn/manager/UserManage";
 import RoleManage from "@/warn/manager/RoleManage";
 import PermissionManage from "@/warn/manager/PermissionManage";
+
+import Plugin from "@/components/controller/PluginController";
+import Button from "@/xincan/comments/Button";
+import Table from "@/xincan/comments/Table";
+import Panel from "@/xincan/comments/Panel";
 import TablePlugin from "@/xincan/comments/TablePlugin";
 import Select from "@/xincan/comments/Select";
 
@@ -42,8 +42,8 @@ const routes = [{
         ,component: PermissionManage
     }]
 },{
-    path: '/comment'
-    ,component: Comment
+    path: '/plugin'
+    ,component: Plugin
     ,children: [{
         path: '/button'
         ,component: Button
@@ -56,12 +56,9 @@ const routes = [{
     }, {
       path: '/select'
       ,component: Select
-    }, {
-        path: '/topBottomPanel'
-        ,component: TopBottomPanel
-    }, {
-        path: '/leftRightPanel'
-        ,component: LeftRightPanel
+    },{
+        path: '/panel'
+        ,component: Panel
     }]
 }, {
     path: '/',
