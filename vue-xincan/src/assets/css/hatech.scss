@@ -51,45 +51,42 @@ html,body {
 }
 
 .hatech {
-  display: inline-block;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  height: calc(100% - 4px);
-  -webkit-box-sizing: border-box;
-  -o-box-sizing: border-box;
-  -ws--box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-
-  & .hatech-pmw {
-    margin: 5px 0px 5px 0px!important;
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
     width: 100%;
-    &:first-child{
-      margin: -5px 0px 5px 0!important;
+    height: calc(100% - 4px);
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ws--box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    & .hatech-pmw {
+        margin: 5px 0px 5px 0px!important;
+        width: 100%;
+        &:first-child{
+            margin: -5px 0px 5px 0!important;
+        }
     }
-  }
 
-  & .hatech-row {
-      display: inline-block;
-      width: 100%;
-      height: calc(100% - 5px);
-      padding-top: 5px;
-      & .hatech-item {
-          display: inline-block;
-          height: 100%;
-          margin: 0px 5px;
-          float: left;
-          -webkit-box-sizing: border-box;
-          -o-box-sizing: border-box;
-          -ws--box-sizing: border-box;
-          -moz-box-sizing: border-box;
-          box-sizing: border-box;
-          &:last-child{
-              margin-right: 0px;
-          }
-      }
-  }
-
-
+    & .hatech-row {
+        display: inline-block;
+        width: 100%;
+        height: calc(100% - 5px);
+        padding-top: 5px;
+        & .hatech-item {
+            display: inline-block;
+            height: 100%;
+            margin: 0px 5px;
+            float: left;
+            -webkit-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ws--box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            &:last-child{
+                margin-right: 0px;
+            }
+        }
+    }
 }

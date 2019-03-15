@@ -6,13 +6,13 @@
 
       <div class="hatech-row">
 
-        <div class="hatech-item hatech-cell-3 left"></div>
+        <div class="hatech-item hatech-cell-3" style="background: #1d21ff"></div>
 
-        <div class="hatech-item hatech-cell-9 right">
+        <div class="hatech-item hatech-cell-9" >
 
-          <div class="hatech-row" style="height: 100%">
+          <div class="hatech-row">
 
-            <div class="hatech-item hatech-cell-12 hatech-pmw" style="height:calc(20% - 5px);background: #62b4ff"></div>
+            <div class="hatech-item hatech-cell-12 hatech-pmw" style="height:calc(20%);background: #62b4ff"></div>
             <div class="hatech-item hatech-cell-12 hatech-pmw" style="height:calc(80% - 5px); margin-top:10px;background: #ffc05d"></div>
 
           </div>
@@ -30,12 +30,5 @@
 </script>
 
 <style scoped lang="scss">
-  .left{
-    background: #1d21ff;
 
-  }
-
-  .right{
-    /*background: burlywood;*/
-  }
 </style>
