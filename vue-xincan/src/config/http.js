@@ -12,15 +12,12 @@ axios.interceptors.request.use(
         // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
         config.data = JSON.stringify(config.data);
         config.headers = {
-          // "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Headers": "X-Requested-With",
-          // "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
-          // "X-Powered-By": " 3.2.1",
           "Content-Type": "application/json;charset=UTF-8"
         }
         // if(token){
         //   config.params = {'token':token}
         // }
+
         return config;
     },
     error => {
