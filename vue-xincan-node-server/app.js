@@ -12,7 +12,7 @@ app.all('*', function(req, res, next) {
 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
 	res.header("X-Powered-By",' 3.2.1');
-	res.header("Content-Type", "application/json;charset=utf-8");
+	res.header("Content-Type", "application/json;charset=UTF-8");
 	next();
  });
 
@@ -160,8 +160,13 @@ app.get('/api/table/select',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let sql = "SELECT * FROM table_cell_show where name = '" + param.name + "'";
 	dataBaseOption(sql, function(result){
+		let resultObject = {
+			code:200
+			,msg: "查询成功"
+			,data: result
+		};
 		res.status(200),
-		res.json(result);
+		res.json(resultObject);
 	});
 });
 
@@ -175,8 +180,13 @@ app.get('/api/table/status',function(req,res){
 	dataBaseOption(deleteSql, function(result){
 		// 增加显隐列数据
 		dataBaseOption(insertSql, function(result){
+			let resultObject = {
+				code:200
+				,msg: "更新成功"
+				,data: result
+			};
 			res.status(200),
-			res.json(result);
+			res.json(resultObject);
 		});
 	});
 });

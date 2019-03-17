@@ -121,10 +121,6 @@
 </template>
 
 <script>
-
-    // 引用Axios异步数据获取插件
-    import Axios from 'axios';
-
     // 引用弹出层插件
     import HatechDialog from '@/components/table/Hatech-Dialog';
 
@@ -155,9 +151,10 @@
              */
             initCellIsHide(){
               let that = this;
-              Axios.get(this.table.showCellUrl, {
-                params: {name:this.table.id}
+              this.$get(this.table.showCellUrl, {
+                name:this.table.id
               }).then( response => {
+                  console.log(response)
                   // 将后台读取字符串JSON数据，转换成JSON数据
                   let cell = JSON.parse(response.data[0].content);
                   if(cell.length > 0){
@@ -201,9 +198,10 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作列数据保存到后台
-                Axios.get(this.table.dropCellUrl, {
-                    params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
-                }).then( response => {}).catch( error => {console.log(error);});
+                this.$get(this.table.dropCellUrl, {
+                    name:this.table.id, content: "["+cellString.substr(1)+"]"
+                }).then( response => {
+                }).catch( error => {console.log(error);});
             }
 
             /**
@@ -239,13 +237,11 @@
              */
             ,initTableData(){
                 let that = this;
-                Axios.get(this.table.url, {
-                  params: { page:this.table.page, size:this.table.size, param:this.table.search }
+                this.$get(this.table.url, {
+                  page:this.table.page, size:this.table.size, param:this.table.search
                 }).then( response => {
-                    that.$nextTick( ()=> {
-                        that.table.count = response.data.count;
-                        that.table.data = response.data.data;
-                    });
+                    that.table.count = response.count;
+                    that.table.data = response.data;
                 }).catch( error => {console.log(error);});
             }
 

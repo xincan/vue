@@ -192,8 +192,6 @@
 </template>
 
 <script>
-    // 引用Axios异步数据获取插件
-    import Axios from 'axios';
 
     export default {
 
@@ -358,8 +356,8 @@
              */
             initCellIsHide(){
                 let that = this;
-                Axios.get("http://localhost:3000/api/table/select", {
-                  params: {name:this.table.id}
+                this.$get("http://localhost:3000/api/table/select", {
+                  name:this.table.id
                 }).then( response => {
                     // 将后台读取字符串JSON数据，转换成JSON数据
                     let cell = JSON.parse(response.data[0].content);
@@ -376,7 +374,7 @@
                             });
                         });
                         that.table.column=[];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
-                        that.$nextTick(()=>{    // 数据DOM元素重新渲染之前，加载数据
+                        this.$nextTick(() => {
                             that.table.column = newColumn;
                         });
                     }
@@ -405,9 +403,10 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                Axios.get("http://localhost:3000/api/table/status", {
-                  params: {name:this.table.id, content: "["+cellString.substr(1)+"]" }
-                }).then( response => {}).catch( error => {console.log(error);});
+                this.$get("http://localhost:3000/api/table/status", {
+                  name:this.table.id, content: "["+cellString.substr(1)+"]"
+                }).then( response => {
+                }).catch( error => {console.log(error);});
 
             }
 
@@ -445,13 +444,11 @@
              */
             ,initTableData(){
                 let that = this;
-                Axios.get("http://localhost:3000/api/user", {
-                    params: { page:this.table.page, size:this.table.size, param:this.table.param }
+                this.$get("http://localhost:3000/api/user", {
+                   page:this.table.page, size:this.table.size, param:this.table.param
                 }).then( response => {
-                    that.$nextTick( ()=> {
-                        that.table.count = response.data.count;
-                        that.table.data = response.data.data;
-                    });
+                      that.table.count = response.count;
+                      that.table.data = response.data;
                 }).catch( error => {console.log(error);});
             }
 
@@ -546,10 +543,10 @@
                     selected.forEach(item => {
                         id += "," + item.id;
                     });
-                    Axios.get("http://localhost:3000/api/user/delete", {
-                        params: {id:id.substr(1)}
+                    that.$get("http://localhost:3000/api/user/delete", {
+                        id:id.substr(1)
                     }).then(function (response) {
-                        that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                        that.$message({message: response.msg ,center: true ,type: 'success'});
                         that.$nextTick(()=>{ that.initTableData(); });
                     }).catch(function (error) {console.log(error)});
                 }).catch(() => {});
@@ -580,10 +577,10 @@
                   ,cancelButtonText: '取消'
                   ,type: 'warning'
                 }).then(() => {
-                    Axios.get("http://localhost:3000/api/user/delete", {
-                        params: {id:row.id}
+                    that.$get("http://localhost:3000/api/user/delete", {
+                        id:row.id
                     }).then( response => {
-                        that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                        that.$message({message: response.msg ,center: true ,type: 'success'});
                         that.$nextTick(()=>{ that.initTableData(); });
                     }).catch( error => {console.log(error);});
                 }).catch(() => {});
@@ -606,12 +603,13 @@
                       ,cancelButtonText: '取消'
                       ,type: 'warning'
                     }).then(() => {
+
                         // 关闭弹出层
                         that.form.dialogFormVisible = false;
-                        Axios.get("http://localhost:3000/api/user/edit", {
-                          params: this.form.data
-                        }).then(function (response) {
-                          that.$message({message: response.data.msg ,center: true ,type: 'success'});
+                        that.$get("http://localhost:3000/api/user/edit",
+                          this.form.data
+                        ).then(function (response) {
+                          that.$message({message: response.msg ,center: true ,type: 'success'});
                           that.$nextTick(()=>{ that.initTableData(); });
                         }).catch(function (error) {
                           that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
