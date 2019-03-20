@@ -181,7 +181,7 @@
                         ,{label:'登录密码',   prop: 'loginPassword',  width:'auto', isHide: true}
                         ,{label:'用户名称',   prop: 'name',           width:'auto', isHide: true,
                           formatter: {
-                            田东:'<span class="hatech-fmt-hand hatech-success">${value}</span>'
+                            田东:'<span class="hatech-fmt hatech-success">${value}</span>'
                             ,三国张飞:'<span class="hatech-fmt-hand hatech-warning">${value}</span>'
                             ,王启超:'<span class="hatech-fmt-hand hatech-danger">${value}</span>'
                             ,管理员:'<span class="hatech-fmt-hand hatech-info">${value}</span>'

@@ -22,6 +22,16 @@
 
       </el-form>
 
+        <el-switch
+
+          :active-text="select.name"
+          v-model="select.value"
+          active-color="skyblue"
+          inactive-color="gray"
+          active-value="1"
+          inactive-value="0">
+        </el-switch>
+
     </div>
 </template>
 
@@ -56,7 +66,13 @@
                 id: '3',
                 label: '陈皮',
               }]
+
+              ,select: {
+                name: '启用'
+                , value: 1
+              }
             }
+
         }
         ,method(){
         }
