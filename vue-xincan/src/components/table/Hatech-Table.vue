@@ -44,6 +44,7 @@
                     :data="table.data"
                     :ref="table.id"
                     :style="'width: ' + table.tableWidth"
+                    @row-click="_rowClick"
                     @selection-change="tableChangeRows"
                     @header-dragend="tableCellDragend"
                   >
@@ -127,8 +128,9 @@
     export default {
         components: { HatechDialog }
         ,props: {
-            table: { type: Object ,required: true }
-            ,form: { type: Object ,required: true }
+            table: { type: Object}
+            ,form: { type: Object}
+            ,rowClick: {type: Function}
 
         }
         ,data() {
@@ -140,10 +142,18 @@
             // 通过数据库查询用户保存的表格显隐列显示方式
             this.initCellIsHide();
             // 初始化加载后台表格数据
-            this.initTableData();
+            // this.initTableData();
+            if(this.table.autoInit){
+              this.$emit("initTable", {});
+            }else{
+              this._initTable();
+            }
+
         }
 
         ,methods: {
+
+
             /**
              * 初始化数据
              * 初始化读取数据库隐藏列,每列的宽度
@@ -154,7 +164,6 @@
               this.$get(this.table.showCellUrl, {
                 name:this.table.id
               }).then( response => {
-                  console.log(response)
                   // 将后台读取字符串JSON数据，转换成JSON数据
                   let cell = JSON.parse(response.data[0].content);
                   if(cell.length > 0){
@@ -175,6 +184,15 @@
                     });
                   }
                 }).catch( error => {console.log(error);});
+            }
+
+            /**
+             * 表格操作
+             * 表格行选中操作
+             * @Method initCellIsHide
+             */
+            ,_rowClick(row){
+              this.$emit("rowClick",row);
             }
 
             /**
@@ -235,10 +253,10 @@
              * 初始化加载列表数据
              * @Method initTableData
              */
-            ,initTableData(){
+            ,_initTable(){
                 let that = this;
                 this.$get(this.table.url, {
-                  page:this.table.page, size:this.table.size, param:this.table.search
+                    page:this.table.page, size:this.table.size, param:this.table.search
                 }).then( response => {
                     that.table.count = response.count;
                     that.table.data = response.data;
@@ -252,7 +270,7 @@
              */
             ,tableSizeChange(size) {
                 this.table.size = size;
-                this.initTableData();
+                this._initTable();
             }
 
             /**
@@ -263,7 +281,7 @@
              */
             ,tableCurrentChange(page) {
                 this.table.page = page;
-                this.initTableData();
+                this._initTable();
             }
 
             /**

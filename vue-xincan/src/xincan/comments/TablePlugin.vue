@@ -11,7 +11,14 @@
         :table="table"      定义table属性，用于父组件传值到子组件，子组件用props{table:Object}接收
         :form="form"        定义form属性， 用于父组件传值到子组件，子组件用props{form:Object}接收
     -->
-    <HatechTable ref="hatechTable" :table="table" :form="form" >
+    <HatechTable
+        ref="hatechTable"
+        :table="table"
+        :form="form"
+        @rowClick="tableRowClick"
+        @initTable="initTable"
+
+        >
         <!--
             按条件查询模块
             slot="hatech-search"   slot:表示table组件中的插槽，hatech-search：表示插槽名称，又称为具名插槽：必写项
@@ -161,8 +168,9 @@
             return {
                 // 表格信息设置
                 table:{
-                     title:'用户列表'                                  // 表格名称
-                    ,id:'admin' + '-' + 'user-table'                  // 表格ID，系统中表格唯一
+                     title:'用户列表'                                       // 表格名称
+                    ,id:'admin' + '-' + 'user-table'                      // 表格ID，系统中表格唯一
+                    ,autoInit: false                                        // 自动加载：true,手动加载false
                     ,url:'http://localhost:3000/api/user'                 // 数据访问路径
                     ,tableWidth:'100%'
                     ,showCellUrl:'http://localhost:3000/api/table/select' // 显隐列读取用户习惯
@@ -259,12 +267,37 @@
         }
 
         ,methods: {
+
+            /**
+             * 手动初始化数据
+             * 初始化读取数据库隐藏列,每列的宽度
+             * @Method initCellIsHide
+             */
+            initTable(param){
+                let that = this;
+                this.$get(this.table.url, {
+                    page:this.table.page, size:this.table.size, param:this.table.search
+                }).then( response => {
+                    that.table.count = response.count;
+                    that.table.data = response.data;
+                }).catch( error => {console.log(error);});
+            }
+
+            /**
+             * 表格行操作
+             * 点击表格任意一行，获取数据
+             * @Method initCellIsHide
+             */
+            ,tableRowClick(row, column, event){
+                console.log(row)
+            }
+
             /**
              * 表单格式化点击事件
              * 带html格式化的点击事件
              * @Method onTableSearch
              */
-            fmtNameClick(param){
+            ,fmtNameClick(param){
               alert(param.row.name);
             }
 
