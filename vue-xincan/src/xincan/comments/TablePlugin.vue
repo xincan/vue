@@ -170,37 +170,42 @@
             return {
                 // 表格信息设置
                 table:{
-                     title:'用户列表'                                      // 表格名称
-                    ,id:'admin' + '-' + 'user-table'                      // 表格ID，系统中表格唯一
-                    ,autoInit: false                                      // 自动加载：true,手动加载false
-                    ,url:'http://localhost:3000/api/user'                 // 数据访问路径
-                    ,tableWidth:'100%'
-                    ,showCellUrl:'http://localhost:3000/api/table/select' // 显隐列读取用户习惯
-                    ,dropCellUrl:'http://localhost:3000/api/table/status' // 拖拽列保存入库路径，记录用户习惯
-                    ,page:1                                               // 分页，当前页
-                    ,size:10                                              // 分页，每页默认显示10条数据
-                    ,sortName:""                                          // 分页排序字段名称
-                    ,sortType:"ASC"                                       // 分页排序方式DESC,ASC
-                    ,pageSize: [10, 20, 50, 100]                          // 分页，设置默认页数
-                    ,isIndexShow: true                                    // 表格编号列显示隐藏设置
-                    ,data: []                                             // 表格数据渲染
-                    ,select: []                                           // 数据多选
-                    ,count: 0                                             // 当前表格数据总数
-                    ,search:{                                             // 查询条件
+                     title:'用户列表'                         // 表格名称
+                    ,id:'admin' + '-' + 'user-table'         // 表格ID，系统中表格唯一
+                    ,autoInit: false                         // 自动加载：true,手动加载false
+                    ,url:'/api/user'                         // 数据访问路径
+                    ,tableWidth:'100%'                       // 表格宽度设定
+                    ,showCellUrl:'/api/table/select'         // 显隐列读取用户习惯
+                    ,dropCellUrl:'/api/table/status'         // 拖拽列保存入库路径，记录用户习惯
+                    ,page:1                                  // 分页，当前页
+                    ,size:10                                 // 分页，每页默认显示10条数据
+                    ,sortName:"name"                             // 分页排序字段名称
+                    ,sortType:"ASC"                          // 分页排序方式DESC,ASC
+                    ,pageSize: [10, 20, 50, 100]             // 分页，设置默认页数
+                    ,isIndexShow: true                       // 表格编号列显示隐藏设置
+                    ,data: []                                // 表格数据渲染
+                    ,select: []                              // 数据多选
+                    ,count: 0                                // 当前表格数据总数
+                    ,search:{                                // 查询条件
                     }
-                    ,column: [                                        // 表格头部信息、列的显隐设置
+                    ,column: [                               // 表格头部信息、列的显隐设置
                          {label:'登录名称',   prop: 'loginName',      width:'auto', isHide: true}
                         ,{label:'登录密码',   prop: 'loginPassword',  width:'auto', isHide: true}
                         ,{label:'用户名称',   prop: 'name',           width:'auto', isHide: true,
-                          formatter: {
-                            田东:'<span class="hatech-fmt hatech-success">${value}</span>'
-                            ,三国张飞:'<span class="hatech-fmt-hand hatech-warning">${value}</span>'
-                            ,王启超:'<span class="hatech-fmt-hand hatech-danger">${value}</span>'
-                            ,管理员:'<span class="hatech-fmt-hand hatech-info">${value}</span>'
-                          }
-                          ,click: 'fmtNameClick'
-                        }
-                        ,{label:'用户性别',   prop: 'sex',            width:'auto', isHide: true, formatter: {1: '<i class="fa fa-male"></i>', 0: '<i class="fa fa-female"></i>'}, click: 'fmtSexClick'}
+                            formatter: {
+                              田东:'<span class="hatech-fmt hatech-success">${value}</span>'
+                              ,三国张飞:'<span class="hatech-fmt-hand hatech-warning">${value}</span>'
+                              ,王启超:'<span class="hatech-fmt-hand hatech-danger">${value}</span>'
+                              ,管理员:'<span class="hatech-fmt-hand hatech-info">${value}</span>'
+                            }
+                            ,click: 'fmtNameClick'           // 数据格式化点击事件
+                         }
+                        ,{label:'用户性别',   prop: 'sex',            width:'auto', isHide: true,
+                            formatter: {
+                              1: '<i class="fa fa-male"></i>',
+                              0: '<i class="fa fa-female"></i>'},
+                              click: 'fmtSexClick'          // 数据格式化点击事件
+                         }
                         ,{label:'用户电话',   prop: 'phone',          width:'auto', isHide: true}
                         ,{label:'用户邮箱',   prop: 'email',          width:'auto', isHide: true}
                         ,{label:'所属地区',   prop: 'areaId',         width:'auto', isHide: true}
@@ -288,7 +293,9 @@
                 }).then( response => {
                     that.table.count = response.count;
                     that.table.data = response.data;
-                }).catch( error => {console.log(error);});
+                }).catch( error => {
+                    console.log(error);
+                });
             }
 
             /**
@@ -326,7 +333,7 @@
              */
             ,onTableSearch(){
                 console.log("父组件调用子组件函数");
-                this.$refs.hatechTable.initTableData();
+                this.$refs.hatechTable._initTable();
             }
 
             /**
@@ -392,11 +399,11 @@
                     type: 'warning'
                 }).then(() => {
                     select.forEach(item => { id += "," + item.id; });
-                    Axios.get("http://localhost:3000/api/user/delete", {
-                        params: {id:id.substr(1)}
+                    this.$post("/api/user/delete", {
+                      id:id.substr(1)
                     }).then(function (response) {
-                        that.$message({message: response.data.msg ,center: true ,type: 'success'});
-                        that.$nextTick(()=>{ that.$refs.hatechTable.initTableData(); });
+                        that.$message({message: response.msg ,center: true ,type: 'success'});
+                        that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
                     }).catch(function (error) {console.log(error)});
                 }).catch(() => {});
             }
@@ -408,11 +415,10 @@
              */
             ,formSubmit(result) {
                 let that = this;
-                Axios.get("http://localhost:3000/api/user/edit", {
-                    params: result.row
-                }).then(response => {
-                    that.$message({message: response.data.msg ,center: true ,type: 'success'});
-                    that.$nextTick(()=>{ that.$refs.hatechTable.initTableData(); });
+                this.$put("/api/user/edit", result.row).then(response => {
+                    console.log(response);
+                    that.$message({message: response.msg ,center: true ,type: 'success'});
+                    that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
                 }).catch(function (error) {
                     that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
                 });

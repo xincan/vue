@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import router from './router/routers';
-import {get,post,patch,put} from './config/http'
+import {get,post,patch,put, del} from './config/http'
 
 
 import 'font-awesome/css/font-awesome.css';
@@ -16,6 +16,7 @@ Vue.prototype.$get = get;
 Vue.prototype.$post = post;
 Vue.prototype.$patch = patch;
 Vue.prototype.$put = put;
+Vue.prototype.$delete = del;
 
 Vue.use(ElementUI);
 

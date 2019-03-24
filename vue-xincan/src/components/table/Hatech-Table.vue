@@ -21,7 +21,7 @@
                               v-if="option.isShow"
                               :key="key"
                               :title="option.name"
-                              @click="hatechTableOptionBtn({key:key, type:option.type, state: 'header'})"
+                              @click="hatechTableOptionBtn({key:key, type:option.type})"
                           >
                               <i :class="option.icon"></i>
                           </li>
@@ -90,7 +90,7 @@
                                   :key="key"
                                   :title="option.name"
                                   :class="option.icon"
-                                  @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row, state: 'cell'})"
+                                  @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row})"
                               ></i>
                           </template>
                       </el-table-column>
@@ -134,7 +134,6 @@
         }
         ,data() {
             return {
-               tableClickArea:''
             }
         }
         ,mounted() {
@@ -302,16 +301,11 @@
              * @Method formSubmit
              */
             ,hatechTableOptionBtn(param){
-
-                if( !(param.state === 'header' && (this.tableClickArea === 'header' || this.tableClickArea === '' )) ) {
-                    this.$refs[this.table.id].clearSelection();     // 清空表格选中信息
-                    this.table.select = [];
-                    if(param.state === 'cell'){
-                        this.table.select.push(param.row);
-                    }
+                // 判断如果param.row有数据说明是点击列表右侧按钮，否则是列表头部右侧按钮
+                if(param.row !== undefined){
+                    this.table.select.push(param.row);
                 }
                 param.select = this.table.select;
-                this.tableClickArea = param.state;
                 this.$parent[param.type] ? this.$parent[param.type].call(this, param) : '';
             }
 

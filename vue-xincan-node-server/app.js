@@ -45,7 +45,7 @@ app.get('/api/user',function(req,res){
 
 		console.log(param);
 
-		if(param.sortName === undefined || param.sortName.length === 0){
+		if(param.sortName !== undefined && param.sortName.length !== 0){
 			sortName = param.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
 			sortType = param.sortType;
 		}
@@ -111,8 +111,9 @@ app.get('/api/user',function(req,res){
 
 
 // 用户操作 根据条件添加修改用户信息
-app.get('/api/user/edit',function(req,res){
-	let param = url.parse(req.url,true).query
+app.put('/api/user/edit',function(req,res){
+    console.log(req.body);
+	let param = req.body
 		,sql = "";
 
 	if(param.id == undefined){
@@ -145,10 +146,10 @@ app.get('/api/user/edit',function(req,res){
 });
 
 // 用户操作 根据条件添加修改用户信息
-app.get('/api/user/delete',function(req,res){
-	let param = url.parse(req.url,true).query;
+app.post('/api/user/delete',function(req,res){
+    console.log(req)
+	let param = req.body;
 	let id = "";
-
 	let ids = param.id.split(",");
 	for(let i  = 0; i < ids.length; i++){
 		id += ",'" + ids[i] + "'";
@@ -186,7 +187,7 @@ app.get('/api/table/select',function(req,res){
 
 // 表格显隐列样式 更新当前表格列的信息
 app.get('/api/table/status',function(req,res){
-	var param = url.parse(req.url,true).query;
+	let param = url.parse(req.url,true).query;
 	let deleteSql = "delete from table_cell_show where name = '" + param.name + "'";
 	let insertSql = "insert into table_cell_show (id, name, content, create_time) " +
 		"value (replace(UUID(), '-', ''), '" + param.name + "', '" + param.content + "', now())";

@@ -122,3 +122,21 @@ export function put(url,data = {}){
         });
     });
 };
+
+/**
+ * 封装put请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function del(url,data = {}){
+  return new Promise((resolve,reject) => {
+    axios.delete(url,data)
+      .then(response => {
+        resolve(response.data);
+      },err => {
+        reject(err);
+      });
+  });
+};
