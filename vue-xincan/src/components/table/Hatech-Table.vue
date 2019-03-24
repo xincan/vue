@@ -130,7 +130,6 @@
         ,props: {
             table: { type: Object}
             ,form: { type: Object}
-            ,rowClick: {type: Function}
 
         }
         ,data() {
@@ -144,7 +143,7 @@
             // 初始化加载后台表格数据
             // this.initTableData();
             if(this.table.autoInit){
-              this.$emit("initTable", {});
+              this.$emit("init-table", {});
             }else{
               this._initTable();
             }
@@ -192,7 +191,7 @@
              * @Method initCellIsHide
              */
             ,_rowClick(row){
-              this.$emit("rowClick",row);
+              this.$emit("row-click",row);
             }
 
             /**

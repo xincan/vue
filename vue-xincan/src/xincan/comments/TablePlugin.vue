@@ -7,16 +7,18 @@
 
     <!--
         同创数据表格调用实列
-        ref="hatechTable"   定义ref属性值，用于父组件调用子组件对象、函数、属性等
-        :table="table"      定义table属性，用于父组件传值到子组件，子组件用props{table:Object}接收
-        :form="form"        定义form属性， 用于父组件传值到子组件，子组件用props{form:Object}接收
+        ref="hatechTable"           定义ref属性值，用于父组件调用子组件对象、函数、属性等
+        :table="table"              定义table属性，用于父组件传值到子组件，子组件用props{table:Object}接收
+        :form="form"                定义form属性， 用于父组件传值到子组件，子组件用props{form:Object}接收
+        @row-click="tableRowClick"  定义row-click事件，用于表格单击行数据操作
+        @init-table="initTable"     定义init-table事件，用户表格初始化数据操作
     -->
     <HatechTable
         ref="hatechTable"
         :table="table"
         :form="form"
-        @rowClick="tableRowClick"
-        @initTable="initTable"
+        @row-click="tableRowClick"
+        @init-table="initTable"
 
         >
         <!--
@@ -168,9 +170,9 @@
             return {
                 // 表格信息设置
                 table:{
-                     title:'用户列表'                                       // 表格名称
+                     title:'用户列表'                                      // 表格名称
                     ,id:'admin' + '-' + 'user-table'                      // 表格ID，系统中表格唯一
-                    ,autoInit: false                                        // 自动加载：true,手动加载false
+                    ,autoInit: false                                      // 自动加载：true,手动加载false
                     ,url:'http://localhost:3000/api/user'                 // 数据访问路径
                     ,tableWidth:'100%'
                     ,showCellUrl:'http://localhost:3000/api/table/select' // 显隐列读取用户习惯
@@ -295,6 +297,7 @@
              * @Method initCellIsHide
              */
             ,tableRowClick(row, column, event){
+                alert(row.toString());
                 console.log(row)
             }
 
