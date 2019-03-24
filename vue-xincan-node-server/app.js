@@ -35,12 +35,23 @@ let dataBaseOption = function(sql, callback){
 
 // 用户操作 根据条件查询用户分页信息
 app.get('/api/user',function(req,res){
-	let search = url.parse(req.url,true).search,
-		param = url.parse(req.url,true).query
-		page = (param.page - 1) * param.size
-		size = param.size
-		sqlCount = "SELECT count(*) count FROM employee where 1=1 ";
-		sql  = "SELECT ";
+	let search = url.parse(req.url,true).search
+		,param = url.parse(req.url,true).query
+		,page = (param.page - 1) * param.size
+		,size = param.size;
+
+		let sortName = "";
+		let sortType = param.sortType;
+
+		console.log(param);
+
+		if(param.sortName === undefined || param.sortName.length === 0){
+			sortName = param.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
+			sortType = param.sortType;
+		}
+
+		let sqlCount = "SELECT count(*) count FROM employee where 1=1 ";
+		let sql  = "SELECT ";
 		sql += "id ";
 		sql += ",login_name loginName ";
 		sql += ",login_password loginPassword ";
@@ -52,6 +63,9 @@ app.get('/api/user',function(req,res){
 		sql += ",organization_id organizationId ";
 		sql += ",date_format(create_time,'%Y-%m-%d %H:%m:%i') createTime ";
 		sql += " FROM employee where 1=1 "; // 查询用户信息
+
+		console.log(sortName);
+		console.log(sortType);
 
 	let searchParam = JSON.parse(param.param);
 	if(search != null){
@@ -76,7 +90,7 @@ app.get('/api/user',function(req,res){
 			sql += " and organization_id='" + searchParam.organizationId + "'";
 		}
 	}
-	sql += " order by create_time desc";
+	sql += " order by " + (sortName.length === 0 ? "create_time" : sortName) + " " + sortType;
 	sql += " limit " + page + ", " + size;
 	console.log("------------------------------------------");
 	console.log(sqlCount);

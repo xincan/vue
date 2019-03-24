@@ -256,7 +256,11 @@
             ,_initTable(){
                 let that = this;
                 this.$get(this.table.url, {
-                    page:this.table.page, size:this.table.size, param:this.table.search
+                    page:this.table.page
+                    ,size:this.table.size
+                    ,sortName:this.table.sortName
+                    ,sortType: this.table.sortType
+                    ,param:this.table.search
                 }).then( response => {
                     that.table.count = response.count;
                     that.table.data = response.data;

@@ -175,14 +175,16 @@
                     ,tableWidth:'100%'
                     ,showCellUrl:'http://localhost:3000/api/table/select' // 显隐列读取用户习惯
                     ,dropCellUrl:'http://localhost:3000/api/table/status' // 拖拽列保存入库路径，记录用户习惯
-                    ,page:1                                           // 分页，当前页
-                    ,size:10                                          // 分页，每页默认显示10条数据
-                    ,pageSize: [10, 20, 50, 100]                      // 分页，设置默认页数
-                    ,isIndexShow: true                                // 表格编号列显示隐藏设置
-                    ,data: []                                         // 表格数据渲染
-                    ,select: []                                       // 数据多选
-                    ,count: 0                                         // 当前表格数据总数
-                    ,search:{                                         // 查询条件
+                    ,page:1                                               // 分页，当前页
+                    ,size:10                                              // 分页，每页默认显示10条数据
+                    ,sortName:""                                          // 分页排序字段名称
+                    ,sortType:"ASC  "                                     // 分页排序方式DESC,ASC
+                    ,pageSize: [10, 20, 50, 100]                          // 分页，设置默认页数
+                    ,isIndexShow: true                                    // 表格编号列显示隐藏设置
+                    ,data: []                                             // 表格数据渲染
+                    ,select: []                                           // 数据多选
+                    ,count: 0                                             // 当前表格数据总数
+                    ,search:{                                             // 查询条件
                     }
                     ,column: [                                        // 表格头部信息、列的显隐设置
                          {label:'登录名称',   prop: 'loginName',      width:'auto', isHide: true}
@@ -276,7 +278,11 @@
             initTable(param){
                 let that = this;
                 this.$get(this.table.url, {
-                    page:this.table.page, size:this.table.size, param:this.table.search
+                  page:this.table.page
+                  ,size:this.table.size
+                  ,sortName:this.table.sortName
+                  ,sortType: this.table.sortType
+                  ,param:this.table.search
                 }).then( response => {
                     that.table.count = response.count;
                     that.table.data = response.data;
