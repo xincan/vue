@@ -9,18 +9,18 @@
 
         <!-- 按条件查询模块 -->
         <div class="hatech-search">
-            <el-form :inline="true" :model="table.param" class="demo-form-inline">
-                <el-form-item><el-input v-model="table.param.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
-                <el-form-item><el-input v-model="table.param.name" placeholder="请输入用户名称"></el-input></el-form-item>
+            <el-form :inline="true" :model="table.search" class="demo-form-inline">
+                <el-form-item><el-input v-model="table.search.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
+                <el-form-item><el-input v-model="table.search.name" placeholder="请输入用户名称"></el-input></el-form-item>
                 <el-form-item>
-                  <el-select v-model="table.param.sex" placeholder="请选择性别">
+                  <el-select v-model="table.search.sex" placeholder="请选择性别">
                     <el-option label="请选择性别" value=""></el-option>
                     <el-option label="男" value="1"></el-option>
                     <el-option label="女" value="0"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item><el-input v-model="table.param.areaId" placeholder="请出入用户所在地区"></el-input></el-form-item>
-                <el-form-item><el-input v-model="table.param.organizationId" placeholder="请输入用户所属机构"></el-input></el-form-item>
+                <el-form-item><el-input v-model="table.search.areaId" placeholder="请出入用户所在地区"></el-input></el-form-item>
+                <el-form-item><el-input v-model="table.search.organizationId" placeholder="请输入用户所属机构"></el-input></el-form-item>
                 <el-form-item>
                     <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
                     <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
@@ -34,28 +34,6 @@
                 <div class="hatech-table-header-left"><ul><li>{{table.title}}</li></ul></div>
                 <div class="hatech-table-header-right" v-if="table.showHeaderOption">
                     <ul>
-                        <li title="检索">
-                            <el-popover placement="bottom"  trigger="click">
-                                <el-form :model="table.param" class="demo-form-inline">
-                                    <el-form-item><el-input v-model="table.param.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
-                                    <el-form-item><el-input v-model="table.param.name" placeholder="请输入用户名称"></el-input></el-form-item>
-                                    <el-form-item>
-                                        <el-select v-model="table.param.sex" placeholder="请选择性别">
-                                          <el-option label="请选择性别" value=""></el-option>
-                                          <el-option label="男" value="1"></el-option>
-                                          <el-option label="女" value="0"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item><el-input v-model="table.param.areaId" placeholder="请出入用户所在地区"></el-input></el-form-item>
-                                    <el-form-item><el-input v-model="table.param.organizationId" placeholder="请输入用户所属机构"></el-input></el-form-item>
-                                    <el-form-item>
-                                        <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
-                                        <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
-                                    </el-form-item>
-                                </el-form>
-                                <i class="el-icon-search" slot="reference"></i>
-                            </el-popover>
-                        </li>
                         <li title="添加" @click="onAddBar"><i class="el-icon-edit"></i></li>
                         <li title="上传"><i class="el-icon-upload2"></i></li>
                         <li title="下载"><i class="el-icon-download"></i></li>
@@ -362,7 +340,7 @@
              */
             initCellIsHide(){
                 let that = this;
-                this.$get("http://localhost:3000/api/table/select", {
+                this.$get("/api/table/select", {
                   name:this.table.id
                 }).then( response => {
                     // 将后台读取字符串JSON数据，转换成JSON数据
@@ -409,7 +387,7 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                this.$get("http://localhost:3000/api/table/status", {
+                this.$get("/api/table/status", {
                   name:this.table.id, content: "["+cellString.substr(1)+"]"
                 }).then( response => {
                 }).catch( error => {console.log(error);});
@@ -450,7 +428,7 @@
              */
             ,initTableData(){
                 let that = this;
-                this.$get("http://localhost:3000/api/user", {
+                this.$get("/api/user", {
                   page:this.table.page
                   ,size:this.table.size
                   ,sortName:this.table.sortName
@@ -553,7 +531,7 @@
                     selected.forEach(item => {
                         id += "," + item.id;
                     });
-                    that.$get("http://localhost:3000/api/user/delete", {
+                    that.$get("/api/user/delete", {
                         id:id.substr(1)
                     }).then(function (response) {
                         that.$message({message: response.msg ,center: true ,type: 'success'});
@@ -587,7 +565,7 @@
                   ,cancelButtonText: '取消'
                   ,type: 'warning'
                 }).then(() => {
-                    that.$get("http://localhost:3000/api/user/delete", {
+                    that.$get("/api/user/delete", {
                         id:row.id
                     }).then( response => {
                         that.$message({message: response.msg ,center: true ,type: 'success'});
@@ -616,7 +594,7 @@
 
                         // 关闭弹出层
                         that.form.dialogFormVisible = false;
-                        that.$get("http://localhost:3000/api/user/edit",
+                        that.$get("/api/user/edit",
                           this.form.data
                         ).then(function (response) {
                           that.$message({message: response.msg ,center: true ,type: 'success'});
