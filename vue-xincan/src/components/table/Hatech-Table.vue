@@ -44,6 +44,7 @@
                     :data="table.data"
                     :ref="table.id"
                     :style="'width: ' + table.tableWidth"
+                    @sort-change="_sortChange"
                     @row-click="_rowClick"
                     @selection-change="tableChangeRows"
                     @header-dragend="tableCellDragend"
@@ -52,11 +53,14 @@
                       <el-table-column type="selection" align="center" width="40" fixed="left"></el-table-column>
                       <!-- 表格编号设置 -->
                       <el-table-column label="编号" v-if="table.isIndexShow" type="index"  align="center" width="70" fixed="left" :index="tableIndex"></el-table-column>
+
+
                       <!-- 表格列循环设置 -->
                       <el-table-column
                         header-align = "center"
                         align = "left"
-                        sortable show-overflow-tooltip
+                        sortable='custom'
+                        show-overflow-tooltip
                         v-if="column.isHide"
                         v-for = "(column, key) in table.column"
                         :key="key"
@@ -64,20 +68,21 @@
                         :label = "column.label"
                         :width = "column.width"
                       >
+
                           <template slot-scope="scope" >
-                            <!--如果当前列存在格式化、点击参数则走第一个div-->
-                            <div
-                                v-if="column.formatter && column.click"
-                                @click.stop="onTableFmtClick({event:column.click,row: scope.row})"
-                                v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
-                            ></div>
-                            <!--如果当前列存在格式化则走第二个div-->
-                            <div
-                                v-else-if="column.formatter"
-                                v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
-                            ></div>
-                            <!--否则则走第三个div-->
-                            <div v-else >{{ scope.row[column.prop] }}</div>
+                              <!--如果当前列存在格式化、点击参数则走第一个div-->
+                              <div
+                                  v-if="column.formatter && column.click"
+                                  @click.stop="onTableFmtClick({event:column.click,row: scope.row})"
+                                  v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
+                              ></div>
+                              <!--如果当前列存在格式化则走第二个div-->
+                              <div
+                                  v-else-if="column.formatter"
+                                  v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
+                              ></div>
+                              <!--否则则走第三个div-->
+                              <div v-else >{{ scope.row[column.prop] }}</div>
                           </template>
 
                       </el-table-column>
@@ -184,6 +189,19 @@
             }
 
             /**
+             * 表格头部排序操作
+             * @Method initCellIsHide
+             */
+            ,_sortChange(column){
+                if(column !== null && this.table.sort.custom){
+                  // column.order == ascending 表示升序，descending 表示降序，否则为空
+                  this.table.sort.sortName = column.prop;
+                    this.table.sort.sortType = "descending" === column.order ? "DESC":"ASC";
+                    this._initTable();
+                }
+            }
+
+            /**
              * 表格操作
              * 表格行选中操作
              * @Method initCellIsHide
@@ -255,8 +273,8 @@
                 this.$get(this.table.url, {
                     page:this.table.page
                     ,size:this.table.size
-                    ,sortName:this.table.sortName
-                    ,sortType: this.table.sortType
+                    ,sortName:this.table.sort.sortName
+                    ,sortType: this.table.sort.sortType
                     ,param:this.table.search
                 }).then( response => {
                     that.table.count = response.count;

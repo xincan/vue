@@ -179,8 +179,11 @@
                     ,dropCellUrl:'/api/table/status'         // 拖拽列保存入库路径，记录用户习惯
                     ,page:1                                  // 分页，当前页
                     ,size:10                                 // 分页，每页默认显示10条数据
-                    ,sortName:"name"                             // 分页排序字段名称
-                    ,sortType:"ASC"                          // 分页排序方式DESC,ASC
+                    ,sort:{
+                       custom: true                          // 开启远程分页
+                      ,sortName:"name"                       // 分页排序字段名称
+                      ,sortType:"ASC"                        // 分页排序方式DESC,ASC
+                    }
                     ,pageSize: [10, 20, 50, 100]             // 分页，设置默认页数
                     ,isIndexShow: true                       // 表格编号列显示隐藏设置
                     ,data: []                                // 表格数据渲染
@@ -287,8 +290,8 @@
                 this.$get(this.table.url, {
                   page:this.table.page
                   ,size:this.table.size
-                  ,sortName:this.table.sortName
-                  ,sortType: this.table.sortType
+                  ,sortName:this.table.sort.sortName
+                  ,sortType: this.table.sort.sortType
                   ,param:this.table.search
                 }).then( response => {
                     that.table.count = response.count;
