@@ -39,7 +39,7 @@
             title: "IStorM DRaaS"
             ,controll: [{
                 id: 1
-                ,label: 'PLUGIN展示'
+                ,label: '插件中心'
                 ,path: '/dashboard'
                 ,child:[{
                     id: 11
