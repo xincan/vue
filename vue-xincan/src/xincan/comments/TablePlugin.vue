@@ -180,7 +180,7 @@
                     ,page:1                                               // 分页，当前页
                     ,size:10                                              // 分页，每页默认显示10条数据
                     ,sortName:""                                          // 分页排序字段名称
-                    ,sortType:"ASC  "                                     // 分页排序方式DESC,ASC
+                    ,sortType:"ASC"                                       // 分页排序方式DESC,ASC
                     ,pageSize: [10, 20, 50, 100]                          // 分页，设置默认页数
                     ,isIndexShow: true                                    // 表格编号列显示隐藏设置
                     ,data: []                                             // 表格数据渲染

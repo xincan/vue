@@ -271,7 +271,11 @@
                     ,id:''                              // 表格ID，系统中表格唯一
                     ,page:1                             // 分页，当前页
                     ,size:10                            // 分页，每页默认显示10条数据
+                    ,sortName:""                        // 分页排序字段名称
+                    ,sortType:"ASC"                     // 分页排序方式DESC,ASC
                     ,pageSize: [10, 20, 30, 50]         // 分页，设置默认页数
+                    ,search:{                           // 查询条件
+                    }
                     ,param:{                            // 查询条件
                         loginName: ''
                         ,name: ''
@@ -447,7 +451,11 @@
             ,initTableData(){
                 let that = this;
                 this.$get("http://localhost:3000/api/user", {
-                   page:this.table.page, size:this.table.size, param:this.table.param
+                  page:this.table.page
+                  ,size:this.table.size
+                  ,sortName:this.table.sortName
+                  ,sortType: this.table.sortType
+                  ,param:this.table.search
                 }).then( response => {
                       that.table.count = response.count;
                       that.table.data = response.data;
