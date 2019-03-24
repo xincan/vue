@@ -68,7 +68,7 @@
                             <!--如果当前列存在格式化、点击参数则走第一个div-->
                             <div
                                 v-if="column.formatter && column.click"
-                                @click="onTableFmtClick({event:column.click,row: scope.row})"
+                                @click.stop="onTableFmtClick({event:column.click,row: scope.row})"
                                 v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
                             ></div>
                             <!--如果当前列存在格式化则走第二个div-->
@@ -90,7 +90,7 @@
                                   :key="key"
                                   :title="option.name"
                                   :class="option.icon"
-                                  @click="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row, state: 'cell'})"
+                                  @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row, state: 'cell'})"
                               ></i>
                           </template>
                       </el-table-column>
@@ -111,10 +111,10 @@
         </div>
 
         <!-- 表格操作对应弹出层 -->
-        <div class="hatech-dialog">
+        <div class="hatech-table-dialog">
             <!-- 定义当前对象并将form传入dialog -->
             <HatechDialog :form="form" :hatechTable="this">
-                <slot slot="hatech-dialog" name="hatech-dialog-from"></slot>
+                <slot slot="hatech-table-dialog" name="hatech-dialog-from"></slot>
             </HatechDialog>
         </div>
 
@@ -123,7 +123,7 @@
 
 <script>
     // 引用弹出层插件
-    import HatechDialog from '@/components/table/Hatech-Dialog';
+    import HatechDialog from '@/components/table/Hatech-Table-Dialog';
 
     export default {
         components: { HatechDialog }
@@ -151,7 +151,6 @@
         }
 
         ,methods: {
-
 
             /**
              * 初始化数据
@@ -240,7 +239,7 @@
             }
 
             /**
-             * 表格列下标操作
+             * 表格列序号计算
              * 重新计算数据下标
              * @Method onIsCellHide
              */
@@ -331,5 +330,5 @@
 
 <style scoped lang="scss">
   @import "../../assets/css/table";
-  @import "../../assets/css/dialog";
+  @import "../../assets/css/table-dialog";
 </style>

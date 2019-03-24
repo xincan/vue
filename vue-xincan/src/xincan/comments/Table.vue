@@ -120,74 +120,76 @@
             </div>
         </div>
 
-        <!--
-            编辑用户信息
-            公用一个弹出层时需要加上v-if判断使之重新渲染组件 避免重置按钮出现数据混乱现象
-
-            custom-class="hatech-dialog"              自定义弹出层class名称
-            v-if="form.dialogFormVisible"             判断弹出层是否显示、隐藏（重新加载渲染弹出层）
-            :title="form.title"                       设置弹出层标题
-            :visible.sync="form.dialogFormVisible"    判断弹出层是否显示、隐藏（不重新加载渲染弹出层）
-            :width="form.formWidth"                   设置弹出层宽度
-            :before-close="formClose"                 弹出层右上角关闭icon
-        -->
-        <el-dialog
-            custom-class="hatech-dialog"
-            v-if="form.dialogFormVisible"
-            :title="form.title"
-            :visible.sync="form.dialogFormVisible"
-            :width="form.formWidth"
-            :before-close="formClose"
-        >
-            <div class="hatech-top-line"></div>     <!-- 弹出层划线，上 -->
+        <div class="hatech-table-dialog">
             <!--
-                表单设置
-                status-icon               设置表单校验时：是否在输入框中显示校验结果反馈图标
-                :ref="form.name"          设置表单名称
-                :model="form.data"        设置表单数据并绑定数据
-                :rules="form.rules"       设置表单验证规则
+                编辑用户信息
+                公用一个弹出层时需要加上v-if判断使之重新渲染组件 避免重置按钮出现数据混乱现象
+
+                custom-class="hatech-dialog"              自定义弹出层class名称
+                v-if="form.dialogFormVisible"             判断弹出层是否显示、隐藏（重新加载渲染弹出层）
+                :title="form.title"                       设置弹出层标题
+                :visible.sync="form.dialogFormVisible"    判断弹出层是否显示、隐藏（不重新加载渲染弹出层）
+                :width="form.formWidth"                   设置弹出层宽度
+                :before-close="formClose"                 弹出层右上角关闭icon
             -->
-            <el-form
-                status-icon
-                :ref="form.name"
-                :model="form.data"
-                :rules="form.rules"
+            <el-dialog
+                custom-class="hatech-table-dialog"
+                v-if="form.dialogFormVisible"
+                :title="form.title"
+                :visible.sync="form.dialogFormVisible"
+                :width="form.formWidth"
+                :before-close="formClose"
             >
-                <el-form-item label="登录名称" prop="loginName" :label-width="form.formLabelWidth" >
-                    <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-                <el-form-item label="登录密码" prop="loginPassword" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-                <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-                <el-form-item label="用户性别" :label-width="form.formLabelWidth">
-                    <el-radio-group v-model="form.data.sex">
-                        <el-radio :label="0">女</el-radio>
-                        <el-radio :label="1">男</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-                <el-form-item label="用户邮箱" prop="email" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-                <el-form-item label="所属地区" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-                <el-form-item label="所属机构" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="{width: form.formInputWidth}"></el-input>
-                </el-form-item>
-            </el-form>
-            <div class="hatech-bottom-line"></div>    <!-- 弹出层划线，上 -->
-            <div slot="footer" class="dialog-footer">
-                <el-button type="primary" size="mini" @click="formSubmit()">确 定</el-button>
-                <el-button type="warning" size="mini" @click="formReset()">重 置</el-button>
-                <el-button size="mini" @click="formConsole()">取 消</el-button>
-            </div>
-        </el-dialog>
+                <div class="hatech-top-line"></div>     <!-- 弹出层划线，上 -->
+                <!--
+                    表单设置
+                    status-icon               设置表单校验时：是否在输入框中显示校验结果反馈图标
+                    :ref="form.name"          设置表单名称
+                    :model="form.data"        设置表单数据并绑定数据
+                    :rules="form.rules"       设置表单验证规则
+                -->
+                <el-form
+                    status-icon
+                    :ref="form.name"
+                    :model="form.data"
+                    :rules="form.rules"
+                >
+                    <el-form-item label="登录名称" prop="loginName" :label-width="form.formLabelWidth" >
+                        <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                    <el-form-item label="登录密码" prop="loginPassword" :label-width="form.formLabelWidth">
+                        <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
+                        <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户性别" :label-width="form.formLabelWidth">
+                        <el-radio-group v-model="form.data.sex">
+                            <el-radio :label="0">女</el-radio>
+                            <el-radio :label="1">男</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
+                        <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户邮箱" prop="email" :label-width="form.formLabelWidth">
+                        <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                    <el-form-item label="所属地区" :label-width="form.formLabelWidth">
+                        <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                    <el-form-item label="所属机构" :label-width="form.formLabelWidth">
+                        <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :style="{width: form.formInputWidth}"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div class="hatech-bottom-line"></div>    <!-- 弹出层划线，上 -->
+                <div slot="footer" class="dialog-footer">
+                    <el-button type="primary" size="mini" @click="formSubmit()">确 定</el-button>
+                    <el-button type="warning" size="mini" @click="formReset()">重 置</el-button>
+                    <el-button size="mini" @click="formConsole()">取 消</el-button>
+                </div>
+            </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -653,5 +655,5 @@
 
 <style scoped lang="scss">
     @import "../../assets/css/table";
-    @import "../../assets/css/dialog";
+    @import "../../assets/css/table-dialog";
 </style>

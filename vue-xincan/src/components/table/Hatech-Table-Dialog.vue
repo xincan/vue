@@ -28,7 +28,7 @@
     <div class="hatech-top-line"></div>     <!-- 弹出层划线，上 -->
 
     <!-- 弹出层form表单插槽定义 -->
-    <slot name="hatech-dialog"></slot>
+    <slot name="hatech-table-dialog"></slot>
 
     <div class="hatech-bottom-line"></div>    <!-- 弹出层划线，上 -->
     <div slot="footer" class="dialog-footer">
@@ -120,4 +120,5 @@
 </script>
 
 <style scoped lang="scss">
+
 </style>
