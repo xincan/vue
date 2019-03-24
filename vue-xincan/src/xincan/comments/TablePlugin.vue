@@ -93,9 +93,6 @@
 
 <script>
 
-    // 引用数据请求插件
-    import Axios from 'axios';
-
     // 引用同创表格插件
     import HatechTable from '@/components/table/Hatech-Table';
 
