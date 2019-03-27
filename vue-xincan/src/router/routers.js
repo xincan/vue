@@ -16,6 +16,7 @@ import Panel from "@/xincan/comments/Panel";
 import AlwaysPanel from "@/xincan/comments/AlwaysPanel";
 import TablePlugin from "@/xincan/comments/TablePlugin";
 import Select from "@/xincan/comments/Select";
+import Icon from "@/xincan/comments/Icon";
 
 
 
@@ -64,6 +65,9 @@ const routes = [{
     },{
         path: '/select'
         ,component: Select
+    },{
+      path: '/icon'
+      ,component: Icon
     }]
 }, {
     path: '/',

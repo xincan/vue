@@ -6,8 +6,10 @@ import {get,post,patch,put, del} from './config/http'
 
 
 import 'font-awesome/css/font-awesome.css';
+import './assets/css/font/hatech-icon.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/hatech.scss';
+
 
 import App from './App';
 
