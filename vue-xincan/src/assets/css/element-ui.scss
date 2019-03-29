@@ -1,3 +1,6 @@
+
+@import "theme/theme";
+
 /**
  * @Author Xincan
  * @Version  1.0
@@ -5,12 +8,12 @@
  * @Date 2019/3/13 13:44
  */
 .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-    background-color: #5BBBBB;
-    border-color: #5BBBBB;
+    background-color: $table-icon-color;
+    border-color: $table-icon-color;
 }
 
 .el-checkbox__input.is-checked+.el-checkbox__label {
-    color: #5BBBBB;
+    color: $table-icon-color;
 }
 
 .el-popover .el-checkbox {
@@ -27,8 +30,4 @@
 .el-message {
     min-width: 150px;
     top: calc(100% / 2 - 15px * 2);
-}
-.el-message--success {
-    background-color: #060606bd;
-    border: none;
 }

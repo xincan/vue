@@ -21,7 +21,7 @@
                               v-if="option.isShow"
                               :key="key"
                               :title="option.name"
-                              @click="hatechTableOptionBtn({key:key, type:option.type})"
+                              @click="hatechTableOptionBtn({key:key, type:option.type, option: option})"
                           >
                               <i :class="option.icon"></i>
                           </li>
@@ -95,7 +95,7 @@
                                   :key="key"
                                   :title="option.name"
                                   :class="option.icon"
-                                  @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row})"
+                                  @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row, option: option})"
                               ></i>
                           </template>
                       </el-table-column>
