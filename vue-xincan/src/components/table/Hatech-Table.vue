@@ -54,19 +54,20 @@
                       >
 
                           <template slot-scope="scope" >
-                              <!--如果当前列存在格式化、点击参数则走第一个div-->
-                              <div
-                                  v-if="column.formatter && column.click"
-                                  @click.stop="onTableFmtClick({event:column.click,row: scope.row})"
-                                  v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
-                              ></div>
-                              <!--如果当前列存在格式化则走第二个div-->
-                              <div
-                                  v-else-if="column.formatter"
-                                  v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"
-                              ></div>
-                              <!--否则则走第三个div-->
-                              <div v-else >{{ scope.row[column.prop] }}</div>
+                              <slot name="table-cell-data" :column="column" :row="scope.row"></slot>
+                              <!--&lt;!&ndash;如果当前列存在格式化、点击参数则走第一个div&ndash;&gt;-->
+                              <!--<div-->
+                                  <!--v-if="column.formatter && column.click"-->
+                                  <!--@click.stop="onTableFmtClick({event:column.click,row: scope.row})"-->
+                                  <!--v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"-->
+                              <!--&gt;</div>-->
+                              <!--&lt;!&ndash;如果当前列存在格式化则走第二个div&ndash;&gt;-->
+                              <!--<div-->
+                                  <!--v-else-if="column.formatter"-->
+                                  <!--v-html="column.formatter[scope.row[column.prop]] ? column.formatter[scope.row[column.prop]].replace('${value}', scope.row[column.prop]) : scope.row[column.prop]"-->
+                              <!--&gt;</div>-->
+                              <!--&lt;!&ndash;否则则走第三个div&ndash;&gt;-->
+                              <!--<div v-else >{{ scope.row[column.prop] }}</div>-->
                           </template>
 
                       </el-table-column>
@@ -295,14 +296,6 @@
                 this.table.select = row;
             }
 
-            /**
-             * 表格数据格式化点击操作
-             * 格式化点击事件
-             * @Method onTableFmtClick
-             */
-            ,onTableFmtClick(param){
-                this.$parent[param.event] ? this.$parent[param.event].call(this, param) : '';
-            }
         }
     }
 </script>

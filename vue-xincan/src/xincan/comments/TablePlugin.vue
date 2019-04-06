@@ -77,6 +77,23 @@
             </i>
         </div>
 
+        <!--如果当前列存在格式化、点击参数则走第一个div-->
+        <div  slot="table-cell-data" slot-scope="cell">
+            <span
+                v-if="cell.column.formatter && cell.column.click"
+                @click.stop="onTableFmtClick({event: cell.column.click,row: cell.row})"
+                v-html="cell.column.formatter[cell.row[cell.column.prop]] ? cell.column.formatter[cell.row[cell.column.prop]].replace('${value}', cell.row[cell.column.prop]) : cell.row[cell.column.prop]"
+            ></span>
+            <!--如果当前列存在格式化则走第二个div-->
+            <span
+                v-else-if="cell.column.formatter"
+                v-html="cell.column.formatter[cell.row[cell.column.prop]] ? cell.column.formatter[cell.row[cell.column.prop]].replace('${value}', cell.row[cell.column.prop]) : cell.row[cell.column.prop]"
+            ></span>
+              <!--否则则走第三个div-->
+              <span v-else >{{ cell.row[cell.column.prop] }}</span>
+        </div>
+
+        <!--表格弹出层-->
         <div slot="hatech-dialog-from">
             <!--
                 表单设置
@@ -358,6 +375,15 @@
             }
 
             /**
+             * 表格数据格式化点击操作
+             * 格式化点击事件
+             * @Method onTableFmtClick
+             */
+            ,onTableFmtClick(param){
+              this[param.event] ? this[param.event].call(this, param) : '';
+            }
+
+            /**
              * 表格行操作
              * 点击表格任意一行，获取数据
              * @Method initCellIsHide
@@ -411,6 +437,7 @@
              * @Method onTableReset
              */
             ,isUse(param){
+              param.row.isAdmin = 0;
               console.log(param);
             }
 
