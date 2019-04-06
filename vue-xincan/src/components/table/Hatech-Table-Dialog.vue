@@ -43,10 +43,6 @@
     export default {
         name: "Hatech-Dialog"
         ,props:{
-            // hatechTable: {
-            //     type:Object
-            //     ,required: true
-            // }
             form: {
                 type: Object
                 ,required: true
@@ -64,36 +60,12 @@
              * @Method formSubmit
              */
             hatechFormSubmit(){
-                let that = this;
-                let param = {
+                this.$emit("hatech-form-submit", {
                   id: this.form.data.id
                   ,type: this.form.submit
                   ,row: this.form.data
                   ,state: 'dialog'
-                }
-                this.$emit("hatech-form-submit", param);
-                // this.hatechTable.$parent.$refs[this.form.name].validate(valid => {
-                //
-                //     // 如果所有验证不通过则直接拦截，不向下执行
-                //     if (!valid) return false;
-                //
-                //     that.$confirm('确定要'+(this.form.data.id ? '修改' : '增加')+'吗?', '温馨提示', {
-                //       confirmButtonText: '确定'
-                //       ,cancelButtonText: '取消'
-                //       ,type: 'warning'
-                //     }).then(() => {
-                //         // 关闭弹出层
-                //         that.form.dialogFormVisible = false;
-                //         // 调用父类函数传参
-                //         that.hatechTable.hatechTableOptionBtn({
-                //           id: this.form.data.id
-                //           ,type: this.form.submit
-                //           ,row: this.form.data
-                //           ,state: 'dialog'
-                //         });
-                //
-                //     }).catch((e) => {console.log(e)});
-                // });
+                });
             }
 
             /**
