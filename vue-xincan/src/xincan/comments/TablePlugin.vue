@@ -23,7 +23,7 @@
         >
         <!--
             按条件查询模块
-            slot="hatech-search"   slot:表示table组件中的插槽，hatech-search：表示插槽名称，又称为具名插槽：必写项
+            slot="hatech-search"   slot:表示table组件中的插槽 hatech-search：表示插槽名称，又称为具名插槽：必写项
         -->
         <div slot="hatech-search" class="hatech-search">
             <el-form :inline="true" :model="table.search" class="demo-form-inline">
@@ -43,6 +43,38 @@
                     <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
                 </el-form-item>
             </el-form>
+        </div>
+
+        <!-- 表格头部操作按钮集合 -->
+        <ul slot="hatech-table-header-option">
+            <li
+                v-for="(option, key) in table.headerOption"
+                v-if="option.isShow"
+                :key="key"
+                :title="option.name"
+                @click="hatechTableOptionBtn({key:key, type:option.type, option: option})"
+            >
+                <i :class="option.icon"></i>
+            </li>
+            <li title="显隐列">
+                <el-popover placement="bottom" width="200" trigger="click">
+                    <el-checkbox v-for="(column,key) in table.column" :key="key" :checked="column.isHide" :name="column.prop" @change="onIsCellHide(column)">{{column.label}}</el-checkbox>
+                    <i class="el-icon-menu" slot="reference"></i>
+                </el-popover>
+            </li>
+        </ul>
+
+        <!-- 表格右侧列操作 -->
+        <div slot="hatech-table-cell-option" slot-scope="cell">
+            <i
+                v-for="(option,key) in table.cellOption"
+                v-if="option.isShow && cell.row[option.prop] == option.value"
+                :key="key"
+                :title="option.name"
+                :class="option.icon"
+                @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: cell.index, row: cell.row, option: option})"
+            >
+            </i>
         </div>
 
         <div slot="hatech-dialog-from">
@@ -73,6 +105,12 @@
                       <el-radio :label="0" :disabled="form.disabled" >女</el-radio>
                       <el-radio :label="1" :disabled="form.disabled" >男</el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="是否管理员" :label-width="form.formLabelWidth">
+                  <el-radio-group v-model="form.data.isAdmin">
+                    <el-radio :label="0" :disabled="form.disabled" >是</el-radio>
+                    <el-radio :label="1" :disabled="form.disabled" >不是</el-radio>
+                  </el-radio-group>
                 </el-form-item>
                 <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
                     <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
@@ -201,13 +239,17 @@
                             ,click: 'fmtNameClick'           // 数据格式化点击事件
                          }
                         ,{label:'用户性别',   prop: 'sex',            width:'auto', isHide: true,
-                            formatter: {
-                              1: '<i class="fa fa-male"></i>',
-                              0: '<i class="fa fa-female"></i>'},
-                              click: 'fmtSexClick'          // 数据格式化点击事件
+                            formatter: { 1: '<i class="fa fa-male"></i>', 0: '<i class="fa fa-female"></i>' },
+                            click: 'fmtSexClick'          // 数据格式化点击事件
                          }
                         ,{label:'用户电话',   prop: 'phone',          width:'auto', isHide: true}
                         ,{label:'用户邮箱',   prop: 'email',          width:'auto', isHide: true}
+                        ,{label:'是否管理员',   prop: 'isAdmin',      width:'auto', isHide: true,
+                            formatter: {
+                               0:'<span class="hatech-fmt hatech-success">否</span>'
+                              ,1:'<span class="hatech-fmt-hand hatech-warning">是</span>'
+                            }
+                        }
                         ,{label:'所属地区',   prop: 'areaId',         width:'auto', isHide: true}
                         ,{label:'所属机构',   prop: 'organizationId', width:'auto', isHide: true}
                         ,{label:'创建时间',   prop: 'createTime',     width:'auto', isHide: true}
@@ -220,11 +262,13 @@
                         ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
                     ]
                     ,showTableOption: true                  // 是否显示列表右侧操作按钮
-                    ,cellOptionWidth: '120px'               // 表格右侧列操作按钮集合宽度
+                    ,cellOptionWidth: '200px'               // 表格右侧列操作按钮集合宽度
                     ,cellOption:[                           // 表格右侧列操作按钮集合
-                         {name:'修改',        icon:'el-icon-edit',      type:'edit',    isShow: true}
-                        ,{name:'查看',        icon:'el-icon-document',  type:'detail',  isShow: true}
-                        ,{name:'删除',        icon:'el-icon-delete',    type:'delete',  isShow: true}
+                         {name:'禁用',        icon:'el-icon-circle-close',      type:'isUse',  prop:'isAdmin', value:'0',    isShow: true}
+                        ,{name:'启用',        icon:'el-icon-circle-check',      type:'isUse',  prop:'isAdmin', value:'1',    isShow: true}
+                        ,{name:'修改',        icon:'el-icon-edit',              type:'edit',    isShow: true}
+                        ,{name:'查看',        icon:'el-icon-document',          type:'detail',  isShow: true}
+                        ,{name:'删除',        icon:'el-icon-delete',            type:'delete',  isShow: true}
                     ]
                 }
                 // 表单信息设置
@@ -262,6 +306,7 @@
                         ,loginPassword: ''
                         ,name: ''
                         ,sex: 1
+                        ,isAdmin: 0
                         ,phone: ''
                         ,email: ''
                         ,areaId: ''
@@ -296,6 +341,20 @@
                 }).catch( error => {
                     console.log(error);
                 });
+            }
+
+            /**
+             * 自定义表格按钮统一操作
+             *  判断父组件函数是否存在，如果存在则执行，否则不执行
+             * @Method formSubmit
+             */
+            ,hatechTableOptionBtn(param){
+                // 判断如果param.row有数据说明是点击列表右侧按钮，否则是列表头部右侧按钮
+                if(param.row !== undefined){
+                  this.table.select.push(param.row);
+                }
+                param.select = this.table.select;
+                this[param.type] ? this[param.type].call(this, param) : '';
             }
 
             /**
@@ -345,6 +404,16 @@
                 this.table.search={};
             }
 
+
+            /**
+             * 表格列操作按钮
+             * 是否是管理员
+             * @Method onTableReset
+             */
+            ,isUse(param){
+              console.log(param);
+            }
+
             /**
              * 表格操作按钮集合
              * 对应headerOption数组对象中type值
@@ -352,7 +421,7 @@
              */
             ,add(){
                 this.form.title='新增用户信息';
-                this.form.data = {sex: 1};
+                this.form.data = {sex: 1, isAdmin: 0};
                 this.form.disabled = false;
                 this.form.isBtnShow = true;
                 this.form.dialogFormVisible=true;

@@ -15,23 +15,8 @@
               <div class="hatech-table-header">
                   <div class="hatech-table-header-left"><ul><li>{{table.title}}</li></ul></div>
                   <div class="hatech-table-header-right" v-if="table.showHeaderOption">
-                      <ul>
-                          <li
-                              v-for="(option, key) in table.headerOption"
-                              v-if="option.isShow"
-                              :key="key"
-                              :title="option.name"
-                              @click="hatechTableOptionBtn({key:key, type:option.type, option: option})"
-                          >
-                              <i :class="option.icon"></i>
-                          </li>
-                          <li title="显隐列">
-                              <el-popover placement="bottom" width="200" trigger="click">
-                                  <el-checkbox v-for="(column,key) in table.column" :key="key" :checked="column.isHide" :name="column.prop" @change="onIsCellHide(column)">{{column.label}}</el-checkbox>
-                                  <i class="el-icon-menu" slot="reference"></i>
-                              </el-popover>
-                          </li>
-                      </ul>
+                    <!--表格头部操作项-->
+                    <slot name="hatech-table-header-option"></slot>
                   </div>
               </div>
               <!-- 表格主体布局 -->
@@ -53,7 +38,6 @@
                       <el-table-column type="selection" align="center" width="40" fixed="left"></el-table-column>
                       <!-- 表格编号设置 -->
                       <el-table-column label="编号" v-if="table.isIndexShow" type="index"  align="center" width="70" fixed="left" :index="tableIndex"></el-table-column>
-
 
                       <!-- 表格列循环设置 -->
                       <el-table-column
@@ -89,14 +73,13 @@
                       <!-- 表格操作列设置 -->
                       <el-table-column prop="option" v-if="table.showTableOption" :width="table.cellOptionWidth" header-align="center" align="center" label="操作" fixed="right">
                           <template slot-scope="scope">
-                              <i
-                                  v-for="(option,key) in table.cellOption"
-                                  v-if="option.isShow"
-                                  :key="key"
-                                  :title="option.name"
-                                  :class="option.icon"
-                                  @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row, option: option})"
-                              ></i>
+                            <!--
+                                表格右侧操作列操作项
+                                name="hatech-table-cell-option"     hatech-table-cell-option 右侧操作列插槽
+                                :row="scope.row"                    scope.row 当前选择的数据
+                                :index="scope.$index"               scope.$index 当前操作行号
+                            -->
+                            <slot name="hatech-table-cell-option" :row="scope.row" :index="scope.$index"></slot>
                           </template>
                       </el-table-column>
                   </el-table>
@@ -310,21 +293,6 @@
              */
             ,tableChangeRows(row){
                 this.table.select = row;
-            }
-
-            /**
-             * 自定义表格按钮统一操作
-             *  判断父组件函数是否存在，如果存在则执行，否则不执行
-             *  state:[cell, header, form] cell:表示表格操作列按钮，header:表示表头操作按钮, dialog: 表示表单提交按钮
-             * @Method formSubmit
-             */
-            ,hatechTableOptionBtn(param){
-                // 判断如果param.row有数据说明是点击列表右侧按钮，否则是列表头部右侧按钮
-                if(param.row !== undefined){
-                    this.table.select.push(param.row);
-                }
-                param.select = this.table.select;
-                this.$parent[param.type] ? this.$parent[param.type].call(this, param) : '';
             }
 
             /**

@@ -59,6 +59,7 @@ app.get('/api/user',function(req,res){
 		sql += ",sex ";
 		sql += ",phone ";
 		sql += ",email ";
+		sql += ",is_admin isAdmin ";
 		sql += ",area_id areaId ";
 		sql += ",organization_id organizationId ";
 		sql += ",date_format(create_time,'%Y-%m-%d %H:%m:%i') createTime ";
@@ -117,10 +118,10 @@ app.put('/api/user/edit',function(req,res){
 		,sql = "";
 
 	if(param.id == undefined){
-		sql  = "insert into employee (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, create_time) ";
+		sql  = "insert into employee (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, is_admin, create_time) ";
 		sql += "value ";
 		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '"
-		+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "', now())";
+		+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "','" + param.isAdmin + "', now())";
 	}else{
 		sql  = "update employee set ";
 		sql += " login_name = '" + param.loginName + "'";
@@ -130,6 +131,7 @@ app.put('/api/user/edit',function(req,res){
 		sql += ", phone = '" + param.phone + "'";
 		sql += ", email = '" + param.email + "'";
 		sql += ", area_id = '" + param.areaId + "'";
+		sql += ",is_admin = '" + param.isAdmin + "'";
 		sql += ", organization_id = '" + param.organizationId + "'";
 		sql += ", create_time = now() ";
 		sql += "where id = '" + param.id+ "'";
