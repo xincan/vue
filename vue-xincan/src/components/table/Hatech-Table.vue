@@ -102,9 +102,12 @@
         <!-- 表格操作对应弹出层 -->
         <div class="hatech-table-dialog">
             <!-- 定义当前对象并将form传入dialog -->
-            <HatechDialog :form="form" :hatechTable="this">
+            <HatechTableDialog
+              :form="form"
+              @hatech-form-submit="hatechFormSubmit"
+            >
                 <slot slot="hatech-table-dialog" name="hatech-dialog-from"></slot>
-            </HatechDialog>
+            </HatechTableDialog>
         </div>
 
     </div>
@@ -112,10 +115,10 @@
 
 <script>
     // 引用弹出层插件
-    import HatechDialog from '@/components/table/Hatech-Table-Dialog';
+    import HatechTableDialog from '@/components/table/Hatech-Table-Dialog';
 
     export default {
-        components: { HatechDialog }
+        components: { HatechTableDialog }
         ,props: {
             table: { type: Object}
             ,form: { type: Object}
@@ -174,7 +177,7 @@
 
             /**
              * 表格头部排序操作
-             * @Method initCellIsHide
+             * @Method _sortChange
              */
             ,_sortChange(column){
                 if(column !== null && this.table.sort.custom){
@@ -188,7 +191,7 @@
             /**
              * 表格操作
              * 表格行选中操作
-             * @Method initCellIsHide
+             * @Method _rowClick
              */
             ,_rowClick(row){
               this.$emit("row-click",row);
@@ -233,7 +236,7 @@
             /**
              * 表格头部列拖拽操作
              * 选中列边框进行左右拖拽，改变列的宽度，并更改模型数据，将其保存到数据库中
-             * @Method onIsCellHide
+             * @Method tableCellDragend
              */
             ,tableCellDragend(newWidth, oldWidth, column, event){
                 this.excuteTable({prop: column.property, width: column.width}, 2);
@@ -242,7 +245,7 @@
             /**
              * 表格列序号计算
              * 重新计算数据下标
-             * @Method onIsCellHide
+             * @Method tableIndex
              */
             ,tableIndex(index){
                 return ((this.table.page - 1) * this.table.size) + index + 1;
@@ -250,7 +253,7 @@
             /**
              * 初始化数据
              * 初始化加载列表数据
-             * @Method initTableData
+             * @Method _initTable
              */
             ,_initTable(){
                 let that = this;
@@ -280,7 +283,7 @@
              * 表格分页
              * 首先数据选择渲染this.table.page数据
              * 其次调用初始化table数据
-             * @Method 当前页选择操作
+             * @Method tableCurrentChange
              */
             ,tableCurrentChange(page) {
                 this.table.page = page;
@@ -296,6 +299,13 @@
                 this.table.select = row;
             }
 
+            /**
+             * 表单提交操作
+             * @Method hatechFormSubmit
+             */
+            ,hatechFormSubmit(param){
+              this.$emit("form-submit", param);
+            }
         }
     }
 </script>

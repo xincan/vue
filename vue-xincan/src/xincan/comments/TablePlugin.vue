@@ -19,8 +19,8 @@
         :form="form"
         @row-click="tableRowClick"
         @init-table="initTable"
-
-        >
+        @form-submit="formSubmit"
+    >
         <!--
             按条件查询模块
             slot="hatech-search"   slot:表示table组件中的插槽 hatech-search：表示插槽名称，又称为具名插槽：必写项
@@ -511,13 +511,30 @@
              */
             ,formSubmit(result) {
                 let that = this;
-                this.$put("/api/user/edit", result.row).then(response => {
-                    console.log(response);
-                    that.$message({message: response.msg ,center: true ,type: 'success'});
-                    that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
-                }).catch(function (error) {
-                    that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                this.$refs[this.form.name].validate(valid => {
+
+                  // 如果所有验证不通过则直接拦截，不向下执行
+                  if (!valid) return false;
+
+                  that.$confirm('确定要'+(this.form.data.id ? '修改' : '增加')+'吗?', '温馨提示', {
+                    confirmButtonText: '确定'
+                    ,cancelButtonText: '取消'
+                    ,type: 'warning'
+                  }).then(() => {
+                    // 关闭弹出层
+                    that.form.dialogFormVisible = false;
+                    // 调用父类函数传参
+                    this.$put("/api/user/edit", result.row).then(response => {
+                      console.log(result);
+                      that.$message({message: response.msg ,center: true ,type: 'success'});
+                      that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
+                    }).catch(function (error) {
+                      that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                    });
+
+                  }).catch((e) => {console.log(e)});
                 });
+
             }
 
         }
