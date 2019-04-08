@@ -6,3 +6,13 @@
  * @Return
  * @Date 2019/3/24 11:05
  */
+
+
+
+@function floatFn($fl) {
+  @if($fl == left) {
+    @return right;
+  }
+  @return left;
+}
+

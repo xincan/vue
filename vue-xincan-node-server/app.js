@@ -34,7 +34,7 @@ let dataBaseOption = function(sql, callback){
 
 
 // 用户操作 根据条件查询用户分页信息
-app.get('/api/user',function(req,res){
+app.get('/api/app/user',function(req,res){
 	let search = url.parse(req.url,true).search
 		,param = url.parse(req.url,true).query
 		,page = (param.page - 1) * param.size
@@ -112,7 +112,7 @@ app.get('/api/user',function(req,res){
 
 
 // 用户操作 根据条件添加修改用户信息
-app.put('/api/user/edit',function(req,res){
+app.put('/api/app/user/edit',function(req,res){
     console.log(req.body);
 	let param = req.body
 		,sql = "";
@@ -148,7 +148,42 @@ app.put('/api/user/edit',function(req,res){
 });
 
 // 用户操作 根据条件添加修改用户信息
-app.post('/api/user/delete',function(req,res){
+app.post('/api/app/user/edit',function(req,res){
+	console.log(req.body);
+	let param = req.body
+		,sql = "";
+
+	if(param.id == undefined){
+		sql  = "insert into employee (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, is_admin, create_time) ";
+		sql += "value ";
+		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '"
+			+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "','" + param.isAdmin + "', now())";
+	}else{
+		sql  = "update employee set ";
+		sql += " login_name = '" + param.loginName + "'";
+		sql += ", login_password = '" + param.loginPassword + "'";
+		sql += ", name = '" + param.name + "'";
+		sql += ", sex = '" + param.sex + "'";
+		sql += ", phone = '" + param.phone + "'";
+		sql += ", email = '" + param.email + "'";
+		sql += ", area_id = '" + param.areaId + "'";
+		sql += ",is_admin = '" + param.isAdmin + "'";
+		sql += ", organization_id = '" + param.organizationId + "'";
+		sql += ", create_time = now() ";
+		sql += "where id = '" + param.id+ "'";
+	}
+	dataBaseOption(sql, function(result){
+		let resultObject = {
+			code:200
+			,msg: param.id === undefined ? "添加成功": "修改成功"
+			,data: result
+		};
+		res.status(200),
+			res.json(resultObject);
+	});
+});
+// 用户操作 根据条件添加修改用户信息
+app.post('/api/app/user/delete',function(req,res){
     console.log(req)
 	let param = req.body;
 	let id = "";
@@ -173,7 +208,7 @@ app.post('/api/user/delete',function(req,res){
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 表格显隐列样式 获取当前表格列的信息
-app.get('/api/table/select',function(req,res){
+app.get('/api/app/table/select',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let sql = "SELECT * FROM table_cell_show where name = '" + param.name + "'";
 	dataBaseOption(sql, function(result){
@@ -188,7 +223,7 @@ app.get('/api/table/select',function(req,res){
 });
 
 // 表格显隐列样式 更新当前表格列的信息
-app.get('/api/table/status',function(req,res){
+app.get('/api/app/table/status',function(req,res){
 	let param = url.parse(req.url,true).query;
 	let deleteSql = "delete from table_cell_show where name = '" + param.name + "'";
 	let insertSql = "insert into table_cell_show (id, name, content, create_time) " +

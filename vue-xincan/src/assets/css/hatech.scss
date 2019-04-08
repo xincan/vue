@@ -1,95 +1,119 @@
 
-/**
- * 导入函数工具类
- */
-@import "mixin/mixin";
+@import "./mixin/mixin";
 
-/**
- * 导入修改elementUI的样式
- */
-@import "element-ui";
+@import "./element-ui";
 
-
-html,body {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-
+html{
+  width: 100%;
+  height: 100%;
+}
+body{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  overflow: hidden;
 }
 
-#app {
+#app{
+  width: 100%;
+  height: 100%;
+  .hatech-page{
+    width: 100%;
     height: 100%;
-    background: $hatech-content-color;
-    overflow: hidden;
+    .controller{
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 /**
  * 系统十二宫格布局设定
  */
 @for $i from 1 through 12 {
-    .hatech-cell-#{$i} {
-        width: calc((100% / 12 * #{$i} - 5px * 2));
-    }
+  .hatech-cell-#{$i} {
+    width: calc((100% / 12 * #{$i} - 5px * 2));
+  }
 }
 
 /**
  * 系统消息提示背景颜色设定
  */
 @for $i from 1 through length($hatech-option-color) {
-    $item: nth($hatech-option-color, $i);
-    .hatech-#{map_get($item, name)} {
-        background-color: map_get($item, color);
-    }
+  $item: nth($hatech-option-color, $i);
+  .hatech-#{map_get($item, name)} {
+    background-color: map_get($item, color);
+  }
 }
 
+/**
+ * 表格数据格式化时，鼠标悬浮样式（不带小手样式）
+ */
 .hatech-fmt{
-    @include table-data-formatter(auto);
+  @include table-data-formatter(auto);
 }
+
+/**
+ * 表格数据格式化时，鼠标悬浮样式（带小手样式）
+ */
 .hatech-fmt-hand{
-    @include table-data-formatter(pointer);
+  @include table-data-formatter(pointer);
+}
+
+/**
+ * 表格数据格式化时，按钮开启
+ */
+.hatech-fmt-enable {
+  @include hatech-fmt-is-enable(right);
+
+}
+
+/**
+ * 表格数据格式化时，按钮关闭
+ */
+.hatech-fmt-disable {
+  @include hatech-fmt-is-enable(left);
 }
 
 .hatech {
-
-    display: inline-block;
-    padding: 0px;
-    margin: 0px;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: calc(100% - 4px);
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ws--box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  & .hatech-pmw {
+    margin: 5px 0px 5px 0px!important;
     width: 100%;
-    height: calc(100% - 4px);
-    -webkit-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    -ws--box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-
-    & .hatech-pmw {
-        margin: 5px 0px 5px 0px!important;
-        width: 100%;
-        &:first-child{
-            margin: -5px 0px 5px 0!important;
-        }
+    &:first-child{
+      margin: -5px 0px 5px 0!important;
     }
-
-    & .hatech-row {
-        display: inline-block;
-        width: 100%;
-        height: calc(100% - 5px);
-        padding-top: 5px;
-        & .hatech-item {
-            display: inline-block;
-            height: 100%;
-            margin: 0px 5px;
-            float: left;
-            -webkit-box-sizing: border-box;
-            -o-box-sizing: border-box;
-            -ws--box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            &:last-child{
-                margin-right: 0px;
-            }
-        }
+  }
+  & .hatech-row {
+    display: inline-block;
+    width: 100%;
+    height: calc(100% - 5px);
+    padding-top: 5px;
+    & .hatech-item {
+      display: inline-block;
+      height: 100%;
+      margin: 0px 5px;
+      float: left;
+      -webkit-box-sizing: border-box;
+      -o-box-sizing: border-box;
+      -ws--box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      &:last-child{
+        margin-right: 0px;
+      }
     }
+  }
 }

@@ -340,7 +340,7 @@
              */
             initCellIsHide(){
                 let that = this;
-                this.$get("/api/table/select", {
+                this.$get("/api/app/table/select", {
                   name:this.table.id
                 }).then( response => {
                     // 将后台读取字符串JSON数据，转换成JSON数据
@@ -387,7 +387,7 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                this.$get("/api/table/status", {
+                this.$get("/api/app/table/status", {
                   name:this.table.id, content: "["+cellString.substr(1)+"]"
                 }).then( response => {
                 }).catch( error => {console.log(error);});
@@ -428,7 +428,7 @@
              */
             ,initTableData(){
                 let that = this;
-                this.$get("/api/user", {
+                this.$get("/api/app/user", {
                   page:this.table.page
                   ,size:this.table.size
                   ,sortName:this.table.sortName
@@ -531,7 +531,7 @@
                     selected.forEach(item => {
                         id += "," + item.id;
                     });
-                    that.$get("/api/user/delete", {
+                    that.$get("/api/app/user/delete", {
                         id:id.substr(1)
                     }).then(function (response) {
                         that.$message({message: response.msg ,center: true ,type: 'success'});
@@ -565,7 +565,7 @@
                   ,cancelButtonText: '取消'
                   ,type: 'warning'
                 }).then(() => {
-                    that.$get("/api/user/delete", {
+                    that.$get("/api/app/user/delete", {
                         id:row.id
                     }).then( response => {
                         that.$message({message: response.msg ,center: true ,type: 'success'});
@@ -594,7 +594,7 @@
 
                         // 关闭弹出层
                         that.form.dialogFormVisible = false;
-                        that.$get("/api/user/edit",
+                        that.$get("/api/app/user/edit",
                           this.form.data
                         ).then(function (response) {
                           that.$message({message: response.msg ,center: true ,type: 'success'});
