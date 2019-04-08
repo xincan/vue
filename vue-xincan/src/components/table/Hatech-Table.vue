@@ -99,26 +99,13 @@
 
         </div>
 
-        <!-- 表格操作对应弹出层 -->
-        <div class="hatech-table-dialog">
-            <!-- 定义当前对象并将form传入dialog -->
-            <HatechTableDialog
-              :form="form"
-              @hatech-form-submit="hatechFormSubmit"
-            >
-                <slot slot="hatech-table-dialog" name="hatech-dialog-from"></slot>
-            </HatechTableDialog>
-        </div>
-
     </div>
 </template>
 
 <script>
-    // 引用弹出层插件
-    import HatechTableDialog from '@/components/table/Hatech-Table-Dialog';
 
     export default {
-        components: { HatechTableDialog }
+        components: { }
         ,props: {
             table: { type: Object}
             ,form: { type: Object}
@@ -299,19 +286,11 @@
                 this.table.select = row;
             }
 
-            /**
-             * 表单提交操作
-             * @Method hatechFormSubmit
-             */
-            ,hatechFormSubmit(param){
-              this.$emit("form-submit", param);
-            }
         }
     }
 </script>
 
 
 <style scoped lang="scss">
-  @import "../../assets/css/table";
-  @import "../../assets/css/table-dialog";
+    @import "../../assets/css/table";
 </style>

@@ -5,123 +5,142 @@
 
 <template>
 
-    <!--
-        同创数据表格调用实列
-        ref="hatechTable"           定义ref属性值，用于父组件调用子组件对象、函数、属性等
-        :table="table"              定义table属性，用于父组件传值到子组件，子组件用props{table:Object}接收
-        :form="form"                定义form属性， 用于父组件传值到子组件，子组件用props{form:Object}接收
-        @row-click="tableRowClick"  定义row-click事件，用于表格单击行数据操作
-        @init-table="initTable"     定义init-table事件，用户表格初始化数据操作
-    -->
-    <HatechTable
-        ref="hatechTable"
-        :table="table"
-        :form="form"
-        @row-click="tableRowClick"
-        @init-table="initTable"
-        @form-submit="formSubmit"
-    >
+    <div class="hatech">
+
+
         <!--
-            按条件查询模块
-            slot="hatech-search"   slot:表示table组件中的插槽 hatech-search：表示插槽名称，又称为具名插槽：必写项
+            同创数据表格调用实列
+            ref="hatechTable"           定义ref属性值，用于父组件调用子组件对象、函数、属性等
+            :table="table"              定义table属性，用于父组件传值到子组件，子组件用props{table:Object}接收
+            :form="form"                定义form属性， 用于父组件传值到子组件，子组件用props{form:Object}接收
+            @row-click="tableRowClick"  定义row-click事件，用于表格单击行数据操作
+            @init-table="initTable"     定义init-table事件，用户表格初始化数据操作
         -->
-        <div slot="hatech-search" class="hatech-search">
-            <el-form :inline="true" :model="table.search" class="demo-form-inline">
-                <el-form-item><el-input v-model="table.search.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
-                <el-form-item><el-input v-model="table.search.name" placeholder="请输入用户名称"></el-input></el-form-item>
-                <el-form-item>
-                    <el-select v-model="table.search.sex" placeholder="请选择性别">
-                        <el-option label="请选择性别" value=""></el-option>
-                        <el-option label="男" value="1"></el-option>
-                        <el-option label="女" value="0"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item><el-input v-model="table.search.areaId" placeholder="请出入用户所在地区"></el-input></el-form-item>
-                <el-form-item><el-input v-model="table.search.organizationId" placeholder="请输入用户所属机构"></el-input></el-form-item>
-                <el-form-item>
-                    <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
-                    <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
-
-        <!-- 表格头部操作按钮集合 -->
-        <ul slot="hatech-table-header-option">
-            <li
-                v-for="(option, key) in table.headerOption"
-                v-if="option.isShow"
-                :key="key"
-                :title="option.name"
-                @click="hatechTableOptionBtn({key:key, type:option.type, option: option})"
-            >
-                <i :class="option.icon"></i>
-            </li>
-            <li title="显隐列">
-                <el-popover placement="bottom" width="200" trigger="click">
-                    <el-checkbox v-for="(column,key) in table.column" :key="key" :checked="column.isHide" :name="column.prop" @change="onIsCellHide(column)">{{column.label}}</el-checkbox>
-                    <i class="el-icon-menu" slot="reference"></i>
-                </el-popover>
-            </li>
-        </ul>
-
-        <!-- 表格右侧列操作 -->
-        <div slot="hatech-table-cell-option" slot-scope="cell">
-            <i
-                v-for="(option,key) in table.cellOption"
-                v-if="option.isShow && cell.row[option.prop] == option.value"
-                :key="key"
-                :title="option.name"
-                :class="option.icon"
-                @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: cell.index, row: cell.row, option: option})"
-            >
-            </i>
-        </div>
-
-        <!--如果当前列存在格式化、点击参数则走第一个div-->
-        <div  slot="table-cell-data" slot-scope="cell">
-            <span
-                v-if="cell.column.formatter && cell.column.click"
-                @click.stop="onTableFmtClick({event: cell.column.click,row: cell.row})"
-                v-html="cell.column.formatter[cell.row[cell.column.prop]] ? cell.column.formatter[cell.row[cell.column.prop]].replace('${value}', cell.row[cell.column.prop]) : cell.row[cell.column.prop]"
-            ></span>
-            <!--如果当前列存在格式化则走第二个div-->
-            <span
-                v-else-if="cell.column.formatter"
-                v-html="cell.column.formatter[cell.row[cell.column.prop]] ? cell.column.formatter[cell.row[cell.column.prop]].replace('${value}', cell.row[cell.column.prop]) : cell.row[cell.column.prop]"
-            ></span>
-              <!--否则则走第三个div-->
-              <span v-else >{{ cell.row[cell.column.prop] }}</span>
-        </div>
-
-        <!--表格弹出层-->
-        <div slot="hatech-dialog-from">
+        <HatechTable
+            ref="hatechTable"
+            :table="table"
+            :form="form"
+            @row-click="tableRowClick"
+            @init-table="initTable"
+        >
             <!--
-                表单设置
-                status-icon               设置表单校验时：是否在输入框中显示校验结果反馈图标
-                :ref="form.name"          设置表单名称
-                :model="form.data"        设置表单数据并绑定数据
-                :rules="form.rules"       设置表单验证规则
+                按条件查询模块
+                slot="hatech-search"   slot:表示table组件中的插槽 hatech-search：表示插槽名称，又称为具名插槽：必写项
             -->
-            <el-form
+            <div slot="hatech-search" class="hatech-search">
+                <el-form :inline="true" :model="table.search" class="demo-form-inline">
+                    <el-form-item><el-input v-model="table.search.loginName" placeholder="请输入登录名称"></el-input></el-form-item>
+                    <el-form-item><el-input v-model="table.search.name" placeholder="请输入用户名称"></el-input></el-form-item>
+                    <el-form-item>
+                        <el-select v-model="table.search.sex" placeholder="请选择性别">
+                            <el-option label="请选择性别" value=""></el-option>
+                            <el-option label="男" value="1"></el-option>
+                            <el-option label="女" value="0"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item><el-input v-model="table.search.areaId" placeholder="请出入用户所在地区"></el-input></el-form-item>
+                    <el-form-item><el-input v-model="table.search.organizationId" placeholder="请输入用户所属机构"></el-input></el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" size="small" @click="onTableSearch" icon="el-icon-search">查询</el-button>
+                        <el-button type="warning" size="small" @click="onTableReset" icon="el-icon-delete">清空</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+
+            <!-- 表格头部操作按钮集合 -->
+            <ul slot="hatech-table-header-option">
+                <li
+                    v-for="(option, key) in table.headerOption"
+                    v-if="option.isShow"
+                    :key="key"
+                    :title="option.name"
+                    @click="hatechTableOptionBtn({key:key, type:option.type, option: option})"
+                >
+                    <i :class="option.icon"></i>
+                </li>
+                <li title="显隐列">
+                    <el-popover placement="bottom" width="200" trigger="click">
+                        <el-checkbox v-for="(column,key) in table.column" :key="key" :checked="column.isHide" :name="column.prop" @change="onIsCellHide(column)">{{column.label}}</el-checkbox>
+                        <i class="el-icon-menu" slot="reference"></i>
+                    </el-popover>
+                </li>
+            </ul>
+
+            <!-- 表格右侧列操作 -->
+            <div slot="hatech-table-cell-option" slot-scope="cell">
+                <i
+                    v-for="(option,key) in table.cellOption"
+                    v-if="option.isShow && cell.row[option.prop] == option.value"
+                    :key="key"
+                    :title="option.name"
+                    :class="option.icon"
+                    @click.stop="hatechTableOptionBtn({key: key, type: option.type, index: cell.index, row: cell.row, option: option})"
+                >
+                </i>
+            </div>
+
+            <!--如果当前列存在格式化、点击参数则走第一个div-->
+            <div  slot="table-cell-data" slot-scope="cell">
+                <span
+                    v-if="cell.column.formatter && cell.column.click"
+                    @click.stop="onTableFmtClick({event: cell.column.click,row: cell.row})"
+                    v-html="cell.column.formatter[cell.row[cell.column.prop]] ? cell.column.formatter[cell.row[cell.column.prop]].replace('${value}', cell.row[cell.column.prop]) : cell.row[cell.column.prop]"
+                ></span>
+                <!--如果当前列存在格式化则走第二个div-->
+                <span
+                    v-else-if="cell.column.formatter"
+                    v-html="cell.column.formatter[cell.row[cell.column.prop]] ? cell.column.formatter[cell.row[cell.column.prop]].replace('${value}', cell.row[cell.column.prop]) : cell.row[cell.column.prop]"
+                ></span>
+                  <!--否则则走第三个div-->
+                  <span v-else >{{ cell.row[cell.column.prop] }}</span>
+            </div>
+
+        </HatechTable>
+
+
+        <!--
+            定义当前对象并将form传入dialog
+            @hatech-orm-reset="hatechFormReset"             表单重置
+            @hatech-dialog-console="hatechDialogConsole"    取消表单
+            @hatech-dialog-close="hatechDialogClose"        关闭表单
+            @hatech-form-submit="hatechFormSubmit"          表单提交
+        -->
+        <HatechDialog
+          :form="form"
+          @hatech-orm-reset="hatechFormReset"
+          @hatech-dialog-console="hatechDialogConsole"
+          @hatech-dialog-close="hatechDialogClose"
+          @hatech-form-submit="hatechFormSubmit"
+        >
+            <!--表格弹出层-->
+            <div slot="hatech-dialog-from">
+              <!--
+                  表单设置
+                  status-icon               设置表单校验时：是否在输入框中显示校验结果反馈图标
+                  :ref="form.name"          设置表单名称
+                  :model="form.data"        设置表单数据并绑定数据
+                  :rules="form.rules"       设置表单验证规则
+              -->
+              <el-form
                 status-icon
                 :ref="form.name"
                 :model="form.data"
                 :rules="form.rules"
-            >
+              >
                 <el-form-item label="登录名称" prop="loginName" :label-width="form.formLabelWidth" >
-                    <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.loginName" autocomplete="off" placeholder="请输入登录名称" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="登录密码" prop="loginPassword" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.loginPassword" autocomplete="off" placeholder="请输入登录密码" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户名称" prop="name" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.name" autocomplete="off" placeholder="请输入用户名称" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户性别" :label-width="form.formLabelWidth">
-                    <el-radio-group v-model="form.data.sex">
-                      <el-radio :label="0" :disabled="form.disabled" >女</el-radio>
-                      <el-radio :label="1" :disabled="form.disabled" >男</el-radio>
-                    </el-radio-group>
+                  <el-radio-group v-model="form.data.sex">
+                    <el-radio :label="0" :disabled="form.disabled" >女</el-radio>
+                    <el-radio :label="1" :disabled="form.disabled" >男</el-radio>
+                  </el-radio-group>
                 </el-form-item>
                 <el-form-item label="是否管理员" :label-width="form.formLabelWidth">
                   <el-radio-group v-model="form.data.isAdmin">
@@ -130,29 +149,32 @@
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="用户电话" prop="phone" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.phone" autocomplete="off" placeholder="请输入用户电话" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="用户邮箱" prop="email" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.email" autocomplete="off" placeholder="请输入用户邮箱" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="所属地区" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.areaId" autocomplete="off" placeholder="请输入用户所属地区" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
                 <el-form-item label="所属机构" :label-width="form.formLabelWidth">
-                    <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
+                  <el-input v-model="form.data.organizationId" autocomplete="off" placeholder="请输入用户所属机构" :disabled="form.disabled" :style="{width: form.formInputWidth}"></el-input>
                 </el-form-item>
-            </el-form>
-        </div>
-    </HatechTable>
+              </el-form>
+            </div>
+        </HatechDialog>
+    </div>
 </template>
 
 <script>
 
     // 引用同创表格插件
     import HatechTable from '@/components/table/Hatech-Table';
+    // 引用同创弹出层插件
+    import HatechDialog from '@/components/dialog/Hatech-Dialog';
 
     export default {
-        components:{ HatechTable }
+        components:{ HatechTable, HatechDialog }
         ,data() {
 
             /**
@@ -506,10 +528,37 @@
 
             /**
              * 弹出层操作
+             * 表单重置数据信息，重置表单弹出时原始数据
+             * @Method formSubmit
+             */
+            ,hatechFormReset(){
+              this.$refs[this.form.name].resetFields();
+            }
+            /**
+             * 弹出层操作
+             * 表单取消操作，重置表单数据，关闭弹出层
+             * @Method
+             */
+            ,hatechDialogConsole(){
+              this.$refs[this.form.name].resetFields();
+              this.form.dialogFormVisible = false;
+            }
+            /**
+             * 弹出层操作
+             * 表单取消操作, 回归重置表单、列表数据然后关闭
+             * @Method formSubmit
+             */
+            ,hatechDialogClose(done){
+              this.$refs[this.form.name].resetFields();
+              done();
+            }
+
+            /**
+             * 弹出层操作
              * 表单数据提交（添加、修改公用提交，后台以数据id做判断区分）
              * @Method formSubmit
              */
-            ,formSubmit(result) {
+            ,hatechFormSubmit(result) {
                 let that = this;
                 this.$refs[this.form.name].validate(valid => {
 

@@ -641,5 +641,5 @@
 
 <style scoped lang="scss">
     @import "../../assets/css/table";
-    @import "../../assets/css/table-dialog";
+    @import "../../assets/css/dialog";
 </style>
