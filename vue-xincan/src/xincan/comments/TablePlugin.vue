@@ -212,7 +212,7 @@
             ,{label:'登录密码',   prop: 'loginPassword',  width:'auto', isHide: true}
             ,{label:'用户名称',   prop: 'name',           width:'auto', isHide: true,
               formatter: {
-                田东:'<span class="hatech-fmt hatech-success">${value}</span>'
+                 田东:'<span class="hatech-fmt hatech-success">${value}</span>'
                 ,三国张飞:'<span class="hatech-fmt-hand hatech-warning">${value}</span>'
                 ,王启超:'<span class="hatech-fmt-hand hatech-danger">${value}</span>'
                 ,管理员:'<span class="hatech-fmt-hand hatech-info">${value}</span>'
@@ -223,9 +223,9 @@
               formatter: { 1: '<i class="fa fa-male"></i>', 0: '<i class="fa fa-female"></i>' },
               click: 'fmtSexClick'          // 数据格式化点击事件
             }
-            ,{label:'用户电话',   prop: 'phone',          width:'auto', isHide: true}
-            ,{label:'用户邮箱',   prop: 'email',          width:'auto', isHide: true}
-            ,{label:'是否管理员',   prop: 'isAdmin',      width:'auto', isHide: true,
+            ,{label:'用户电话',   prop: 'phone',        width:'auto', isHide: true}
+            ,{label:'用户邮箱',   prop: 'email',        width:'auto', isHide: true}
+            ,{label:'是否管理员', prop: 'isAdmin',      width:'auto', isHide: true,
               formatter: {
                 1: '<span class="hatech-fmt-enable hatech-success">ON</span>',
                 0: '<span class="hatech-fmt-disable hatech-danger">OFF</span>'
@@ -238,15 +238,15 @@
           ]
           ,showHeaderOption: true                 // 是否显示头部右侧操作按钮
           ,headerOption:[                         // 表格头部操作按钮集合
-            {name:'增加',        icon:'el-icon-edit',       type:'add',        isShow: true}
+             {name:'增加',        icon:'el-icon-edit',       type:'add',        isShow: true}
             ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',     isShow: false}
             ,{name:'下载',        icon:'el-icon-download',   type:'download',   isShow: false}
             ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
           ]
           ,showTableOption: true                  // 是否显示列表右侧操作按钮
-          ,cellOptionWidth: 'auto'               // 表格右侧列操作按钮集合宽度
+          ,cellOptionWidth: '200px'               // 表格右侧列操作按钮集合宽度
           ,cellOption:[                           // 表格右侧列操作按钮集合
-            {name:'禁用',        icon:'el-icon-circle-close',      type:'isUse',  prop:'isAdmin', value:'0',    isShow: true}
+             {name:'禁用',        icon:'el-icon-circle-close',      type:'isUse',  prop:'isAdmin', value:'0',    isShow: true}
             ,{name:'启用',        icon:'el-icon-circle-check',      type:'isUse',  prop:'isAdmin', value:'1',    isShow: true}
             ,{name:'修改',        icon:'el-icon-edit',              type:'edit',    isShow: true}
             ,{name:'查看',        icon:'el-icon-document',          type:'detail',  isShow: true}

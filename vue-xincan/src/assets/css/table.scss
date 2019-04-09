@@ -33,7 +33,6 @@
             display: block;
             width: calc(100% - 2px);
             border: 1px solid $table-border-color;
-            border-bottom: none;
             background: white;
             float: left;
             & div > ul {
@@ -56,7 +55,12 @@
         }
 
         & .hatech-table-body {
+            border: 1px solid $table-border-color;
             & /deep/ .el-table {
+                width: calc(100% - 2px)!important;
+                left: 1px;
+                top: 1px;
+                margin-bottom: 2px;
                 & th{
                   background-color: $table-first-line-color;
                 }
