@@ -238,19 +238,19 @@
           ]
           ,showHeaderOption: true                 // 是否显示头部右侧操作按钮
           ,headerOption:[                         // 表格头部操作按钮集合
-             {name:'增加',        icon:'el-icon-edit',       type:'add',        isShow: true}
-            ,{name:'上传',        icon:'el-icon-upload2',    type:'upload',     isShow: false}
-            ,{name:'下载',        icon:'el-icon-download',   type:'download',   isShow: false}
-            ,{name:'批量删除',    icon:'el-icon-delete',      type:'delete',    isShow: true}
+             {name:'增加',        icon:'el-icon-edit',       fun:'add',        isShow: true}
+            ,{name:'上传',        icon:'el-icon-upload2',    fun:'upload',     isShow: false}
+            ,{name:'下载',        icon:'el-icon-download',   fun:'download',   isShow: false}
+            ,{name:'批量删除',    icon:'el-icon-delete',      fun:'delete',    isShow: true}
           ]
           ,showTableOption: true                  // 是否显示列表右侧操作按钮
           ,cellOptionWidth: '200px'               // 表格右侧列操作按钮集合宽度
           ,cellOption:[                           // 表格右侧列操作按钮集合
-             {name:'禁用',        icon:'el-icon-circle-close',      type:'isUse',  prop:'isAdmin', value:'0',    isShow: true}
-            ,{name:'启用',        icon:'el-icon-circle-check',      type:'isUse',  prop:'isAdmin', value:'1',    isShow: true}
-            ,{name:'修改',        icon:'el-icon-edit',              type:'edit',    isShow: true}
-            ,{name:'查看',        icon:'el-icon-document',          type:'detail',  isShow: true}
-            ,{name:'删除',        icon:'el-icon-delete',            type:'delete',  isShow: true}
+             {name:'禁用',        icon:'el-icon-circle-close',      fun:'isUse',  prop:'isAdmin', value:'0',    isShow: true}
+            ,{name:'启用',        icon:'el-icon-circle-check',      fun:'isUse',  prop:'isAdmin', value:'1',    isShow: true}
+            ,{name:'修改',        icon:'el-icon-edit',              fun:'edit',    isShow: true}
+            ,{name:'查看',        icon:'el-icon-document',          fun:'detail',  isShow: true}
+            ,{name:'删除',        icon:'el-icon-delete',            fun:'delete',  isShow: true}
           ]
         }
         // 表单信息设置

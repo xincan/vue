@@ -23,7 +23,7 @@
               v-if="option.isShow"
               :key="key"
               :title="option.name"
-              @click="_hatechTableOptionBtn({key:key, type:option.type, option: option})"
+              @click="_hatechTableOptionBtn({key:key, fun:option.fun, option: option})"
             >
               <i :class="option.icon"></i>
             </li>
@@ -96,7 +96,7 @@
                 :key="key"
                 :title="option.name"
                 :class="option.icon"
-                @click.stop="_hatechTableOptionBtn({key: key, type: option.type, index: scope.$index, row: scope.row, option: option})"
+                @click.stop="_hatechTableOptionBtn({key: key, fun: option.fun, index: scope.$index, row: scope.row, option: option})"
               >
               </i>
             </template>
@@ -199,7 +199,7 @@
           this.table.select.push(param.row);
         }
         param.select = this.table.select;
-        this.hatechTable[param.type] ? this.hatechTable[param.type].call(this, param) : '';
+        this.hatechTable[param.fun] ? this.hatechTable[param.fun].call(this, param) : '';
       }
 
       /**
