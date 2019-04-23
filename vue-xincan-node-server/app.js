@@ -37,17 +37,17 @@ let dataBaseOption = function(sql, callback){
 app.get('/api/app/user',function(req,res){
 	let search = url.parse(req.url,true).search
 		,param = url.parse(req.url,true).query
-		,page = (param.page - 1) * param.size
-		,size = param.size;
+		,page = (search.page - 1) * search.size
+		,size = search.size;
 
 		let sortName = "";
-		let sortType = param.sortType;
+		let sortType = search.sortType;
 
-		console.log(param);
+		console.log(search);
 
-		if(param.sortName !== undefined && param.sortName.length !== 0){
-			sortName = param.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
-			sortType = param.sortType;
+		if(search.sortName !== undefined && search.sortName.length !== 0){
+			sortName = search.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
+			sortType = search.sortType;
 		}
 
 		let sqlCount = "SELECT count(*) count FROM employee where 1=1 ";
@@ -71,8 +71,8 @@ app.get('/api/app/user',function(req,res){
 	let searchParam = JSON.parse(param.param);
 	if(search != null){
 		if(searchParam.loginName != undefined & searchParam.loginName != ''){
-			sqlCount += " and login_name='" + searchParam.loginName + "'";
-			sql += " and login_name='" + searchParam.loginName + "'";
+			sqlCount += " and login_name like '" + searchParam.loginName + "%'";
+			sql += " and login_name like '" + searchParam.loginName + "%'";
 		}
 		if(searchParam.name != undefined & searchParam.name != ''){
 			sqlCount += " and name='" + searchParam.name + "'";
