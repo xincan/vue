@@ -197,8 +197,8 @@
           ,size:10                                 // 分页，每页默认显示10条数据
           ,sort:{
             custom: true                          // 开启远程分页
-            ,sortName:"name"                       // 分页排序字段名称
-            ,sortType:"ASC"                        // 分页排序方式DESC,ASC
+            ,sortName:"createTime"                       // 分页排序字段名称
+            ,sortType:"DESC"                        // 分页排序方式DESC,ASC
           }
           ,pageSize: [10, 20, 50, 100]             // 分页，设置默认页数
           ,isIndexShow: true                       // 表格编号列显示隐藏设置
@@ -313,21 +313,15 @@
        * @Method initCellIsHide
        */
       initTable(param){
-        let that = this;
-        this.$get(this.table.url, {
-            page:this.table.page
-            ,size:this.table.size
-            ,sortName:this.table.sort.sortName
-            ,sortType: this.table.sort.sortType
-            ,param:this.table.search
-          }).then( response => {
-          that.table.count = response.data.count;
-          that.table.data = response.data.data;
-        }).catch( error => {
-          console.log(error);
-        });
+        console.log("head")
+        console.log(param)
+          this.$get(this.table.url, param).then(response => {
+            this.table.count = response.count;
+            this.table.data = response.data;
+          }).catch( error => {
+            console.log(error);
+          });
       }
-
 
 
       /**

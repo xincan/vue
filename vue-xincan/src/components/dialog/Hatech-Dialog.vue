@@ -37,6 +37,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button
           v-for="(option,key) in form.formOption"
+          :key="key"
           v-if="option.isShow"
           :type="option.type"
           :size="option.size"

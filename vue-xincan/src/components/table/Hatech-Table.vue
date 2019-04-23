@@ -129,18 +129,21 @@
       ,table: { type: Object}
     }
     ,data() {
-      return {
-      }
+        return {
+
+        }
     }
     ,mounted() {
+
       // 通过数据库查询用户保存的表格显隐列显示方式
       this._initCellIsHide();
-      // 初始化加载后台表格数据
-      // this.initTableData();
-      if(this.table.autoInit){
-        this.$emit("init-table", {});
-      }else{
+      // 初始化加载后台表格数据, 判断是否手动加载还是自动加载,如果参数不存在则走自动加载
+      if(this.table.autoInit || this.table.autoInit === undefined){
         this._initTable();
+      }else{
+        // 初始化查询参数
+        this._search();
+        this.$emit("init-table", this.table.search);
       }
 
     }
@@ -148,15 +151,24 @@
     ,methods: {
 
       /**
+       * 初始化表格查询参数
+       * @Method initCellIsHide
+       */
+      _search(){
+        this.table.search.page = this.table.page;
+        this.table.search.size = this.table.size;
+        this.table.search.sortName = this.table.sort.sortName;
+        this.table.search.sortType = this.table.sort.sortType;
+      }
+
+      /**
        * 初始化数据
        * 初始化读取数据库隐藏列,每列的宽度
        * @Method initCellIsHide
        */
-      _initCellIsHide(){
+      ,_initCellIsHide(){
         let that = this;
-        this.$get(this.table.showCellUrl, {
-            name:this.table.id
-          }).then( response => {
+        this.$get(this.table.showCellUrl, { name: this.table.id }).then( response => {
           // 将后台读取字符串JSON数据，转换成JSON数据
           let cell = JSON.parse(response.data[0].content);
           if(cell.length > 0){
@@ -283,14 +295,12 @@
        * @Method _initTable
        */
       ,_initTable(){
+        // 表格查询封装
+        this._search();
+        console.log("auto")
+        console.log(this.table.search)
         let that = this;
-        this.$get(this.table.url, {
-            page:this.table.page
-            ,size:this.table.size
-            ,sortName:this.table.sort.sortName
-            ,sortType: this.table.sort.sortType
-            ,param:this.table.search
-          }).then( response => {
+        this.$get(this.table.url, this.table.search).then( response => {
           that.table.count = response.count;
           that.table.data = response.data;
         }).catch( error => {console.log(error);});

@@ -35,19 +35,17 @@ let dataBaseOption = function(sql, callback){
 
 // 用户操作 根据条件查询用户分页信息
 app.get('/api/app/user',function(req,res){
-	let search = url.parse(req.url,true).search
-		,param = url.parse(req.url,true).query
-		,page = (search.page - 1) * search.size
-		,size = search.size;
+	let  param = url.parse(req.url,true).query
+		,page = (param.page - 1) * param.size
+		,size = param.size;
 
 		let sortName = "";
-		let sortType = search.sortType;
+		let sortType = param.sortType;
+		console.log(param);
 
-		console.log(search);
-
-		if(search.sortName !== undefined && search.sortName.length !== 0){
-			sortName = search.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
-			sortType = search.sortType;
+		if(param.sortName !== undefined && param.sortName.length !== 0){
+			sortName = param.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
+			sortType = param.sortType;
 		}
 
 		let sqlCount = "SELECT count(*) count FROM employee where 1=1 ";
@@ -62,40 +60,39 @@ app.get('/api/app/user',function(req,res){
 		sql += ",is_admin isAdmin ";
 		sql += ",area_id areaId ";
 		sql += ",organization_id organizationId ";
-		sql += ",date_format(create_time,'%Y-%m-%d %H:%m:%i') createTime ";
+		sql += ",date_format(create_time,'%Y-%m-%d %H:%m:%i') as createTime";
 		sql += " FROM employee where 1=1 "; // 查询用户信息
 
 		console.log(sortName);
 		console.log(sortType);
 
-	let searchParam = JSON.parse(param.param);
-	if(search != null){
-		if(searchParam.loginName != undefined & searchParam.loginName != ''){
-			sqlCount += " and login_name like '" + searchParam.loginName + "%'";
-			sql += " and login_name like '" + searchParam.loginName + "%'";
+	if(param != null){
+		if(param.loginName != undefined & param.loginName != ''){
+			sqlCount += " and login_name like '" + param.loginName + "%'";
+			sql += " and login_name like '" + param.loginName + "%'";
 		}
-		if(searchParam.name != undefined & searchParam.name != ''){
-			sqlCount += " and name='" + searchParam.name + "'";
-			sql += " and name='" + searchParam.name + "'";
+		if(param.name != undefined & param.name != ''){
+			sqlCount += " and name='" + param.name + "'";
+			sql += " and name='" + param.name + "'";
 		}
-		if(searchParam.sex != undefined & searchParam.sex != ''){
-			sqlCount += " and sex='" + searchParam.sex + "'";
-			sql += " and sex='" + searchParam.sex + "'";
+		if(param.sex != undefined & param.sex != ''){
+			sqlCount += " and sex='" + param.sex + "'";
+			sql += " and sex='" + param.sex + "'";
 		}
-		if(searchParam.areaId != undefined & searchParam.areaId != ''){
-			sqlCount += " and area_id='" + searchParam.areaId + "'";
-			sql += " and area_id='" + searchParam.areaId + "'";
+		if(param.areaId != undefined & param.areaId != ''){
+			sqlCount += " and area_id='" + param.areaId + "'";
+			sql += " and area_id='" + param.areaId + "'";
 		}
-		if(searchParam.organizationId != undefined & searchParam.organizationId != ''){
-			sqlCount += " and organization_id='" + searchParam.organizationId + "'";
-			sql += " and organization_id='" + searchParam.organizationId + "'";
+		if(param.organizationId != undefined & param.organizationId != ''){
+			sqlCount += " and organization_id='" + param.organizationId + "'";
+			sql += " and organization_id='" + param.organizationId + "'";
 		}
 	}
 	sql += " order by " + (sortName.length === 0 ? "create_time" : sortName) + " " + sortType;
 	sql += " limit " + page + ", " + size;
-	console.log("------------------------------------------");
+	console.log("-----------------查询总数-------------------------");
 	console.log(sqlCount);
-	console.log("------------------------------------------");
+	console.log("-----------------查询当前信息-------------------------");
 	console.log(sql);
 	console.log("------------------------------------------");
 
@@ -122,6 +119,9 @@ app.put('/api/app/user/edit',function(req,res){
 		sql += "value ";
 		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '"
 		+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "','" + param.isAdmin + "', now())";
+		console.log("------------------新增信息------------------------");
+		console.log(sql);
+		console.log("------------------------------------------");
 	}else{
 		sql  = "update employee set ";
 		sql += " login_name = '" + param.loginName + "'";
@@ -135,56 +135,24 @@ app.put('/api/app/user/edit',function(req,res){
 		sql += ", organization_id = '" + param.organizationId + "'";
 		sql += ", create_time = now() ";
 		sql += "where id = '" + param.id+ "'";
+		console.log("-------------------修改信息-----------------------");
+		console.log(sql);
+		console.log("------------------------------------------");
 	}
+
 	dataBaseOption(sql, function(result){
 		let resultObject = {
 			code:200
 			,msg: param.id === undefined ? "添加成功": "修改成功"
 			,data: result
 		};
-		res.status(200),
+		res.status(200);
 		res.json(resultObject);
 	});
 });
 
 // 用户操作 根据条件添加修改用户信息
-app.post('/api/app/user/edit',function(req,res){
-	console.log(req.body);
-	let param = req.body
-		,sql = "";
-
-	if(param.id == undefined){
-		sql  = "insert into employee (id, login_name, login_password, name, sex, phone, email, area_id, organization_id, is_admin, create_time) ";
-		sql += "value ";
-		sql += "(replace(UUID(), '-', ''), '" +param.loginName+ "', '" +param.loginPassword+ "', '" +param.name+ "', '" +param.sex+ "', '"
-			+param.phone+ "', '" +param.email+ "', '" +param.areaId+ "', '" +param.organizationId+ "','" + param.isAdmin + "', now())";
-	}else{
-		sql  = "update employee set ";
-		sql += " login_name = '" + param.loginName + "'";
-		sql += ", login_password = '" + param.loginPassword + "'";
-		sql += ", name = '" + param.name + "'";
-		sql += ", sex = '" + param.sex + "'";
-		sql += ", phone = '" + param.phone + "'";
-		sql += ", email = '" + param.email + "'";
-		sql += ", area_id = '" + param.areaId + "'";
-		sql += ",is_admin = '" + param.isAdmin + "'";
-		sql += ", organization_id = '" + param.organizationId + "'";
-		sql += ", create_time = now() ";
-		sql += "where id = '" + param.id+ "'";
-	}
-	dataBaseOption(sql, function(result){
-		let resultObject = {
-			code:200
-			,msg: param.id === undefined ? "添加成功": "修改成功"
-			,data: result
-		};
-		res.status(200),
-			res.json(resultObject);
-	});
-});
-// 用户操作 根据条件添加修改用户信息
 app.post('/api/app/user/delete',function(req,res){
-    console.log(req)
 	let param = req.body;
 	let id = "";
 	let ids = param.id.split(",");
@@ -192,15 +160,12 @@ app.post('/api/app/user/delete',function(req,res){
 		id += ",'" + ids[i] + "'";
 	}
 	let sql = "DELETE FROM employee where id in (" + id.substr(1) + ")";
+	console.log("-----------------------删除信息---------------------------------");
 	console.log(sql);
 	console.log("--------------------------------------------------------");
 	dataBaseOption(sql, function(result){
-		let resultObject = {
-			code:200
-			,msg: "删除成功"
-			,data: result
-		};
-		res.status(200),
+		let resultObject = { code:200, msg: "删除成功", data: result };
+		res.status(200);
 		res.json(resultObject);
 	});
 });
@@ -217,7 +182,7 @@ app.get('/api/app/table/select',function(req,res){
 			,msg: "查询成功"
 			,data: result
 		};
-		res.status(200),
+		res.status(200);
 		res.json(resultObject);
 	});
 });
@@ -232,12 +197,8 @@ app.get('/api/app/table/status',function(req,res){
 	dataBaseOption(deleteSql, function(result){
 		// 增加显隐列数据
 		dataBaseOption(insertSql, function(result){
-			let resultObject = {
-				code:200
-				,msg: "更新成功"
-				,data: result
-			};
-			res.status(200),
+			let resultObject = { code:200, msg: "更新成功", data: result };
+			res.status(200);
 			res.json(resultObject);
 		});
 	});
