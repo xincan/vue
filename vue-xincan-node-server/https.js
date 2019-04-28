@@ -1,1 +1,0 @@
-let require = new require();
