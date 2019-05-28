@@ -5,7 +5,6 @@
 
 
 import echarts from 'echarts';
-// import 'echarts/theme/walden.js';
 import axios from 'axios';
 
 const install = function(Vue) {
