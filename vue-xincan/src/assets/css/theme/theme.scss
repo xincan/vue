@@ -32,9 +32,10 @@ $hatech-option-color: (
 );
 
 // 模块区域色系配置
+$system-color-font: #FFF;                                   // 系统字体颜色
 $system-color-header: #60C2DE;                              // 内容区域第一行菜单对应的标题颜色
-$system-color-panel-title: #60C2DE;                         // 内容块结构头部背景颜色
-$system-color-panel-border: #E2E0E0;                        // 内容区域线条边框颜色
+$system-color-panel-title: $hatech-header-hover-color;      // 内容块结构头部背景颜色
+$system-color-panel-border: $hatech-header-hover-color;     // 内容区域线条边框颜色
 
 
 // 表格色系配置
@@ -43,3 +44,4 @@ $table-icon-color: #5BBBBB;                                 // 表格操作按�
 $table-icon-hover-color: #4686B5;                           // 表格操作按钮悬浮颜色
 $table-first-line-color: #F9F9F9;                           // 表格第一行（列头）背景颜色
 $hatech-line-color: #F1EFEF;                                // 表格弹出层头部（下边框），底部（上边框）边框颜色
+

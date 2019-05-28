@@ -10,8 +10,10 @@ import './assets/css/font/hatech-icon.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/hatech.scss';
 
+import AreaChart from "@/utils/echarts/AreaChart";
 
 import App from './App';
+
 
 //定义全局变量
 Vue.prototype.$get = get;
@@ -21,6 +23,7 @@ Vue.prototype.$put = put;
 Vue.prototype.$delete = del;
 
 Vue.use(ElementUI);
+Vue.use(AreaChart);
 
 new Vue({
   el: '#app'

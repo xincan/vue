@@ -104,6 +104,14 @@
                           ,{id: 1326 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
 
                         ]
+                    },{
+                        id: 133
+                        ,name: '视觉管理'
+                        ,icon: 'fa-home'
+                        ,path: ''
+                        ,child: [
+                            {id: 1331 ,name: '地图管理', icon: 'fa-globe',    path: '/area'}
+                        ]
                     }]
                 }]
             },{
