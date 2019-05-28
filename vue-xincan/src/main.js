@@ -10,7 +10,7 @@ import './assets/css/font/hatech-icon.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/hatech.scss';
 
-import AreaChart from "@/utils/echarts/AreaChart";
+import HatechChart from "@/utils/echarts/HatechChart";
 
 import App from './App';
 
@@ -23,7 +23,7 @@ Vue.prototype.$put = put;
 Vue.prototype.$delete = del;
 
 Vue.use(ElementUI);
-Vue.use(AreaChart);
+Vue.use(HatechChart);
 
 new Vue({
   el: '#app'
