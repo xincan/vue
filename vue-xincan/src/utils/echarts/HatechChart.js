@@ -5,7 +5,7 @@
 
 
 import echarts from 'echarts';
-import 'echarts/theme/walden.js';
+// import 'echarts/theme/walden.js';
 import axios from 'axios';
 
 const install = function(Vue) {
@@ -15,12 +15,42 @@ const install = function(Vue) {
             get() {
 
                 /**
+                 * 渲染地图
+                 * @param id
+                 * @returns {Promise<void>}
+                 */
+                async function initMapChart(id, chinaMap, option) {
+                    let theme = await getTheme();
+                    if(theme !== null && theme !== undefined){
+                        echarts.registerTheme("theme", theme.data);
+                        let chart = echarts.init(document.getElementById(id), 'theme');
+                        echarts.registerMap('china', chinaMap); //注册
+                        chart.setOption(option,true);
+                        return chart;
+                    }
+                };
+
+                /**
+                 * 渲染基本图表
+                 * @param id
+                 * @returns {Promise<void>}
+                 */
+                async function initChart(id, option) {
+                    let theme = await getTheme();
+                    if(theme !== null && theme !== undefined){
+                        echarts.registerTheme("theme", theme.data);
+                        let chart = echarts.init(document.getElementById(id), 'theme');
+                        chart.setOption(option,true);
+                        return chart;
+                    }
+                };
+                /**
                  * 获取echarts自定义皮肤
                  * @returns {*}
                  */
-                // function provinceMapData(){
-                //   return axios.get("/static/echarts/map/china.json", {});
-                // };
+                function getTheme(){
+                  return axios.get("/static/echarts/theme/walden.json", {});
+                };
 
                 /**
                  * 省级地图数据获取
@@ -126,8 +156,13 @@ const install = function(Vue) {
                 };
 
                 return {
-
-                    area: async function (id, result) {
+                    /**
+                     * 渲染地图
+                     * @param id 绑定dam元素
+                     * @param result 需要渲染的数据
+                     * @returns {Promise<void>}
+                     */
+                    map: async function (id, result) {
 
                         let {data, chinaMap} = await getMapData();
 
@@ -145,12 +180,17 @@ const install = function(Vue) {
                                 series.push(mapItems(item));
                             }
                             option.series = series;
-                            let myChart = echarts.init(document.getElementById(id), 'walden');
-                            echarts.registerMap('china', chinaMap); //注册
-                            myChart.setOption(option,true);
+
+                            await initMapChart(id, chinaMap, option);
                         }
                     }
 
+                    /**
+                     * 渲染普通圆
+                     * @param id
+                     * @param result
+                     * @returns {Promise<void>}
+                     */
                     ,cycle: async function (id, result) {
                         let option = {
                             title : {
@@ -178,11 +218,9 @@ const install = function(Vue) {
                                 }
                             ]
                         };
-                        let myChart = echarts.init(document.getElementById(id), 'walden');
-                        myChart.setOption(option,true);
+
+                        await initChart(id, option);
                     }
-
-
                 }
             }
         }
