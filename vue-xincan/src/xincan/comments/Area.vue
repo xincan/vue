@@ -138,7 +138,7 @@
         }
         ,mounted(){
 
-            this.$chart.area("area-chart", this.area);
+            this.$chart.map("area-chart", this.area);
 
             this.$chart.cycle("area-cycle", this.cycle);
         }
