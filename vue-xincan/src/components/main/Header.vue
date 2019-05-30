@@ -55,11 +55,11 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                             {id: 1211 ,name: '地区管理', icon: 'fa-globe',    path: '/areaManage'}
-                            ,{id: 1212 ,name: '菜单管理', icon: 'fa-bars',     path: '/menuManage'}
-                            ,{id: 1213 ,name: '用户管理', icon: 'fa-user-o',   path: '/userManage'}
-                            ,{id: 1214 ,name: '角色管理', icon: 'fa-user-md',  path: '/roleManage'}
-                            ,{id: 1215 ,name: '权限管理', icon: 'fa-home',     path: '/permissionManage'}
+                             {id: 1211 ,name: '地区管理', icon: 'fa-globe',    path: '/warn/manager/areaManage'}
+                            ,{id: 1212 ,name: '菜单管理', icon: 'fa-bars',     path: '/warn/manager/menuManage'}
+                            ,{id: 1213 ,name: '用户管理', icon: 'fa-user-o',   path: '/warn/manager/userManage'}
+                            ,{id: 1214 ,name: '角色管理', icon: 'fa-user-md',  path: '/warn/manager/roleManage'}
+                            ,{id: 1215 ,name: '权限管理', icon: 'fa-home',     path: '/warn/manager/permissionManage'}
                         ]
                     },{
                         id: 122
@@ -73,8 +73,8 @@
                         ,icon: 'fa-exclamation-triangle'
                         ,path: '/publish'
                         ,child: [
-                           {id: 1231 ,name: '预警编辑', icon: 'fa-user-md',   path: '/warnEdit'}
-                          ,{id: 1232 ,name: '预警配置', icon: 'fa-user-md',  path: '/warnConfig'}
+                           {id: 1231 ,name: '预警编辑', icon: 'fa-user-md',   path: '/warn/manager/warnEdit'}
+                          ,{id: 1232 ,name: '预警配置', icon: 'fa-user-md',  path: '/warn/manager/warnConfig'}
                         ]
                     }]
                 },{
@@ -87,8 +87,8 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                           {id: 1311 ,name: '表格实例', icon: 'fa-globe',    path: '/table'}
-                          ,{id: 1312 ,name: '表格封装', icon: 'fa-globe',    path: '/table/plugin'}
+                           {id: 1311 ,name: '表格实例', icon: 'fa-globe',    path: '/xincan/comments/table'}
+                          ,{id: 1312 ,name: '表格封装', icon: 'fa-globe',    path: '/xincan/comments/table/plugin'}
 
                         ]
                     },{
@@ -97,11 +97,11 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                           {id: 1322 ,name: '内置图标', icon: 'fa-globe',    path: '/icon'}
-                          ,{id: 1323 ,name: '基本布局', icon: 'fa-home',     path: '/panel'}
-                          ,{id: 1324 ,name: '常用布局', icon: 'fa-home',     path: '/always/panel'}
-                          ,{id: 1325 ,name: '常用按钮', icon: 'fa-globe',    path: '/button'}
-                          ,{id: 1326 ,name: '下拉列表', icon: 'fa-globe',    path: '/select'}
+                           {id: 1322 ,name: '内置图标', icon: 'fa-globe',    path: '/xincan/comments/icon'}
+                          ,{id: 1323 ,name: '基本布局', icon: 'fa-home',     path: '/xincan/comments/panel'}
+                          ,{id: 1324 ,name: '常用布局', icon: 'fa-home',     path: '/xincan/comments/always/panel'}
+                          ,{id: 1325 ,name: '常用按钮', icon: 'fa-globe',    path: '/xincan/comments/button'}
+                          ,{id: 1326 ,name: '下拉列表', icon: 'fa-globe',    path: '/xincan/comments/select'}
 
                         ]
                     },{
@@ -110,9 +110,17 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                             {id: 1331 ,name: '地图管理', icon: 'fa-globe',    path: '/area'}
-                            ,{id: 1332 ,name: '绘图管理', icon: 'fa-globe',    path: '/flow'}
-                            ,{id: 1333 ,name: '文本编辑', icon: 'fa-globe',    path: '/editor'}
+                             {id: 1331 ,name: '地图管理', icon: 'fa-globe',    path: '/xincan/comments/area'}
+                            ,{id: 1332 ,name: '绘图管理', icon: 'fa-globe',    path: '/xincan/comments/flow'}
+                        ]
+                    },{
+                        id: 134
+                        ,name: '编辑管理'
+                        ,icon: 'fa-home'
+                        ,path: ''
+                        ,child: [
+                            {id: 1341 ,name: '预案管理', icon: 'fa-globe',    path: '/xincan/edit/manager'}
+                            ,{id: 1342 ,name: '预案编辑', icon: 'fa-globe',    path: '/xincan/edit/editor'}
                         ]
                     }]
                 }]

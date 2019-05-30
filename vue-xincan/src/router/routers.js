@@ -19,7 +19,8 @@ import Select from "@/xincan/comments/Select";
 import Icon from "@/xincan/comments/Icon";
 import Area from "@/xincan/comments/Area";
 import Flow from "@/xincan/comments/Flow";
-import Editor from "@/xincan/comments/Editor";
+import Manager from "@/xincan/edit/Manager";
+import Editor from "@/xincan/edit/Editor";
 
 
 
@@ -33,53 +34,56 @@ const routes = [{
     path: '/controller'
     ,component: Controller
     ,children: [{
-        path: '/areaManage'
+        path: '/warn/manager/areaManage'
         ,component: AreaManage
     }, {
-        path: '/menuManage'
+        path: '/warn/manager/menuManage'
         ,component: MenuManage
     }, {
-        path: '/userManage'
+        path: '/warn/manager/userManage'
         ,component: UserManage
     }, {
-        path: '/roleManage'
+        path: '/warn/manager/roleManage'
         ,component: RoleManage
     }, {
-        path: '/permissionManage'
+        path: '/warn/manager/permissionManage'
         ,component: PermissionManage
     }]
 },{
     path: '/plugin'
     ,component: Plugin
     ,children: [{
-        path: '/table'
+        path: '/xincan/comments/table'
         ,component: Table
     }, {
-        path: '/table/plugin'
+        path: '/xincan/comments/table/plugin'
         ,component: TablePlugin
     },{
-        path: '/panel'
+        path: '/xincan/comments/panel'
         ,component: Panel
     },{
-      path: '/always/panel'
-      ,component: AlwaysPanel
+        path: '/xincan/comments/always/panel'
+        ,component: AlwaysPanel
     },{
-        path: '/button'
+        path: '/xincan/comments/button'
         ,component: Button
     },{
-        path: '/select'
+        path: '/xincan/comments/select'
         ,component: Select
     },{
-      path: '/icon'
+      path: '/xincan/comments/icon'
       ,component: Icon
     },{
-      path: '/area'
+      path: '/xincan/comments/area'
       ,component: Area
     },{
-      path: '/flow'
+      path: '/xincan/comments/flow'
       ,component: Flow
     },{
-      path: '/editor'
+      path: '/xincan/edit/manager'
+      ,component: Manager
+    },{
+      path: '/xincan/edit/editor'
       ,component: Editor
     }]
 }, {
