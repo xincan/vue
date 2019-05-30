@@ -18,6 +18,9 @@ import TablePlugin from "@/xincan/comments/TablePlugin";
 import Select from "@/xincan/comments/Select";
 import Icon from "@/xincan/comments/Icon";
 import Area from "@/xincan/comments/Area";
+import Flow from "@/xincan/comments/Flow";
+import Editor from "@/xincan/comments/Editor";
+
 
 
 
@@ -72,6 +75,12 @@ const routes = [{
     },{
       path: '/area'
       ,component: Area
+    },{
+      path: '/flow'
+      ,component: Flow
+    },{
+      path: '/editor'
+      ,component: Editor
     }]
 }, {
     path: '/',

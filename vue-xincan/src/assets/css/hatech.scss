@@ -110,11 +110,8 @@ body{
       height: 100%;
       margin: 0px 5px;
       float: left;
-      -webkit-box-sizing: border-box;
-      -o-box-sizing: border-box;
-      -ws--box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
+      @include box-border-sizing();
+      border: 1px solid $system-color-panel-border;
       &:last-child{
         margin-right: 0px;
       }
@@ -124,11 +121,9 @@ body{
         width: 100%;
         height: 35px;
         line-height: 35px;
-        box-sizing: border-box;
         padding: 0;
         margin: 0;
         color: $system-color-font;
-        border: 1px solid $system-color-panel-border;
         background-color: $system-color-panel-title;
         & .hatech-item-header-title {
           float: left;
@@ -153,7 +148,6 @@ body{
         width: 100%;
         height: calc(100% - 35px);
         padding: 0;
-        border: 1px solid $system-color-panel-border;
       }
 
 

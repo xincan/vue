@@ -110,7 +110,9 @@
                         ,icon: 'fa-home'
                         ,path: ''
                         ,child: [
-                            {id: 1331 ,name: '地图管理', icon: 'fa-globe',    path: '/area'}
+                             {id: 1331 ,name: '地图管理', icon: 'fa-globe',    path: '/area'}
+                            ,{id: 1332 ,name: '绘图管理', icon: 'fa-globe',    path: '/flow'}
+                            ,{id: 1333 ,name: '文本编辑', icon: 'fa-globe',    path: '/editor'}
                         ]
                     }]
                 }]
