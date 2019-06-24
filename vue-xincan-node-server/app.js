@@ -32,6 +32,41 @@ let dataBaseOption = function(sql, callback){
 	});
 };
 
+///////////////////////////////////////////////通用表格处理///////////////////////////////////////////////////////
+
+// 表格显隐列样式 获取当前表格列的信息
+app.get('/api/app/table/select',function(req,res){
+	let param = url.parse(req.url,true).query;
+	let sql = "SELECT * FROM table_cell_show where name = '" + param.name + "'";
+	dataBaseOption(sql, function(result){
+		let resultObject = {
+			code:200
+			,msg: "查询成功"
+			,data: result
+		};
+		res.status(200);
+		res.json(resultObject);
+	});
+});
+
+// 表格显隐列样式 更新当前表格列的信息
+app.get('/api/app/table/status',function(req,res){
+	let param = url.parse(req.url,true).query;
+	let deleteSql = "delete from table_cell_show where name = '" + param.name + "'";
+	let insertSql = "insert into table_cell_show (id, name, content, create_time) " +
+		"value (replace(UUID(), '-', ''), '" + param.name + "', '" + param.content + "', now())";
+	// 删除显隐列数据
+	dataBaseOption(deleteSql, function(result){
+		// 增加显隐列数据
+		dataBaseOption(insertSql, function(result){
+			let resultObject = { code:200, msg: "更新成功", data: result };
+			res.status(200);
+			res.json(resultObject);
+		});
+	});
+});
+
+
 
 // 用户操作 根据条件查询用户分页信息
 app.get('/api/app/user',function(req,res){
@@ -108,6 +143,7 @@ app.get('/api/app/user',function(req,res){
 });
 
 
+////////////////////////////////////////////用户管理//////////////////////////////////////////////////////////
 
 // 用户操作 根据条件添加修改用户信息
 app.put('/api/app/user/edit',function(req,res){
@@ -171,41 +207,118 @@ app.post('/api/app/user/delete',function(req,res){
 	});
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////预案处理///////////////////////////////////////////////////////
 
-// 表格显隐列样式 获取当前表格列的信息
-app.get('/api/app/table/select',function(req,res){
-	let param = url.parse(req.url,true).query;
-	let sql = "SELECT * FROM table_cell_show where name = '" + param.name + "'";
+// 用户操作 根据条件查询预案计划类型信息
+app.get('/api/app/plan/type',function(req,res){
+
+	let getTree = function(id, result){
+		let items = [];
+		for (let rlt of result) {
+			// 遍历所有节点，将父菜单id与传过来的id比较
+			if (rlt.parentId === id) {
+				rlt.label = rlt.name;
+				delete rlt.name;
+				items.push(rlt);
+				if(items.length !== 0){
+					let tree = getTree(rlt.id, result);
+					if(tree.length > 0){
+						rlt.children = tree;
+					}
+				}
+			}
+		}
+		return items;
+	};
+
+	let sql  = "SELECT id ,name ,parent_id parentId ,code ,description FROM plan_type"; // 查询用户信息
+	// 查询总条数
 	dataBaseOption(sql, function(result){
-		let resultObject = {
-			code:200
-			,msg: "查询成功"
-			,data: result
-		};
-		res.status(200);
-		res.json(resultObject);
+
+		let item = getTree(0, result);
+
+		res.status(200),
+			res.json({count:result.length,msg:'查询成功', data:item});
 	});
+
 });
 
-// 表格显隐列样式 更新当前表格列的信息
-app.get('/api/app/table/status',function(req,res){
-	let param = url.parse(req.url,true).query;
-	let deleteSql = "delete from table_cell_show where name = '" + param.name + "'";
-	let insertSql = "insert into table_cell_show (id, name, content, create_time) " +
-		"value (replace(UUID(), '-', ''), '" + param.name + "', '" + param.content + "', now())";
-	// 删除显隐列数据
-	dataBaseOption(deleteSql, function(result){
-		// 增加显隐列数据
-		dataBaseOption(insertSql, function(result){
-			let resultObject = { code:200, msg: "更新成功", data: result };
-			res.status(200);
-			res.json(resultObject);
+// 根据条件查询预案分页信息
+app.get('/api/app/plan',function(req,res){
+	let  param = url.parse(req.url,true).query
+		,page = (param.page - 1) * param.size
+		,size = param.size;
+
+	let sortName = "";
+	let sortType = param.sortType;
+
+	if(param.sortName !== undefined && param.sortName.length !== 0){
+		sortName = param.sortName.replace(/([A-Z])/g,"_$1").toLowerCase();
+		sortType = param.sortType;
+	}
+
+	let sqlCount = "SELECT count(*) count FROM plan where 1=1 ";
+	let sql  = "SELECT ";
+		sql += "p.id id ";
+		sql += ",p.plan_name planName ";
+		sql += ",p.version version ";
+		sql += ",p.description description ";
+		sql += ",p.plan_type_id planTypeId ";
+		sql += ",(select name from plan_type pt where pt.id = p.plan_type_id) typeName ";
+		sql += ",p.status status ";
+		sql += ",p.edit_time editTime ";
+		sql += " FROM plan p where 1=1 "; // 查询用户信息
+
+		sql += " order by " + (sortName.length === 0 ? "p.edit_time" : sortName) + " " + sortType;
+		sql += " limit " + page + ", " + size;
+
+	// 查询总条数
+	dataBaseOption(sqlCount, function(total){
+		let count = total[0].count;
+		dataBaseOption(sql, function(result){
+			res.status(200),
+				res.json({count:count,msg:'查询成功', data:result});
 		});
 	});
 });
 
 
+// 根据条件查询预案分页信息
+app.get('/api/app/word/outline',function(req,res){
+	let  param = url.parse(req.url,true).query;
+
+	let getTree = function(id, result){
+		let items = [];
+		for (let rlt of result) {
+			// 遍历所有节点，将父菜单id与传过来的id比较
+			if (rlt.parentId === id) {
+				rlt.label = rlt.num +"  "+ rlt.menu;
+				items.push(rlt);
+				if(items.length !== 0){
+					let tree = getTree(rlt.id, result);
+					if(tree.length > 0){
+						rlt.children = tree;
+					}
+				}
+			}
+		}
+		return items;
+	};
+
+	let sql  = "SELECT";
+	sql += " id";
+	sql += ", num";
+	sql += ", menu";
+	sql += ", parent_id parentId";
+	sql += " FROM word_outline where 1=1 "; // 查询用户信息
+
+	dataBaseOption(sql, function(result){
+		let item = getTree(0, result);
+		res.status(200),
+		res.json({count:result.count,msg:'查询成功', data:item});
+	});
+
+});
 
 //配置服务端口
 let server = app.listen(3000, function () {
