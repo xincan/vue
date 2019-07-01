@@ -49,16 +49,18 @@ $hatech-edit-input-color: $hatech-header-hover-color;
           margin-top: 5px;
           &:hover {
             background-color: #F3F3F3;
-
             & span.edit-btn {
               display: block;
+            }
+            & ul:last-child {
+              background: white;
             }
           }
           & > ul{
             padding: 0;
             margin: 0;
           }
-          & ul.content {
+          & > ul.content {
             cursor: pointer;
             & p {
               padding: 0;

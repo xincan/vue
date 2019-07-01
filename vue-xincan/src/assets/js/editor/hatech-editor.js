@@ -11,6 +11,7 @@ class HatechEditor {
   menus;          // 自定义菜单配置
   content;        // 编辑器内容
   display;        // 编辑器是否显示
+  _saveBtnClick;   // 保存按钮触发操作
 
   constructor(option){
     if (Object.keys(option).length === 0) {
@@ -19,6 +20,7 @@ class HatechEditor {
     this.editorId = option.id;
     this.menus = option.menus;
     this.display = option.display;
+    this._saveBtnClick = option.save || null;
     if(this.editorId !== undefined && this.editorId !== null){
       if(this.menus.length > 0){
         this._initEditor();
@@ -72,13 +74,13 @@ class HatechEditor {
         iBtn.className = "hatech_" + option;
         if(option === "screen"){
           iBtn.onclick = ()=> {
-            this._toggleScreen(iBtn);
+            this._hatechEditScreen(iBtn);
           }
           iBtn.innerHTML = "全屏";
         }
         if(option === "save"){
           iBtn.onclick = ()=> {
-            this._toggleSave(iBtn);
+            this._hatechEditSave(iBtn);
           }
           iBtn.innerHTML = "保存";
         }
@@ -95,7 +97,7 @@ class HatechEditor {
    * @param fullscreenBtn
    * @private
    */
-  _toggleScreen(iBtn){
+  _hatechEditScreen(iBtn){
     this._toggleClass(this.editorDom, 'fullscreen-editor');
     if(iBtn.innerHTML == '全屏'){
       iBtn.innerHTML = '退出全屏';
@@ -110,7 +112,7 @@ class HatechEditor {
    * @param fullscreenBtn
    * @private
    */
-  _toggleSave(iBtn){
+  _hatechEditSave(iBtn){
     if(this.content === undefined || this.content == "<p><br></p>"){
       return false;
     }
@@ -124,6 +126,10 @@ class HatechEditor {
     // 1:获取内容节点同级向上操作按钮节点
     let spanNode = contentNode.previousElementSibling;
     spanNode.style= "";
+
+    if(this._saveBtnClick != null){
+      this._saveBtnClick(this.editorId.substring(1), this.editorDom, this.content);
+    }
   };
 
   /**

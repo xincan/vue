@@ -104,21 +104,22 @@
                 }
 
                 ,editor: {
-                    data:[
-                      {
-                        id:1,
-                        content: '锦瑟无端五十弦，一弦一柱思华年'
-                      }, {
-                        id:2,
-                        content: '庄生晓梦迷蝴蝶，望帝春心托杜鹃'
-                      }, {
-                        id:3,
-                        content: '沧海月明珠有泪，蓝田日暖玉生烟'
-                      }, {
-                        id:4,
-                        content: '此情可待成追忆，只是当时已惘然'
-                      }
-                    ]
+                  display: "block",
+                  data:[
+                    {
+                      id:1,
+                      content: '锦瑟无端五十弦，一弦一柱思华年'
+                    }, {
+                      id:2,
+                      content: '庄生晓梦迷蝴蝶，望帝春心托杜鹃'
+                    }, {
+                      id:3,
+                      content: '沧海月明珠有泪，蓝田日暖玉生烟'
+                    }, {
+                      id:4,
+                      content: '此情可待成追忆，只是当时已惘然'
+                    }
+                  ]
                 }
 
             }
@@ -158,7 +159,23 @@
             }
 
             ,editorOption(editorId){
-                new HatechEditor({id:'#' + editorId, display: 'block', menus:['screen','save']});
+
+                let than = this;
+                if(this.editor.display === "block"){
+                    new HatechEditor({
+                        id:'#' + editorId,
+                        display: this.editor.display,
+                        menus:['screen','save'],
+                        save: function (id, dom, content) {
+                          console.log(id);
+                          console.log(dom);
+                          console.log(content);
+                          than.editor.display = "block";
+                        }
+                    });
+                  than.editor.display = "none";
+                }
+
             }
 
         }
