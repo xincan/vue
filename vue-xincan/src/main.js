@@ -12,6 +12,7 @@ import './assets/css/hatech.scss';
 
 import HatechChart from "@/utils/echarts/HatechChart";
 
+
 import App from './App';
 
 

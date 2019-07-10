@@ -122,6 +122,14 @@
                             {id: 1341 ,name: '预案管理', icon: 'fa-globe',    path: '/xincan/edit/manager'}
                             ,{id: 1342 ,name: '预案编辑', icon: 'fa-globe',    path: '/xincan/edit/editor'}
                         ]
+                    },{
+                      id: 135
+                      ,name: '消息管理'
+                      ,icon: 'fa-home'
+                      ,path: ''
+                      ,child: [
+                        {id: 1351 ,name: '消息管理', icon: 'fa-globe',    path: '/xincan/message/manager'}
+                      ]
                     }]
                 }]
             },{

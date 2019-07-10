@@ -22,7 +22,7 @@ import Flow from "@/xincan/comments/Flow";
 import Manager from "@/xincan/edit/Manager";
 import Editor from "@/xincan/edit/Editor";
 
-
+import Message from "@/xincan/comments/Message";
 
 
 Vue.use(VueRouter);
@@ -85,6 +85,9 @@ const routes = [{
     },{
       path: '/xincan/edit/editor'
       ,component: Editor
+    },{
+      path: '/xincan/message/manager'
+      ,component: Message
     }]
 }, {
     path: '/',

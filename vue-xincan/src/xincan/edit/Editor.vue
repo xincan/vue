@@ -167,9 +167,6 @@
                         display: this.editor.display,
                         menus:['screen','save'],
                         save: function (id, dom, content) {
-                          console.log(id);
-                          console.log(dom);
-                          console.log(content);
                           than.editor.display = "block";
                         }
                     });
