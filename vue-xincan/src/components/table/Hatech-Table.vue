@@ -169,24 +169,26 @@
       ,_initCellIsHide(){
         let that = this;
         this.$get(this.table.showCellUrl, { name: this.table.id }).then( response => {
-          // 将后台读取字符串JSON数据，转换成JSON数据
-          let cell = JSON.parse(response.data[0].content);
-          if(cell.length > 0){
-            let newColumn = [];
-            // 比对两个集合修改列显示状态
-            that.table.column.forEach(clm => {
-              cell.forEach(cel => {
-                if(clm.prop === cel.prop){
-                  clm.isHide = cel.isHide;
-                  clm.width = cel.width;
-                  newColumn.push(clm);
-                }
+          if(response.data !== undefined || response.data !== null){
+            // 将后台读取字符串JSON数据，转换成JSON数据
+            let cell = JSON.parse(response.data.content);
+            if(cell.length > 0){
+              let newColumn = [];
+              // 比对两个集合修改列显示状态
+              that.table.column.forEach(clm => {
+                cell.forEach(cel => {
+                  if(clm.prop === cel.prop){
+                    clm.isHide = cel.isHide;
+                    clm.width = cel.width;
+                    newColumn.push(clm);
+                  }
+                });
               });
-            });
-            that.table.column=[];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
-            that.$nextTick(()=>{    // 数据DOM元素重新渲染之前，加载数据
-              that.table.column = newColumn;
-            });
+              that.table.column=[];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
+              that.$nextTick(()=>{    // 数据DOM元素重新渲染之前，加载数据
+                that.table.column = newColumn;
+              });
+            }
           }
         }).catch( error => {console.log(error);});
       }
@@ -257,7 +259,7 @@
           cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
         });
         // 将操作列数据保存到后台
-        this.$get(this.table.dropCellUrl, {
+        this.$put(this.table.dropCellUrl, {
             name:this.table.id, content: "["+cellString.substr(1)+"]"
           }).then( response => {
         }).catch( error => {console.log(error);});
@@ -297,8 +299,6 @@
       ,_initTable(){
         // 表格查询封装
         this._search();
-        console.log("auto")
-        console.log(this.table.search)
         let that = this;
         this.$get(this.table.url, this.table.search).then( response => {
           that.table.count = response.count;

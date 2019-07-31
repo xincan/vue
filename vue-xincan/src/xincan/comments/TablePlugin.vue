@@ -189,10 +189,10 @@
           title:'用户列表'                         // 表格名称
           ,id:'admin' + '-' + 'user-table'         // 表格ID，系统中表格唯一
           ,autoInit: false                         // 自动加载：true,手动加载false
-          ,url:'/api/app/user'                         // 数据访问路径
+          ,url:'/api/user'                         // 数据访问路径
           ,tableWidth:'100%'                       // 表格宽度设定
-          ,showCellUrl:'/api/app/table/select'         // 显隐列读取用户习惯
-          ,dropCellUrl:'/api/app/table/status'         // 拖拽列保存入库路径，记录用户习惯
+          ,showCellUrl:'/api/table'         // 显隐列读取用户习惯
+          ,dropCellUrl:'/api/table'         // 拖拽列保存入库路径，记录用户习惯
           ,page:1                                  // 分页，当前页
           ,size:10                                 // 分页，每页默认显示10条数据
           ,sort:{
@@ -313,8 +313,6 @@
        * @Method initCellIsHide
        */
       initTable(param){
-        console.log("head")
-        console.log(param)
           this.$get(this.table.url, param).then(response => {
             this.table.count = response.count;
             this.table.data = response.data;
@@ -445,13 +443,14 @@
           type: 'warning'
         }).then(() => {
           select.forEach(item => { id += "," + item.id; });
-          this.$post("/api/app/user/delete", {
+          this.$post("/api/user/delete", {
             id:id.substr(1)
           }).then(function (response) {
             that.$message({message: response.msg ,center: true ,type: 'success'});
             that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
           }).catch(function (error) {console.log(error)});
         }).catch(() => {});
+        this.table.select = [];
       }
 
       /**
@@ -473,14 +472,28 @@
           }).then(() => {
             // 关闭弹出层
             that.form.dialogFormVisible = false;
-            // 调用父类函数传参
-            this.$post("/api/app/user/edit", result.row).then(response => {
-              console.log(result);
-              that.$message({message: response.msg ,center: true ,type: 'success'});
-              that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
-            }).catch(function (error) {
-              that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
-            });
+
+           if(result.id === undefined){
+             // 调用父类函数传参
+             this.$put("/api/user", result.row).then(response => {
+               console.log(result);
+               that.$message({message: response.msg ,center: true ,type: 'success'});
+               that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
+             }).catch(function (error) {
+               that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+             });
+           } else {
+             // 调用父类函数传参
+             this.$patch("/api/user", result.row).then(response => {
+               console.log(result);
+               that.$message({message: response.msg ,center: true ,type: 'success'});
+               that.$nextTick(()=>{ that.$refs.hatechTable._initTable(); });
+             }).catch(function (error) {
+               that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+             });
+           }
+
+
 
           }).catch((e) => {console.log(e)});
         });

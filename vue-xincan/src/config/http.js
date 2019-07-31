@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Message } from 'element-ui';
-import router from '../router/routers';
+import qs from 'qs';
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL ='';
@@ -24,28 +23,6 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
-
-//http response 拦截器
-// axios.interceptors.response.use(
-//     response => {
-//
-//
-//         if(response.data.code == 200){
-//             router.push({
-//                 path:"/login",
-//                 querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
-//             });
-//         }
-//
-//         console.log(response)
-//         return response;
-//     },
-//     error => {
-//         return Promise.reject(error)
-//     }
-// )
-
 
 /**
  * 封装get方法
@@ -124,7 +101,7 @@ export function put(url,data = {}){
 };
 
 /**
- * 封装put请求
+ * 封装delete请求
  * @param url
  * @param data
  * @returns {Promise}
@@ -132,7 +109,8 @@ export function put(url,data = {}){
 
 export function del(url,data = {}){
   return new Promise((resolve,reject) => {
-    axios.delete(url,data)
+    console.log(data);
+    axios.delete(url,qs.stringify(data))
       .then(response => {
         resolve(response.data);
       },err => {

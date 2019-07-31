@@ -249,7 +249,7 @@
                     ,id:''                              // 表格ID，系统中表格唯一
                     ,page:1                             // 分页，当前页
                     ,size:10                            // 分页，每页默认显示10条数据
-                    ,sortName:""                        // 分页排序字段名称
+                    ,sortName:"createTime"              // 分页排序字段名称
                     ,sortType:"ASC"                     // 分页排序方式DESC,ASC
                     ,pageSize: [10, 20, 30, 50]         // 分页，设置默认页数
                     ,search:{                           // 查询条件
@@ -340,28 +340,30 @@
              */
             initCellIsHide(){
                 let that = this;
-                this.$get("/api/app/table/select", {
+                this.$get("/api/table", {
                   name:this.table.id
                 }).then( response => {
+                  if(response.data !== undefined || response.data !== null) {
                     // 将后台读取字符串JSON数据，转换成JSON数据
-                    let cell = JSON.parse(response.data[0].content);
-                    if(cell.length > 0){
-                        let newColumn = [];
-                        // 比对两个集合修改列显示状态
-                        that.table.column.forEach(clm => {
-                            cell.forEach(cel => {
-                                if(clm.prop === cel.prop){
-                                    clm.isHide = cel.isHide;
-                                    clm.width = cel.width;
-                                    newColumn.push(clm);
-                                }
-                            });
+                    let cell = JSON.parse(response.data.content);
+                    if (cell.length > 0) {
+                      let newColumn = [];
+                      // 比对两个集合修改列显示状态
+                      that.table.column.forEach(clm => {
+                        cell.forEach(cel => {
+                          if (clm.prop === cel.prop) {
+                            clm.isHide = cel.isHide;
+                            clm.width = cel.width;
+                            newColumn.push(clm);
+                          }
                         });
-                        that.table.column=[];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
-                        this.$nextTick(() => {
-                            that.table.column = newColumn;
-                        });
+                      });
+                      that.table.column = [];   // 清空列显示数据，后续紧跟着渲染使之vue执行树双向绑定
+                      this.$nextTick(() => {
+                        that.table.column = newColumn;
+                      });
                     }
+                  }
                 }).catch( error => {console.log(error);});
             }
 
@@ -387,7 +389,7 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                this.$get("/api/app/table/status", {
+                this.$get("/api/table", {
                   name:this.table.id, content: "["+cellString.substr(1)+"]"
                 }).then( response => {
                 }).catch( error => {console.log(error);});
@@ -428,7 +430,7 @@
              */
             ,initTableData(){
                 let that = this;
-                this.$get("/api/app/user", {
+                this.$get("/api/user", {
                   page:this.table.page
                   ,size:this.table.size
                   ,sortName:this.table.sortName
@@ -531,7 +533,7 @@
                     selected.forEach(item => {
                         id += "," + item.id;
                     });
-                    that.$get("/api/app/user/delete", {
+                    that.$post("/api/user/delete", {
                         id:id.substr(1)
                     }).then(function (response) {
                         that.$message({message: response.msg ,center: true ,type: 'success'});
@@ -560,12 +562,12 @@
              */
             ,deleteTableRowOption(index, row) {
                 let that = this;
-                that.$confirm('确定要删除吗?', '温馨提示', {
+                this.$confirm('确定要删除吗?', '温馨提示', {
                   confirmButtonText: '确定'
                   ,cancelButtonText: '取消'
                   ,type: 'warning'
                 }).then(() => {
-                    that.$get("/api/app/user/delete", {
+                    that.$delete("/api/user", {
                         id:row.id
                     }).then( response => {
                         that.$message({message: response.msg ,center: true ,type: 'success'});
@@ -594,14 +596,26 @@
 
                         // 关闭弹出层
                         that.form.dialogFormVisible = false;
-                        that.$get("/api/app/user/edit",
-                          this.form.data
-                        ).then(function (response) {
-                          that.$message({message: response.msg ,center: true ,type: 'success'});
-                          that.$nextTick(()=>{ that.initTableData(); });
-                        }).catch(function (error) {
-                          that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
-                        });
+
+                        if(this.form.data.id){
+                            that.$patch("/api/user",
+                              this.form.data
+                            ).then(function (response) {
+                              that.$message({message: response.msg ,center: true ,type: 'success'});
+                              that.$nextTick(()=>{ that.initTableData(); });
+                            }).catch(function (error) {
+                              that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                            });
+                        } else {
+                            that.$put("/api/user",
+                              this.form.data
+                            ).then(function (response) {
+                              that.$message({message: response.msg ,center: true ,type: 'success'});
+                              that.$nextTick(()=>{ that.initTableData(); });
+                            }).catch(function (error) {
+                              that.$message({message: "数据操作失败" ,center: true ,type: 'success'});
+                            });
+                        }
 
                     }).catch(() => {});
                 });
