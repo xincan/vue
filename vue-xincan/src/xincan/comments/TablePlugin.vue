@@ -191,8 +191,8 @@
           ,autoInit: false                         // 自动加载：true,手动加载false
           ,url:'/api/user'                         // 数据访问路径
           ,tableWidth:'100%'                       // 表格宽度设定
-          ,showCellUrl:'/api/table'         // 显隐列读取用户习惯
-          ,dropCellUrl:'/api/table'         // 拖拽列保存入库路径，记录用户习惯
+          ,showCellUrl:'/api/table/find'         // 显隐列读取用户习惯
+          ,dropCellUrl:'/api/table/save'         // 拖拽列保存入库路径，记录用户习惯
           ,page:1                                  // 分页，当前页
           ,size:10                                 // 分页，每页默认显示10条数据
           ,sort:{

@@ -101,15 +101,15 @@
                 title:'用户列表'                         // 表格名称
                 ,id:'admin' + '-' + 'plan-table'         // 表格ID，系统中表格唯一
                 ,autoInit: true                         // 自动加载：true,手动加载false
-                ,url:'/api/app/plan'                         // 数据访问路径
+                ,url:'/api/plan'                         // 数据访问路径
                 ,tableWidth:'100%'                       // 表格宽度设定
-                ,showCellUrl:'/api/app/table/select'         // 显隐列读取用户习惯
-                ,dropCellUrl:'/api/app/table/status'         // 拖拽列保存入库路径，记录用户习惯
+                ,showCellUrl:'/api/table/find'         // 显隐列读取用户习惯
+                ,dropCellUrl:'/api/table/save'         // 拖拽列保存入库路径，记录用户习惯
                 ,page:1                                  // 分页，当前页
                 ,size:10                                 // 分页，每页默认显示10条数据
                 ,sort:{
                   custom: true                          // 开启远程分页
-                  ,sortName:"editTime"                       // 分页排序字段名称
+                  ,sortName:"createTime"                       // 分页排序字段名称
                   ,sortType:"DESC"                        // 分页排序方式DESC,ASC
                 }
                 ,pageSize: [10, 20, 50, 100]             // 分页，设置默认页数
@@ -125,7 +125,7 @@
                   ,{label:'预案分类',   prop: 'typeName',       width:'auto', isHide: true}
                   ,{label:'预案状态',   prop: 'status',         width:'auto', isHide: true}
                   ,{label:'预案描述',   prop: 'description',    width:'auto', isHide: true}
-                  ,{label:'更新时间',   prop: 'editTime',       width:'auto', isHide: true}
+                  ,{label:'更新时间',   prop: 'createTime',       width:'auto', isHide: true}
                 ]
                 ,showHeaderOption: true                 // 是否显示头部右侧操作按钮
                 ,headerOption:[                         // 表格头部操作按钮集合
@@ -161,7 +161,7 @@
              */
             initPlanTree(){
                 let that = this;
-                this.$get("/api/app/plan/type", {}).then(response => {
+                this.$get("/api/plan/type", {}).then(response => {
                     that.treeData = response.data;
                 });
             },

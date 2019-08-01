@@ -340,10 +340,10 @@
              */
             initCellIsHide(){
                 let that = this;
-                this.$get("/api/table", {
+                this.$get("/api/table/find", {
                   name:this.table.id
                 }).then( response => {
-                  if(response.data !== undefined || response.data !== null) {
+                  if(response.data !== undefined && response.data !== null) {
                     // 将后台读取字符串JSON数据，转换成JSON数据
                     let cell = JSON.parse(response.data.content);
                     if (cell.length > 0) {
@@ -389,7 +389,7 @@
                     cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
                 });
                 // 将操作的显隐列数据保存到后台
-                this.$get("/api/table", {
+                this.$get("/api/table/save", {
                   name:this.table.id, content: "["+cellString.substr(1)+"]"
                 }).then( response => {
                 }).catch( error => {console.log(error);});

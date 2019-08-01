@@ -169,7 +169,7 @@
       ,_initCellIsHide(){
         let that = this;
         this.$get(this.table.showCellUrl, { name: this.table.id }).then( response => {
-          if(response.data !== undefined || response.data !== null){
+          if(response.data !== undefined && response.data !== null){
             // 将后台读取字符串JSON数据，转换成JSON数据
             let cell = JSON.parse(response.data.content);
             if(cell.length > 0){
@@ -246,7 +246,7 @@
        * @Method excuteTable
        */
       ,_excuteTable(column, type){
-        let cellString = '';
+        let cellString = [];
         // 遍历表头，更改表头数据模型，并拼接表头数据
         this.table.column.forEach( cell => {
           if( cell.prop === column.prop){
@@ -256,11 +256,12 @@
               cell.width = column.width;
             }
           }
-          cellString += ',' + '{"prop":\"' + cell.prop + '\", \"width\":\"' + cell.width + '\" , \"isHide\": ' + cell.isHide + '}';
+          cellString.push({'prop': cell.prop, 'width': cell.width , 'isHide': cell.isHide});
         });
+        console.log(this.table.dropCellUrl);
         // 将操作列数据保存到后台
         this.$put(this.table.dropCellUrl, {
-            name:this.table.id, content: "["+cellString.substr(1)+"]"
+            name:this.table.id, content: cellString
           }).then( response => {
         }).catch( error => {console.log(error);});
       }

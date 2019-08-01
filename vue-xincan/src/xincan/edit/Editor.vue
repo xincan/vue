@@ -136,7 +136,7 @@
              */
             initPlanTree(){
               let that = this;
-              this.$get("/api/app/word/outline", {}).then(response => {
+              this.$get("/api/word/outline", {}).then(response => {
                 that.treeData = response.data;
               });
             }
